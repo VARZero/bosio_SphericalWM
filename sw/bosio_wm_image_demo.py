@@ -33,7 +33,9 @@ def main() -> None:
     parser.add_argument("--width", type=int, default=320)
     parser.add_argument("--height", type=int, default=200)
     parser.add_argument("--azimuth", type=float, default=0.0)
-    parser.add_argument("--elevation", type=float, default=-20.0)
+    # The reference GY-521 mounting orientation points the current view near -59°.
+    # Override this for another mechanical mounting orientation.
+    parser.add_argument("--elevation", type=float, default=-59.0)
     args = parser.parse_args()
 
     with BosioWMClient("image-demo", args.socket) as wm:
