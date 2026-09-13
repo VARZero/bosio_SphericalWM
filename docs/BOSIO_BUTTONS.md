@@ -13,6 +13,42 @@ BOSIO 데몬이 필요하지 않다. FPGA에는 현재 비트스트림이 올라
 | 2 | BTN2 | L20 | 1 |
 | 3 | BTN3 | L19 | 1 |
 
+## 데몬 없이 Linux에서 읽기
+
+비트스트림이 PL에 올라간 상태라면 표준 Python 라이브러리의 `/dev/mem` 매핑만
+사용해 현재 상태를 읽거나 엣지 이벤트를 계속 볼 수 있다. 이 경로는 구면 윈도우
+매니저나 출력 코어 드라이버를 불러오지 않는다.
+
+```bash
+sudo python3 bosio_buttons.py --once
+sudo python3 bosio_buttons.py
+```
+
+첫 명령은 `BTN0..BTN3` 상태를 16진수 비트 마스크로 출력한다. 두 번째 명령은
+5 ms마다 입력을 읽고 30 ms 디바운스를 거쳐 `pressed`와 `released`를 출력한다.
+`--poll-ms`와 `--debounce-ms`로 이 값을 바꿀 수 있다.
+
+## 데몬 이벤트 API
+
+데몬은 같은 입력을 읽어 최대 256개의 전역 버튼 엣지를 보관한다. 이벤트를
+읽어도 다른 클라이언트의 이벤트가 사라지지 않는다. SDK는 연결 시점의 이벤트
+ID를 기억하므로 각 이벤트를 해당 클라이언트에 한 번씩 반환한다.
+
+```python
+import time
+from bosio_wm_client import BosioWMClient
+
+with BosioWMClient("boayo-shell") as client:
+    print(client.get_button_state())
+    while True:
+        for event in client.poll_button_events():
+            print(event["name"], event["pressed"], event["state"])
+        time.sleep(0.01)
+```
+
+각 이벤트에는 `id`, `type`, `button`, `name`, `pressed`, `state`,
+`monotonic_ns`가 들어간다. 아직 BTN0 등에 홈이나 설정 의미를 부여하지 않았다.
+
 비트스트림과 HWH가 이미 올라간 상태에서는 창 관리자 없이도 다음처럼 읽는다.
 `/dev/mem` 접근 권한이 필요하므로 일반적인 PYNQ 설정에서는 `sudo`를 사용한다.
 
