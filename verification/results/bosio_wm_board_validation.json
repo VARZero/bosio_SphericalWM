@@ -1,0 +1,68 @@
+{
+  "date": "2026-09-12",
+  "board": "PYNQ-Z2",
+  "capture_device": "USB3.0 Video",
+  "systemd_service": {
+    "enabled": true,
+    "active": true
+  },
+  "ipc": {
+    "transport": "AF_UNIX JSON lines",
+    "socket": "/tmp/bosio-wm.sock",
+    "owner": "root:xilinx",
+    "mode": "0660",
+    "ping": "pass",
+    "second_daemon_lock": "pass"
+  },
+  "result": {
+    "window_count": 4,
+    "focused_window": 2,
+    "pointer": {
+      "azimuth": 10.0,
+      "elevation": -57.0,
+      "visible": true,
+      "window_id": 2,
+      "zone": "content",
+      "dragging": false
+    },
+    "titles": [
+      "FLIGHT",
+      "SYSTEM",
+      "RADIO",
+      "NAV"
+    ],
+    "overlap_and_focus_capture": "pass",
+    "title_drag": "pass",
+    "application_disconnect_cleanup": "pass",
+    "render_error": null,
+    "output": {
+      "raw": 222298123,
+      "enabled": true,
+      "scene_valid": true,
+      "dma_busy": false,
+      "pose_pending": true,
+      "scene_pending": false,
+      "error": false,
+      "frames": 3392,
+      "received": 47168,
+      "fclk0_mhz": 100.0,
+      "sensor_mode": true,
+      "sensor_active": true,
+      "sensor_pose_busy": true,
+      "sensor_applied": 5455,
+      "sensor_packets": 5458,
+      "sensor_yaw_mrad": 9,
+      "sensor_pitch_mrad": -1031,
+      "sensor_roll_mrad": -33,
+      "sensor_invert_yaw": false,
+      "sensor_invert_pitch": false,
+      "sensor_invert_roll": false
+    }
+  },
+  "mouse": {
+    "evdev_auto_detected": false,
+    "ipc_pointer_test": "pass",
+    "note": "No USB mouse evdev device was connected during this run."
+  },
+  "capture": "outputs/bosio_wm_live.png"
+}

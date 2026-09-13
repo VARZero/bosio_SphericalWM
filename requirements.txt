@@ -1,0 +1,2 @@
+numpy>=1.19
+evdev>=1.6; platform_system == "Linux"

@@ -1,0 +1,143 @@
+{
+  "m": 16,
+  "output_resolution": [
+    1280,
+    720
+  ],
+  "output_target_fps": 60,
+  "benchmark_frame_limit": 240.0,
+  "duration_per_case_seconds": 4.0,
+  "results": [
+    {
+      "case": "no_windows_pointer_dirty",
+      "seconds": 4.084225434000473,
+      "windows": 0,
+      "ipc_calls": 536,
+      "ipc_calls_per_second": 131.23663437818402,
+      "scene_updates": 8,
+      "scene_update_fps": 1.9587557369878212,
+      "average_compose_ms": 325.7172469999432,
+      "average_pack_dma_ms": 138.52377675027583,
+      "hdmi_fps": 58.762672109634636,
+      "dma_words": 48512,
+      "render_error": null
+    },
+    {
+      "case": "one_window_25_percent_fov",
+      "seconds": 4.6607003930002975,
+      "windows": 1,
+      "ipc_calls": 280,
+      "ipc_calls_per_second": 60.076807430170746,
+      "scene_updates": 4,
+      "scene_update_fps": 0.8582401061452964,
+      "average_compose_ms": 1021.6942015003951,
+      "average_pack_dma_ms": 149.1818509996392,
+      "hdmi_fps": 60.5059274832434,
+      "dma_words": 92608,
+      "render_error": null
+    },
+    {
+      "case": "one_window_50_percent_fov",
+      "seconds": 4.715897949999999,
+      "windows": 1,
+      "ipc_calls": 293,
+      "ipc_calls_per_second": 62.130267259069946,
+      "scene_updates": 4,
+      "scene_update_fps": 0.8481947748678491,
+      "average_compose_ms": 1021.6716682500646,
+      "average_pack_dma_ms": 140.71576874994207,
+      "hdmi_fps": 59.37363424074944,
+      "dma_words": 165440,
+      "render_error": null
+    },
+    {
+      "case": "one_window_100_percent_fov",
+      "seconds": 4.856988233000266,
+      "windows": 1,
+      "ipc_calls": 280,
+      "ipc_calls_per_second": 57.648894040461364,
+      "scene_updates": 4,
+      "scene_update_fps": 0.8235556291494481,
+      "average_compose_ms": 1074.3085925000742,
+      "average_pack_dma_ms": 137.56226449959286,
+      "hdmi_fps": 60.11956092790971,
+      "dma_words": 280384,
+      "render_error": null
+    },
+    {
+      "case": "one_window_100_percent_fov_full_rgb_ipc",
+      "seconds": 4.959218465999584,
+      "windows": 1,
+      "ipc_calls": 16,
+      "ipc_calls_per_second": 3.226314813452169,
+      "scene_updates": 4,
+      "scene_update_fps": 0.8065787033630423,
+      "average_compose_ms": 1069.2011369999364,
+      "average_pack_dma_ms": 160.6380917498882,
+      "hdmi_fps": 59.686824048865134,
+      "dma_words": 400064,
+      "render_error": null
+    },
+    {
+      "case": "four_windows_covering_fov",
+      "seconds": 6.685840119000204,
+      "windows": 4,
+      "ipc_calls": 159,
+      "ipc_calls_per_second": 23.781603683304464,
+      "scene_updates": 2,
+      "scene_update_fps": 0.2991396689723832,
+      "average_compose_ms": 3200.2466074995937,
+      "average_pack_dma_ms": 146.11255400041046,
+      "hdmi_fps": 60.127073463449015,
+      "dma_words": 477248,
+      "render_error": null
+    },
+    {
+      "case": "eight_overlapping_full_fov_windows",
+      "seconds": 6.65201488799994,
+      "windows": 8,
+      "ipc_calls": 75,
+      "ipc_calls_per_second": 11.274779335701433,
+      "scene_updates": 1,
+      "scene_update_fps": 0.15033039114268576,
+      "average_compose_ms": 6531.214341000123,
+      "average_pack_dma_ms": 134.1722649995063,
+      "hdmi_fps": 60.13215645707431,
+      "dma_words": 530112,
+      "render_error": null
+    }
+  ],
+  "geometry": {
+    "total_cells": 1080320,
+    "cases": {
+      "25_percent": {
+        "union_cells": 16924,
+        "active_tiles": 84,
+        "scene_words": 9856
+      },
+      "50_percent": {
+        "union_cells": 33186,
+        "active_tiles": 158,
+        "scene_words": 14592
+      },
+      "100_percent": {
+        "union_cells": 65648,
+        "active_tiles": 304,
+        "scene_words": 23936
+      },
+      "four_windows": {
+        "union_cells": 68380,
+        "projected_cells": 69014,
+        "active_tiles": 310,
+        "scene_words": 24320
+      },
+      "eight_overlap": {
+        "union_cells": 65648,
+        "projected_cells": 525184,
+        "active_tiles": 304,
+        "scene_words": 23936
+      }
+    }
+  },
+  "interpretation": "HDMI scanout remains ~60 fps. scene_update_fps measures CPU spherical composition plus pack/DMA replacement."
+}

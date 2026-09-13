@@ -1,0 +1,15 @@
+{
+  "case": "paced_16x16_full_fov_60hz",
+  "seconds": 5.250480712002172,
+  "calls": 300,
+  "renders": 296,
+  "patches": 292,
+  "no_ops": 4,
+  "compose_ms": 8.921636212746947,
+  "upload_ms": 3.60673725673051,
+  "packet_words_avg": 496.0,
+  "dma_words": 289664,
+  "hdmi_fps": 58.47083664134275,
+  "error": null,
+  "backend": "BS23 BPT1 partial tile + C++/NEON dirty compositor"
+}
