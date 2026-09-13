@@ -26,7 +26,13 @@ set_property -dict { PACKAGE_PIN T10 IOSTANDARD LVCMOS33 } [get_ports -quiet { p
 set_property PULLUP true [get_ports -quiet { pmodb_iic_sda_io }];
 set_property PULLUP true [get_ports -quiet { pmodb_iic_scl_io }];
 
+## PYNQ-Z2 user push buttons, active high (BTN0..BTN3)
+set_property -dict { PACKAGE_PIN D19 IOSTANDARD LVCMOS33 } [get_ports { buttons[0] }];
+set_property -dict { PACKAGE_PIN D20 IOSTANDARD LVCMOS33 } [get_ports { buttons[1] }];
+set_property -dict { PACKAGE_PIN L20 IOSTANDARD LVCMOS33 } [get_ports { buttons[2] }];
+set_property -dict { PACKAGE_PIN L19 IOSTANDARD LVCMOS33 } [get_ports { buttons[3] }];
+
 # Asynchronous Clock Domain Crossing (100MHz AXI vs 74.25MHz/371.25MHz Video Domain)
 set_clock_groups -asynchronous \
     -group [get_clocks -include_generated_clocks -of_objects [get_pins -hier *clk_wiz_0/clk_out1]] \
-    -group [get_clocks -include_generated_clocks -of_objects [get_pins -hier *clk_wiz_0/clk_out[23]]]
+    -group [get_clocks -include_generated_clocks -of_objects [get_pins -hier *clk_wiz_0/clk_out2]]

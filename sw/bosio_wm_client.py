@@ -25,6 +25,7 @@ class BosioWMClient:
         self.file = self.socket.makefile("rwb")
         self._sequence = 0
         self._lock = threading.Lock()
+        self._button_event_id = int(self.call("get_button_state")["last_event_id"])
 
     def close(self):
         if self.file is not None:
@@ -100,6 +101,16 @@ class BosioWMClient:
 
     def poll_events(self, limit=64):
         return self.call("poll_events", limit=limit)
+
+    def get_button_state(self):
+        """Return the current BTN0..BTN3 bit mask and availability."""
+        return self.call("get_button_state")
+
+    def poll_button_events(self, limit=64):
+        """Return each debounced button edge once for this client instance."""
+        result = self.call("poll_button_events", after_id=self._button_event_id, limit=limit)
+        self._button_event_id = max(self._button_event_id, int(result["next_id"]))
+        return result["events"]
 
     def get_state(self):
         return self.call("get_state")

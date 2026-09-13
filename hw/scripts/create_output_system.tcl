@@ -3,6 +3,7 @@
 # Architecture:
 #   - Bosio 3DoF Output Core (bosio_output_core)
 #   - Direct RTL GY-521 / MPU6050 sensor hub on Pmod B
+#   - Four PYNQ-Z2 push buttons exposed as an independent AXI GPIO input
 #   - AXI-Lite Software Control via Zynq PS
 #   - AXI Master DDR Texture Fetch via Zynq HP0
 #   - VTC + Video Out + rgb2dvi driving 720p60 HDMI PHY
@@ -72,7 +73,18 @@ create_bd_cell -type ip -vlnv varzero.org:user:bosio_sensor_hub_mpu6050:1.0 sens
 connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins sensor_hub_0/enable]
 make_bd_intf_pins_external [get_bd_intf_pins sensor_hub_0/iic] -name "pmodb_iic"
 
-# 7. Video Timing Controller (VTC) for 720p60
+# 7. Board push buttons. This is a standard Linux-visible AXI GPIO peripheral;
+# it does not depend on the BOSIO output core or sensor hub RTL.
+puts "==> Instantiating four-bit board button GPIO..."
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 buttons_gpio
+set_property -dict [list \
+    CONFIG.C_GPIO_WIDTH {4} \
+    CONFIG.C_ALL_INPUTS {1} \
+    CONFIG.C_INTERRUPT_PRESENT {0} \
+] [get_bd_cells buttons_gpio]
+make_bd_pins_external [get_bd_pins buttons_gpio/gpio_io_i] -name "buttons"
+
+# 8. Video Timing Controller (VTC) for 720p60
 create_bd_cell -type ip -vlnv xilinx.com:ip:v_tc:6.2 vtc_0
 set_property -dict [list \
     CONFIG.HAS_AXI4_LITE {false} \
@@ -92,7 +104,7 @@ set_property -dict [list \
     CONFIG.GEN_VACTIVE_SIZE {720} \
 ] [get_bd_cells vtc_0]
 
-# 8. AXI4-Stream to Video Out
+# 9. AXI4-Stream to Video Out
 create_bd_cell -type ip -vlnv xilinx.com:ip:v_axi4s_vid_out:4.0 vid_out_0
 set_property -dict [list \
     CONFIG.C_VTG_MASTER_SLAVE {1} \
@@ -102,7 +114,7 @@ set_property -dict [list \
     CONFIG.C_SYNC_LOCK_THRESHOLD {4} \
 ] [get_bd_cells vid_out_0]
 
-# 9. RGB to DVI / TMDS Transmitter
+# 10. RGB to DVI / TMDS Transmitter
 puts "==> Instantiating rgb2dvi HDMI TMDS Core..."
 create_bd_cell -type ip -vlnv digilentinc.com:ip:rgb2dvi:1.4 rgb2dvi_0
 set_property -dict [list \
@@ -155,6 +167,10 @@ connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins vid_out_0/vid_io_out_ce
 # ----------------------------------------------------------------------------
 puts "==> Connecting AXI-Lite Control Interface..."
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/ps7_0/M_AXI_GP0" Clk "Auto" }  [get_bd_intf_pins output_core_0/s_axi_lite]
+
+puts "==> Connecting independent board button GPIO..."
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/ps7_0/M_AXI_GP0" Clk "Auto" } [get_bd_intf_pins buttons_gpio/S_AXI]
+assign_bd_address -offset 0x41200000 -range 64K -target_address_space [get_bd_addr_spaces ps7_0/Data] [get_bd_addr_segs buttons_gpio/S_AXI/Reg] -force
 
 puts "==> Connecting Framebuffer DMA AXI Master to Zynq HP0..."
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/output_core_0/m_axi" Clk "Auto" }  [get_bd_intf_pins ps7_0/S_AXI_HP0]

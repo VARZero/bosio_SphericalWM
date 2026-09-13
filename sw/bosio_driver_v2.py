@@ -17,6 +17,9 @@ class BosioV2:
   if abs(self.clock_mhz-100)>0.1:raise RuntimeError(f'Unexpected FCLK0 {self.clock_mhz}')
   time.sleep(.05)
   self.core=self.overlay.output_core_0
+  from bosio_buttons import BosioButtons
+  if not hasattr(self.overlay,'buttons_gpio'):raise RuntimeError('Wrong bitstream: buttons_gpio is required')
+  self.buttons=BosioButtons(self.overlay.buttons_gpio)
   if self.core.read(0x7c)!=0x42533233:raise RuntimeError('Wrong bitstream: BS23 partial-tile core required')
   self.m=m;self.allocate=pynq.allocate;self.buffer=None;self.running=False
   self.core.write(0x5c,{8:0,16:1,32:2}[m]);self.core.write(0x78,0)

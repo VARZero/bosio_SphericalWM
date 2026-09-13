@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import deque
 import json
 import os
 import signal
@@ -94,6 +95,12 @@ class BosioWindowDaemon:
         self.metrics_started = time.monotonic()
         self._last_status_time = 0.0
         self.lock_file = None
+        self.buttons = None
+        self.button_thread = None
+        self.button_state = 0
+        self.button_event_id = 0
+        self.button_events = deque(maxlen=256)
+        self.button_lock = threading.Lock()
 
     def dispatch(self, request):
         op = request["op"]
@@ -101,7 +108,8 @@ class BosioWindowDaemon:
         app = str(request.get("app", "anonymous"))
         wm = self.manager
         if op == "ping":
-            return {"version": 1, "m": wm.m, "headless": self.headless}
+            return {"version": 2, "m": wm.m, "headless": self.headless,
+                    "features": ["windows", "pointer", "button-events"]}
         if op == "set_frame_limit":
             fps = float(args["fps"])
             if not 1 <= fps <= 500:
@@ -145,9 +153,24 @@ class BosioWindowDaemon:
             return wm.pointer_button(args.get("button", "left"), args["pressed"])
         if op == "poll_events":
             return wm.poll_events(app, args.get("limit", 64))
+        if op == "get_button_state":
+            with self.button_lock:
+                return {"state": self.button_state, "available": self.buttons is not None,
+                        "last_event_id": self.button_event_id}
+        if op == "poll_button_events":
+            after_id = max(0, int(args.get("after_id", 0)))
+            limit = max(1, min(256, int(args.get("limit", 64))))
+            with self.button_lock:
+                events = [event for event in self.button_events if event["id"] > after_id][:limit]
+                return {"events": events, "next_id": events[-1]["id"] if events else after_id,
+                        "state": self.button_state, "available": self.buttons is not None}
         if op == "get_state":
             state = wm.state()
             state["output"] = self.output_status
+            with self.button_lock:
+                state["buttons"] = {"state": self.button_state,
+                                    "available": self.buttons is not None,
+                                    "last_event_id": self.button_event_id}
             state["render_error"] = self.render_error
             count = self.render_count
             state["performance"] = {
@@ -173,6 +196,8 @@ class BosioWindowDaemon:
             raise RuntimeError("--bit is required unless --headless is used")
         from bosio_driver_v2 import BosioV2
         self.driver = BosioV2(self.bitstream, self.manager.m)
+        self.buttons = self.driver.buttons
+        self.button_state = self.buttons.read_state()
         self.driver.upload(self.manager.render())
         self.driver.set_pose(0, 0, 0)
         self.driver.start()
@@ -180,6 +205,26 @@ class BosioWindowDaemon:
         if self.sensor:
             self.driver.use_sensor(True)
         self.output_status = self.driver.status()
+
+    def _button_loop(self):
+        from bosio_buttons import ButtonDebouncer
+        debouncer = ButtonDebouncer(self.button_state, 0.03)
+        while self.running:
+            try:
+                state = self.buttons.read_state()
+                events = debouncer.update(state)
+                with self.button_lock:
+                    self.button_state = state
+                    for event in events:
+                        self.button_event_id += 1
+                        event.update(id=self.button_event_id, type="button",
+                                     monotonic_ns=time.monotonic_ns())
+                        self.button_events.append(event)
+                        print(f'BOSIO_BUTTON {event["name"]} '
+                              f'{"pressed" if event["pressed"] else "released"}', flush=True)
+            except Exception as exc:
+                self.render_error = f"button input: {exc!r}"
+            time.sleep(0.005)
 
     def _render_loop(self):
         while self.running:
@@ -256,6 +301,9 @@ class BosioWindowDaemon:
         self.running = True
         render_thread = threading.Thread(target=self._render_loop, name="bosio-compositor", daemon=True)
         render_thread.start()
+        if self.buttons is not None:
+            self.button_thread = threading.Thread(target=self._button_loop, name="bosio-buttons", daemon=True)
+            self.button_thread.start()
         print(f"BOSIO_WM_READY {self.socket_path}", flush=True)
         try:
             self.server.serve_forever(poll_interval=0.1)
@@ -263,6 +311,8 @@ class BosioWindowDaemon:
             self.running = False
             self.server.server_close()
             render_thread.join(timeout=2)
+            if self.button_thread is not None:
+                self.button_thread.join(timeout=1)
             if self.driver is not None:
                 self.driver.close()
             if self.socket_path.exists():
@@ -295,6 +345,6 @@ def main():
     signal.signal(signal.SIGINT, daemon.stop)
     daemon.run()
 
-
 if __name__ == "__main__":
     main()
+

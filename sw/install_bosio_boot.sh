@@ -17,6 +17,7 @@ bosio_wm_daemon.py
 bosio_window_manager.py
 bosio_native_compositor.py
 bosio_mouse_input.py
+bosio_buttons.py
 bosio_driver_v2.py
 bosio_geometry_v2.py
 bosio_wm_client.py

@@ -23,6 +23,7 @@ RTL 출력 코어는 Git submodule로 연결된 별도 저장소인
                             BPT1 부분 타일 DMA ─ BS23 출력 코어 ─ HDMI
                                                    ^
 GY-521 ─ I²C 센서 허브 ─ 96-bit AXI4-Stream ─ yaw/pitch/roll 자세 엔진
+PYNQ BTN0..3 ─ 독립 AXI GPIO ─ Linux 버튼 입력 ─ 데몬 전역 이벤트 기록
 ```
 
 창 surface의 변경 영역은 dirty rectangle로 합쳐집니다. 네이티브 합성기는
@@ -42,19 +43,20 @@ sw/
   bosio_driver_v2.py          # BS23 출력 코어 PYNQ 드라이버
   bosio_geometry_v2.py        # 정이십면체 장면 형식과 자세 계수
   bosio_mouse_input.py        # Linux evdev 마우스 입력
+  bosio_buttons.py            # 독립 /dev/mem 버튼 입력과 디바운스
   bosio_wm_demo.py            # 네 개의 예제 창
   bosio_wm_image_demo.py      # 1초마다 이미지 변경·클릭 좌표 예제
   bosio_wm_benchmark.py       # 실제 보드 성능 측정 도구
   bosio-window-manager.service
   install_bosio_boot.sh       # 부팅 자동 실행 설치 및 상태 검사
-  bitstream/                  # 검증된 PYNQ-Z2 BS23 bitstream/HWH
+  bitstream/                  # 검증된 PYNQ-Z2 bitstream/HWH
 docs/                         # 설계, IPC, 설치, 성능 문서
 verification/                 # 단위 테스트와 보드 벤치마크 원본
 hw/
   ip_repo/bosio_sensor_hub_mpu6050_1.0/  # GY-521 직접 I²C/AXI4-Stream RTL
   ip_repo/bosio_output_core_1.0/          # 출력 코어 Git submodule
   scripts/                                # Vivado IP 패키징 및 시스템 빌드 Tcl
-  constrs/                                # PYNQ-Z2 HDMI·Pmod 핀 제약
+  constrs/                                # PYNQ-Z2 HDMI·Pmod·버튼 핀 제약
 ```
 
 Vivado 프로젝트 캐시, SDK 임시 파일, 캡처 이미지, 개인 배포 스크립트와 접속
@@ -129,6 +131,7 @@ IPC 전체 사양은 [구면 윈도우 매니저 문서](docs/BOSIO_SPHERICAL_WI
 측정 조건과 결과는 [성능 문서](docs/BOSIO_WM_PERFORMANCE.md)를 참고하십시오.
 애플리케이션을 처음 작성한다면 [애플리케이션 빠른 시작](docs/BOSIO_APPLICATION_QUICKSTART.md)부터
 읽으면 됩니다.
+[PYNQ-Z2 버튼 입력](docs/BOSIO_BUTTONS.md)은 Linux 직접 판독과 데몬 이벤트 API를 설명합니다.
 
 ## 개발과 검증
 
