@@ -127,6 +127,8 @@ wm.update_surface(window["window_id"], patch, x=40, y=32)
 
 IPC 전체 사양은 [구면 윈도우 매니저 문서](docs/BOSIO_SPHERICAL_WINDOW_MANAGER.md),
 측정 조건과 결과는 [성능 문서](docs/BOSIO_WM_PERFORMANCE.md)를 참고하십시오.
+애플리케이션을 처음 작성한다면 [애플리케이션 빠른 시작](docs/BOSIO_APPLICATION_QUICKSTART.md)부터
+읽으면 됩니다.
 
 ## 개발과 검증
 
