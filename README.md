@@ -43,6 +43,7 @@ sw/
   bosio_geometry_v2.py        # 정이십면체 장면 형식과 자세 계수
   bosio_mouse_input.py        # Linux evdev 마우스 입력
   bosio_wm_demo.py            # 네 개의 예제 창
+  bosio_wm_image_demo.py      # 1초마다 이미지 변경·클릭 좌표 예제
   bosio_wm_benchmark.py       # 실제 보드 성능 측정 도구
   bosio-window-manager.service
   install_bosio_boot.sh       # 부팅 자동 실행 설치 및 상태 검사
@@ -84,6 +85,20 @@ journalctl -b -u bosio-window-manager.service --no-pager
 ```bash
 cd /home/xilinx/bosio_v2
 python3 bosio_wm_demo.py --center-elevation -59
+```
+
+가장 간단한 애플리케이션 예제는 1초마다 이미지를 바꾸고 창 안을 클릭했을
+때 상대 좌표를 터미널에 출력합니다.
+
+```bash
+python3 bosio_wm_image_demo.py
+```
+
+출력 예:
+
+```text
+image frame=3
+click button=left pressed=True u=0.4219 v=0.6350 pixel=(135,127) zone=content
 ```
 
 ## 애플리케이션 예제
