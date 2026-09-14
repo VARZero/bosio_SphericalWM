@@ -20,16 +20,18 @@ def pack_scene(rgb,m=16):
  return output[:words].copy(),int(active.value)
 
 class NativeCompositor:
- def __init__(self,rays):
+ def __init__(self,rays,projection_aa=True):
   path=Path(os.environ.get('BOSIO_COMPOSITOR_LIB',Path(__file__).with_name('libbosio_compositor.so')))
   self.lib=ctypes.CDLL(str(path));self._bind()
   self.rays=np.ascontiguousarray(rays,dtype=np.float32).reshape(-1,3)
   self.ctx=self.lib.bosio_compositor_create(self.rays.ctypes.data_as(ctypes.POINTER(ctypes.c_float)),len(self.rays))
   if not self.ctx:raise RuntimeError('native compositor allocation failed')
+  self.lib.bosio_compositor_set_projection_aa(self.ctx,1 if projection_aa else 0)
   self.known=set()
  def _bind(self):
   L=self.lib;L.bosio_compositor_create.argtypes=[ctypes.POINTER(ctypes.c_float),ctypes.c_uint32];L.bosio_compositor_create.restype=ctypes.c_void_p
   L.bosio_compositor_destroy.argtypes=[ctypes.c_void_p]
+  L.bosio_compositor_set_projection_aa.argtypes=[ctypes.c_void_p,ctypes.c_int]
   L.bosio_compositor_sync_window.argtypes=[ctypes.c_void_p,ctypes.c_uint64]+[ctypes.c_float]*5+[ctypes.c_uint32,ctypes.c_uint32,ctypes.c_uint64,ctypes.POINTER(ctypes.c_uint8)]
   L.bosio_compositor_sync_window_dirty.argtypes=L.bosio_compositor_sync_window.argtypes+[ctypes.c_uint32]*4
   L.bosio_compositor_remove_window.argtypes=[ctypes.c_void_p,ctypes.c_uint64]

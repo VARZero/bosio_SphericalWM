@@ -83,12 +83,13 @@ class SphericalWindowManager:
     MAX_WINDOWS = 64
     MAX_SURFACE_PIXELS = 1024 * 1024
 
-    def __init__(self, m=16, background=(2, 6, 14)):
+    def __init__(self, m=16, background=(2, 6, 14), projection_aa=True):
         self.m = int(m)
         self._rays = cell_rays(self.m).astype(np.float32)
         self._flat_rays = self._rays.reshape(-1, 3)
         self._shape = self._rays.shape[:-1]
         self.background = np.asarray(background, dtype=np.uint8)
+        self.projection_aa = bool(projection_aa)
         self.windows: dict[int, SphericalWindow] = {}
         self.z_order: list[int] = []
         self.focused_window: int | None = None
@@ -103,7 +104,7 @@ class SphericalWindowManager:
         self.native = None
         try:
             from bosio_native_compositor import NativeCompositor
-            self.native = NativeCompositor(self._rays)
+            self.native = NativeCompositor(self._rays, projection_aa=self.projection_aa)
         except (OSError, RuntimeError, ImportError):
             self.native = None
 
@@ -373,9 +374,19 @@ class SphericalWindowManager:
                 indices = np.flatnonzero(mask)
                 if not len(indices):
                     continue
-                px = np.clip(np.rint((x[mask] + 1) * 0.5 * (window.surface_width - 1)), 0, window.surface_width - 1).astype(np.int32)
-                py = np.clip(np.rint((1 - y[mask]) * 0.5 * (window.surface_height - 1)), 0, window.surface_height - 1).astype(np.int32)
-                flat[indices] = window.surface[py, px]
+                fx = (x[mask] + 1) * 0.5 * (window.surface_width - 1)
+                fy = (1 - y[mask]) * 0.5 * (window.surface_height - 1)
+                if self.projection_aa:
+                    taps = []
+                    for ox, oy in ((-.25, -.25), (.25, -.25), (-.25, .25), (.25, .25)):
+                        px = np.clip(np.rint(fx + ox), 0, window.surface_width - 1).astype(np.int32)
+                        py = np.clip(np.rint(fy + oy), 0, window.surface_height - 1).astype(np.int32)
+                        taps.append(window.surface[py, px].astype(np.uint16))
+                    flat[indices] = ((taps[0] + taps[1] + taps[2] + taps[3] + 2) // 4).astype(np.uint8)
+                else:
+                    px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)
+                    py = np.clip(np.rint(fy), 0, window.surface_height - 1).astype(np.int32)
+                    flat[indices] = window.surface[py, px]
                 title = y[mask] > 0.72
                 border = (np.abs(x[mask]) > 0.94) | (np.abs(y[mask]) > 0.92)
                 flat[indices[title]] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)

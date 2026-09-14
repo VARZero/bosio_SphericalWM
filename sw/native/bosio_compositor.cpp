@@ -12,7 +12,7 @@
 
 namespace {
 constexpr float kPi = 3.14159265358979323846f;
-struct Sample { uint32_t dst, src; uint8_t flags; };
+struct Sample { uint32_t dst, src[4]; uint8_t flags; };
 struct Window {
   float az=0, el=0, roll=0, width=0, height=0;
   uint32_t sw=0, sh=0; uint64_t surface_revision=0;
@@ -29,10 +29,20 @@ struct Context {
   uint64_t last_focus=0;float last_paz=0,last_pel=0;bool last_pvisible=false;
   uint8_t last_br=0,last_bg=0,last_bb=0;uint32_t last_m=0;
   bool packed_valid=false,structural_dirty=true;
+  bool projection_aa=true;
   std::string error;
 };
 inline float rad(float x){return x*kPi/180.0f;}
 inline uint8_t rgb_index(uint8_t r,uint8_t g,uint8_t b){return (r&224)|((g>>3)&28)|(b>>6);}
+inline void sample_rgb(const Window&w,const Sample&s,uint8_t& r,uint8_t& g,uint8_t& b){
+  uint32_t rr=0,gg=0,bb=0; for(int k=0;k<4;k++){const uint8_t*p=&w.surface[(size_t)s.src[k]*3];rr+=p[0];gg+=p[1];bb+=p[2];}
+  r=(uint8_t)((rr+2)>>2); g=(uint8_t)((gg+2)>>2); b=(uint8_t)((bb+2)>>2);
+}
+inline uint8_t sample_index(const Window&w,const Sample&s){uint8_t r,g,b;sample_rgb(w,s,r,g,b);return rgb_index(r,g,b);}
+inline void source_taps(const Window&w,float x,float y,bool aa,uint32_t out[4]){
+  const float fx=(x+1.f)*.5f*(w.sw-1), fy=(1.f-y)*.5f*(w.sh-1);
+  for(int k=0;k<4;k++){float ox=(k&1)?0.25f:-0.25f, oy=(k&2)?0.25f:-0.25f; long px=std::lround(fx+ (aa?ox:0.f)), py=std::lround(fy+(aa?oy:0.f)); px=std::max(0l,std::min((long)w.sw-1,px));py=std::max(0l,std::min((long)w.sh-1,py));out[k]=(uint32_t)py*w.sw+(uint32_t)px;}
+}
 void convert_surface(Window&w){
   size_t pixels=(size_t)w.sw*w.sh;w.surface_index.resize(pixels);size_t i=0;
 #if defined(__ARM_NEON)
@@ -83,10 +93,9 @@ void rebuild(Context&ctx,Window&w){
     float32x4_t recip=vrecpeq_f32(d);recip=vmulq_f32(vrecpsq_f32(d,recip),recip);recip=vmulq_f32(vrecpsq_f32(d,recip),recip);
     vst1q_f32(ds,d);vst1q_f32(xs,vmulq_n_f32(vmulq_f32(nx,recip),1.0f/tx));vst1q_f32(ys,vmulq_n_f32(vmulq_f32(ny,recip),1.0f/ty));
     for(int lane=0;lane<4;lane++)if(ds[lane]>0&&std::fabs(xs[lane])<=1&&std::fabs(ys[lane])<=1){
-      uint32_t px=std::min(w.sw-1,(uint32_t)std::max(0l,std::lround((xs[lane]+1)*.5f*(w.sw-1))));
-      uint32_t py=std::min(w.sh-1,(uint32_t)std::max(0l,std::lround((1-ys[lane])*.5f*(w.sh-1))));
+      uint32_t taps[4]; source_taps(w,xs[lane],ys[lane],ctx.projection_aa,taps);
       uint8_t f=(ys[lane]>.72f?1:0)|((std::fabs(xs[lane])>.94f||std::fabs(ys[lane])>.92f)?2:0);
-      w.samples.push_back({i+(uint32_t)lane,py*w.sw+px,f});
+      w.samples.push_back({i+(uint32_t)lane,{taps[0],taps[1],taps[2],taps[3]},f});
     }
   }
 #else
@@ -96,9 +105,8 @@ void rebuild(Context&ctx,Window&w){
     const float*q=&ctx.rays[i*3];float d=q[0]*c[0]+q[1]*c[1]+q[2]*c[2];if(d<=0)continue;
     float x=(q[0]*r[0]+q[1]*r[1]+q[2]*r[2])/d/tx,y=(q[0]*u[0]+q[1]*u[1]+q[2]*u[2])/d/ty;
     if(std::fabs(x)>1||std::fabs(y)>1)continue;
-    uint32_t px=std::min(w.sw-1,(uint32_t)std::max(0l,std::lround((x+1)*.5f*(w.sw-1))));
-    uint32_t py=std::min(w.sh-1,(uint32_t)std::max(0l,std::lround((1-y)*.5f*(w.sh-1))));
-    uint8_t f=(y>.72f?1:0)|((std::fabs(x)>.94f||std::fabs(y)>.92f)?2:0);w.samples.push_back({i,py*w.sw+px,f});
+    uint32_t taps[4]; source_taps(w,x,y,ctx.projection_aa,taps);
+    uint8_t f=(y>.72f?1:0)|((std::fabs(x)>.94f||std::fabs(y)>.92f)?2:0);w.samples.push_back({i,{taps[0],taps[1],taps[2],taps[3]},f});
   }
 }
 void rebuild_pointer(Context&ctx,float az,float el,bool visible){
@@ -120,7 +128,7 @@ int bosio_compositor_render_packed(void*ptr,const uint64_t*order,uint32_t order_
     auto&ctx=*static_cast<Context*>(ptr);const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles,max_bytes=196608;if(ctx.count!=tiles*cells||capacity<prefix+16)return -1;
     ctx.image.assign(ctx.count,rgb_index(br,bg,bb));ctx.owner.assign(ctx.count,0);
     const uint8_t tf=rgb_index(22,112,190),ti=rgb_index(55,65,81),bf=rgb_index(250,204,21),bi=rgb_index(120,130,145);
-    for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;bool focused=order[z]==focus;for(const auto&s:w.samples){uint8_t value=w.surface_index[s.src];if(s.flags&1)value=focused?tf:ti;if(s.flags&2)value=focused?bf:bi;ctx.image[s.dst]=value;ctx.owner[s.dst]=s.flags?UINT64_MAX:order[z];}}
+    for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;bool focused=order[z]==focus;for(const auto&s:w.samples){uint8_t value=sample_index(w,s);if(s.flags&1)value=focused?tf:ti;if(s.flags&2)value=focused?bf:bi;ctx.image[s.dst]=value;ctx.owner[s.dst]=s.flags?UINT64_MAX:order[z];}}
     rebuild_pointer(ctx,paz,pel,pvisible!=0);for(auto i:ctx.pointer_outer){ctx.image[i]=rgb_index(10,10,10);ctx.owner[i]=UINT64_MAX;}for(auto i:ctx.pointer_inner){ctx.image[i]=rgb_index(255,255,255);ctx.owner[i]=UINT64_MAX;}
     for(uint32_t k=0;k<256;k++){uint32_t red=(k>>5)*255/7,green=((k>>2)&7)*255/7,blue=(k&3)*255/3;out[k]=(red<<16)|(blue<<8)|green;}
     std::fill(out+256,out+prefix,0xffffffffu);ctx.directory.assign(tiles,0xffffffffu);uint8_t*data=reinterpret_cast<uint8_t*>(out+prefix);uint32_t active=0,bytes=0;
@@ -141,7 +149,7 @@ int bosio_compositor_render_patch(void*ptr,const uint64_t*order,uint32_t order_c
   std::vector<uint8_t> dirty(tiles,0);
   for(auto&kv:ctx.windows){uint64_t id=kv.first;Window&w=kv.second;if(!w.dirty_w)continue;
    uint32_t x1=w.dirty_x+w.dirty_w,y1=w.dirty_y+w.dirty_h;
-   for(const auto&s:w.samples){uint32_t sx=s.src%w.sw,sy=s.src/w.sw;if(sx<w.dirty_x||sx>=x1||sy<w.dirty_y||sy>=y1||s.flags||ctx.owner[s.dst]!=id)continue;uint8_t value=w.surface_index[s.src];if(ctx.image[s.dst]!=value){ctx.image[s.dst]=value;dirty[s.dst/cells]=1;}}
+   for(const auto&s:w.samples){bool hit=false;for(int k=0;k<4;k++){uint32_t sx=s.src[k]%w.sw,sy=s.src[k]/w.sw;if(sx>=w.dirty_x&&sx<x1&&sy>=w.dirty_y&&sy<y1){hit=true;break;}}if(!hit||s.flags||ctx.owner[s.dst]!=id)continue;uint8_t value=sample_index(w,s);if(ctx.image[s.dst]!=value){ctx.image[s.dst]=value;dirty[s.dst/cells]=1;}}
    w.dirty_w=w.dirty_h=0;
   }
   uint32_t records=0;for(uint32_t t=0;t<tiles;t++)if(dirty[t]){if(ctx.directory[t]==0xffffffffu||(ctx.directory[t]&3u))return -3;records++;}
@@ -170,6 +178,7 @@ int bosio_pack_scene(const uint8_t*rgb,uint32_t m,uint32_t*out,uint32_t capacity
   std::memset(data+bytes,0,(size_t)(words-prefix)*4-bytes);if(active_out)*active_out=active;return (int)words;
 }
 void* bosio_compositor_create(const float*rays,uint32_t count){try{auto*c=new Context;c->count=count;c->rays.assign(rays,rays+(size_t)count*3);return c;}catch(...){return nullptr;}}
+void bosio_compositor_set_projection_aa(void*ptr,int enabled){auto&ctx=*static_cast<Context*>(ptr);bool v=enabled!=0;if(ctx.projection_aa==v)return;ctx.projection_aa=v;for(auto&kv:ctx.windows)rebuild(ctx,kv.second);ctx.structural_dirty=true;ctx.packed_valid=false;}
 void bosio_compositor_destroy(void*ptr){delete static_cast<Context*>(ptr);}
 int bosio_compositor_sync_window(void*ptr,uint64_t id,float az,float el,float roll,float width,float height,uint32_t sw,uint32_t sh,uint64_t revision,const uint8_t*rgb){
   try{auto&ctx=*static_cast<Context*>(ptr);auto&w=ctx.windows[id];bool changed=!same_geometry(w,az,el,roll,width,height,sw,sh);w.az=az;w.el=el;w.roll=roll;w.width=width;w.height=height;w.sw=sw;w.sh=sh;if(changed){rebuild(ctx,w);ctx.structural_dirty=true;}if(w.surface_revision!=revision||w.surface.empty()){w.surface.assign(rgb,rgb+(size_t)sw*sh*3);convert_surface(w);add_dirty(w,0,0,sw,sh);w.surface_revision=revision;}return 0;}catch(const std::exception&e){static_cast<Context*>(ptr)->error=e.what();return -1;}}
@@ -182,7 +191,7 @@ int bosio_compositor_sync_window_dirty(void*ptr,uint64_t id,float az,float el,fl
 void bosio_compositor_remove_window(void*ptr,uint64_t id){auto&ctx=*static_cast<Context*>(ptr);ctx.windows.erase(id);ctx.structural_dirty=true;}
 int bosio_compositor_render(void*ptr,const uint64_t*order,uint32_t order_count,uint64_t focus,float paz,float pel,int pvisible,uint8_t br,uint8_t bg,uint8_t bb,uint8_t*out){
   try{auto&ctx=*static_cast<Context*>(ptr);for(uint32_t i=0;i<ctx.count;i++){out[i*3]=br;out[i*3+1]=bg;out[i*3+2]=bb;}
-    for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;for(const auto&s:w.samples){uint8_t*d=&out[(size_t)s.dst*3];const uint8_t*src=&w.surface[(size_t)s.src*3];d[0]=src[0];d[1]=src[1];d[2]=src[2];if(s.flags&1){bool f=order[z]==focus;d[0]=f?22:55;d[1]=f?112:65;d[2]=f?190:81;}if(s.flags&2){bool f=order[z]==focus;d[0]=f?250:120;d[1]=f?204:130;d[2]=f?21:145;}}}
+    for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;for(const auto&s:w.samples){uint8_t*d=&out[(size_t)s.dst*3];sample_rgb(w,s,d[0],d[1],d[2]);if(s.flags&1){bool f=order[z]==focus;d[0]=f?22:55;d[1]=f?112:65;d[2]=f?190:81;}if(s.flags&2){bool f=order[z]==focus;d[0]=f?250:120;d[1]=f?204:130;d[2]=f?21:145;}}}
     rebuild_pointer(ctx,paz,pel,pvisible!=0);for(auto i:ctx.pointer_outer){out[i*3]=10;out[i*3+1]=10;out[i*3+2]=10;}for(auto i:ctx.pointer_inner){out[i*3]=255;out[i*3+1]=255;out[i*3+2]=255;}return 0;
   }catch(const std::exception&e){static_cast<Context*>(ptr)->error=e.what();return -1;}}
 const char* bosio_compositor_error(void*ptr){return static_cast<Context*>(ptr)->error.c_str();}
