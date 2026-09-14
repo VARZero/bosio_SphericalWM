@@ -14,12 +14,13 @@ Environment=PYTHONUNBUFFERED=1
 ExecStartPre=/usr/bin/test -r /home/xilinx/bosio_v2/bitstream/bosio_output_disp.bit
 ExecStartPre=/usr/bin/test -r /home/xilinx/bosio_v2/bitstream/bosio_output_disp.hwh
 ExecStartPre=/usr/bin/test -r /home/xilinx/bosio_v2/libbosio_compositor.so
-ExecStart=/usr/local/share/pynq-venv/bin/python3 -u /home/xilinx/bosio_v2/bosio_wm_daemon.py --bit /home/xilinx/bosio_v2/bitstream/bosio_output_disp.bit --m 16 --fps 30 --mouse auto --mouse-sensitivity 0.5 --socket-group xilinx
+ExecStart=/usr/local/share/pynq-venv/bin/python3 -u /home/xilinx/bosio_v2/bosio_wm_daemon.py --bit /home/xilinx/bosio_v2/bitstream/bosio_output_disp.bit --m 16 --fps 30 --mouse auto --mouse-sensitivity 1.5 --socket-group xilinx
 Restart=always
 RestartSec=3
 TimeoutStopSec=10
 
 [Install]
 WantedBy=multi-user.target
+
 
 
