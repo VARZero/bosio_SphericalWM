@@ -72,7 +72,7 @@ class _Handler(socketserver.StreamRequestHandler):
 class BosioWindowDaemon:
     def __init__(self, socket_path, m=16, fps=12, bitstream=None, headless=False,
                  sensor=True, invert_mask=0, mouse=None, mouse_sensitivity=0.12,
-                 socket_group=None, antialias=True, aa_threshold=24, aa_strength=64):
+                 socket_group=None, antialias=True, aa_threshold=24, aa_strength=32):
         self.socket_path = Path(socket_path)
         self.manager = SphericalWindowManager(m)
         self.frame_period = 1.0 / max(1.0, float(fps))
@@ -407,7 +407,7 @@ def main():
     parser.add_argument("--socket-group", help="group allowed to connect to the 0660 socket")
     parser.add_argument("--no-aa", action="store_true", help="disable projected-stream antialiasing")
     parser.add_argument("--aa-threshold", type=int, default=24, help="edge threshold, 0..255")
-    parser.add_argument("--aa-strength", type=int, default=64, help="blend strength, 0..255")
+    parser.add_argument("--aa-strength", type=int, default=32, help="blend strength, 0..255")
     args = parser.parse_args()
     daemon = BosioWindowDaemon(args.socket, args.m, args.fps, args.bit, args.headless,
                                not args.no_sensor, args.invert_mask, args.mouse,

@@ -12,7 +12,7 @@
 
 namespace {
 constexpr float kPi = 3.14159265358979323846f;
-struct Sample { uint32_t dst, src[4]; uint8_t flags; };
+struct Sample { uint32_t dst; float fx,fy; uint8_t flags,aa; };
 struct Window {
   float az=0, el=0, roll=0, width=0, height=0;
   uint32_t sw=0, sh=0; uint64_t surface_revision=0;
@@ -34,14 +34,27 @@ struct Context {
 };
 inline float rad(float x){return x*kPi/180.0f;}
 inline uint8_t rgb_index(uint8_t r,uint8_t g,uint8_t b){return (r&224)|((g>>3)&28)|(b>>6);}
+inline float clampf(float v,float lo,float hi){return std::max(lo,std::min(hi,v));}
+inline void bilinear_rgb(const Window&w,float fx,float fy,float& r,float& g,float& b){
+  fx=clampf(fx,0.f,(float)(w.sw-1));fy=clampf(fy,0.f,(float)(w.sh-1));
+  uint32_t x0=(uint32_t)std::floor(fx),y0=(uint32_t)std::floor(fy),x1=std::min(w.sw-1,x0+1),y1=std::min(w.sh-1,y0+1);
+  float ax=fx-x0,ay=fy-y0,w00=(1-ax)*(1-ay),w10=ax*(1-ay),w01=(1-ax)*ay,w11=ax*ay;
+  const uint8_t*p00=&w.surface[((size_t)y0*w.sw+x0)*3],*p10=&w.surface[((size_t)y0*w.sw+x1)*3],*p01=&w.surface[((size_t)y1*w.sw+x0)*3],*p11=&w.surface[((size_t)y1*w.sw+x1)*3];
+  r=p00[0]*w00+p10[0]*w10+p01[0]*w01+p11[0]*w11;g=p00[1]*w00+p10[1]*w10+p01[1]*w01+p11[1]*w11;b=p00[2]*w00+p10[2]*w10+p01[2]*w01+p11[2]*w11;
+}
+inline uint16_t luma(const uint8_t*p){return (uint16_t)(p[0]*3+p[1]*6+p[2]);}
+inline bool high_contrast(const Window&w,float fx,float fy){
+  uint32_t x0=(uint32_t)clampf(std::floor(fx),0.f,(float)(w.sw-1)),y0=(uint32_t)clampf(std::floor(fy),0.f,(float)(w.sh-1)),x1=std::min(w.sw-1,x0+1),y1=std::min(w.sh-1,y0+1);
+  uint16_t lo=2295,hi=0;const uint32_t ids[4]={y0*w.sw+x0,y0*w.sw+x1,y1*w.sw+x0,y1*w.sw+x1};for(auto id:ids){uint16_t v=luma(&w.surface[(size_t)id*3]);lo=std::min(lo,v);hi=std::max(hi,v);}return hi-lo>=216;
+}
 inline void sample_rgb(const Window&w,const Sample&s,uint8_t& r,uint8_t& g,uint8_t& b){
-  uint32_t rr=0,gg=0,bb=0; for(int k=0;k<4;k++){const uint8_t*p=&w.surface[(size_t)s.src[k]*3];rr+=p[0];gg+=p[1];bb+=p[2];}
-  r=(uint8_t)((rr+2)>>2); g=(uint8_t)((gg+2)>>2); b=(uint8_t)((bb+2)>>2);
+  if(!s.aa){long x=std::lround(s.fx),y=std::lround(s.fy);x=std::max(0l,std::min((long)w.sw-1,x));y=std::max(0l,std::min((long)w.sh-1,y));const uint8_t*p=&w.surface[((size_t)y*w.sw+x)*3];r=p[0];g=p[1];b=p[2];return;}
+  float rr=0,gg=0,bb=0;if(!high_contrast(w,s.fx,s.fy)){bilinear_rgb(w,s.fx,s.fy,rr,gg,bb);}else{constexpr float o[4]={-.375f,-.125f,.125f,.375f};for(float oy:o)for(float ox:o){float tr,tg,tb;bilinear_rgb(w,s.fx+ox,s.fy+oy,tr,tg,tb);rr+=tr;gg+=tg;bb+=tb;}rr*=.0625f;gg*=.0625f;bb*=.0625f;}r=(uint8_t)clampf(std::round(rr),0.f,255.f);g=(uint8_t)clampf(std::round(gg),0.f,255.f);b=(uint8_t)clampf(std::round(bb),0.f,255.f);
 }
 inline uint8_t sample_index(const Window&w,const Sample&s){uint8_t r,g,b;sample_rgb(w,s,r,g,b);return rgb_index(r,g,b);}
-inline void source_taps(const Window&w,float x,float y,bool aa,uint32_t out[4]){
-  const float fx=(x+1.f)*.5f*(w.sw-1), fy=(1.f-y)*.5f*(w.sh-1);
-  for(int k=0;k<4;k++){float ox=(k&1)?0.25f:-0.25f, oy=(k&2)?0.25f:-0.25f; long px=std::lround(fx+ (aa?ox:0.f)), py=std::lround(fy+(aa?oy:0.f)); px=std::max(0l,std::min((long)w.sw-1,px));py=std::max(0l,std::min((long)w.sh-1,py));out[k]=(uint32_t)py*w.sw+(uint32_t)px;}
+inline bool sample_hits_dirty(const Window&w,const Sample&s,uint32_t x1,uint32_t y1){
+  float radius=s.aa?.375f:0.f;int sx0=(int)std::floor(s.fx-radius),sy0=(int)std::floor(s.fy-radius),sx1=(int)std::floor(s.fx+radius)+1,sy1=(int)std::floor(s.fy+radius)+1;
+  sx0=std::max(0,sx0);sy0=std::max(0,sy0);sx1=std::min((int)w.sw-1,sx1);sy1=std::min((int)w.sh-1,sy1);return sx1>=(int)w.dirty_x&&sx0<(int)x1&&sy1>=(int)w.dirty_y&&sy0<(int)y1;
 }
 void convert_surface(Window&w){
   size_t pixels=(size_t)w.sw*w.sh;w.surface_index.resize(pixels);size_t i=0;
@@ -93,9 +106,9 @@ void rebuild(Context&ctx,Window&w){
     float32x4_t recip=vrecpeq_f32(d);recip=vmulq_f32(vrecpsq_f32(d,recip),recip);recip=vmulq_f32(vrecpsq_f32(d,recip),recip);
     vst1q_f32(ds,d);vst1q_f32(xs,vmulq_n_f32(vmulq_f32(nx,recip),1.0f/tx));vst1q_f32(ys,vmulq_n_f32(vmulq_f32(ny,recip),1.0f/ty));
     for(int lane=0;lane<4;lane++)if(ds[lane]>0&&std::fabs(xs[lane])<=1&&std::fabs(ys[lane])<=1){
-      uint32_t taps[4]; source_taps(w,xs[lane],ys[lane],ctx.projection_aa,taps);
+      float fx=(xs[lane]+1.f)*.5f*(w.sw-1),fy=(1.f-ys[lane])*.5f*(w.sh-1);
       uint8_t f=(ys[lane]>.72f?1:0)|((std::fabs(xs[lane])>.94f||std::fabs(ys[lane])>.92f)?2:0);
-      w.samples.push_back({i+(uint32_t)lane,{taps[0],taps[1],taps[2],taps[3]},f});
+      w.samples.push_back({i+(uint32_t)lane,fx,fy,f,(uint8_t)ctx.projection_aa});
     }
   }
 #else
@@ -105,8 +118,7 @@ void rebuild(Context&ctx,Window&w){
     const float*q=&ctx.rays[i*3];float d=q[0]*c[0]+q[1]*c[1]+q[2]*c[2];if(d<=0)continue;
     float x=(q[0]*r[0]+q[1]*r[1]+q[2]*r[2])/d/tx,y=(q[0]*u[0]+q[1]*u[1]+q[2]*u[2])/d/ty;
     if(std::fabs(x)>1||std::fabs(y)>1)continue;
-    uint32_t taps[4]; source_taps(w,x,y,ctx.projection_aa,taps);
-    uint8_t f=(y>.72f?1:0)|((std::fabs(x)>.94f||std::fabs(y)>.92f)?2:0);w.samples.push_back({i,{taps[0],taps[1],taps[2],taps[3]},f});
+    float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);uint8_t f=(y>.72f?1:0)|((std::fabs(x)>.94f||std::fabs(y)>.92f)?2:0);w.samples.push_back({i,fx,fy,f,(uint8_t)ctx.projection_aa});
   }
 }
 void rebuild_pointer(Context&ctx,float az,float el,bool visible){
@@ -149,7 +161,7 @@ int bosio_compositor_render_patch(void*ptr,const uint64_t*order,uint32_t order_c
   std::vector<uint8_t> dirty(tiles,0);
   for(auto&kv:ctx.windows){uint64_t id=kv.first;Window&w=kv.second;if(!w.dirty_w)continue;
    uint32_t x1=w.dirty_x+w.dirty_w,y1=w.dirty_y+w.dirty_h;
-   for(const auto&s:w.samples){bool hit=false;for(int k=0;k<4;k++){uint32_t sx=s.src[k]%w.sw,sy=s.src[k]/w.sw;if(sx>=w.dirty_x&&sx<x1&&sy>=w.dirty_y&&sy<y1){hit=true;break;}}if(!hit||s.flags||ctx.owner[s.dst]!=id)continue;uint8_t value=sample_index(w,s);if(ctx.image[s.dst]!=value){ctx.image[s.dst]=value;dirty[s.dst/cells]=1;}}
+   for(const auto&s:w.samples){if(!sample_hits_dirty(w,s,x1,y1)||s.flags||ctx.owner[s.dst]!=id)continue;uint8_t value=sample_index(w,s);if(ctx.image[s.dst]!=value){ctx.image[s.dst]=value;dirty[s.dst/cells]=1;}}
    w.dirty_w=w.dirty_h=0;
   }
   uint32_t records=0;for(uint32_t t=0;t<tiles;t++)if(dirty[t]){if(ctx.directory[t]==0xffffffffu||(ctx.directory[t]&3u))return -3;records++;}

@@ -377,12 +377,36 @@ class SphericalWindowManager:
                 fx = (x[mask] + 1) * 0.5 * (window.surface_width - 1)
                 fy = (1 - y[mask]) * 0.5 * (window.surface_height - 1)
                 if self.projection_aa:
-                    taps = []
-                    for ox, oy in ((-.25, -.25), (.25, -.25), (-.25, .25), (.25, .25)):
-                        px = np.clip(np.rint(fx + ox), 0, window.surface_width - 1).astype(np.int32)
-                        py = np.clip(np.rint(fy + oy), 0, window.surface_height - 1).astype(np.int32)
-                        taps.append(window.surface[py, px].astype(np.uint16))
-                    flat[indices] = ((taps[0] + taps[1] + taps[2] + taps[3] + 2) // 4).astype(np.uint8)
+                    def bilinear(sx, sy):
+                        sx = np.clip(sx, 0, window.surface_width - 1)
+                        sy = np.clip(sy, 0, window.surface_height - 1)
+                        x0 = np.floor(sx).astype(np.int32)
+                        y0 = np.floor(sy).astype(np.int32)
+                        x1 = np.minimum(x0 + 1, window.surface_width - 1)
+                        y1 = np.minimum(y0 + 1, window.surface_height - 1)
+                        ax, ay = (sx - x0)[:, None], (sy - y0)[:, None]
+                        p00 = window.surface[y0, x0].astype(np.float32)
+                        p10 = window.surface[y0, x1].astype(np.float32)
+                        p01 = window.surface[y1, x0].astype(np.float32)
+                        p11 = window.surface[y1, x1].astype(np.float32)
+                        return p00 * (1 - ax) * (1 - ay) + p10 * ax * (1 - ay) + p01 * (1 - ax) * ay + p11 * ax * ay
+
+                    sampled = bilinear(fx, fy)
+                    x0 = np.clip(np.floor(fx).astype(np.int32), 0, window.surface_width - 1)
+                    y0 = np.clip(np.floor(fy).astype(np.int32), 0, window.surface_height - 1)
+                    x1 = np.minimum(x0 + 1, window.surface_width - 1)
+                    y1 = np.minimum(y0 + 1, window.surface_height - 1)
+                    neighbors = np.stack((window.surface[y0, x0], window.surface[y0, x1],
+                                          window.surface[y1, x0], window.surface[y1, x1]), axis=0).astype(np.int16)
+                    luminance = neighbors[..., 0] * 3 + neighbors[..., 1] * 6 + neighbors[..., 2]
+                    edge = np.ptp(luminance, axis=0) >= 216
+                    if np.any(edge):
+                        accum = np.zeros((int(np.count_nonzero(edge)), 3), dtype=np.float32)
+                        for oy in (-.375, -.125, .125, .375):
+                            for ox in (-.375, -.125, .125, .375):
+                                accum += bilinear(fx[edge] + ox, fy[edge] + oy)
+                        sampled[edge] = accum * (1.0 / 16.0)
+                    flat[indices] = np.clip(np.rint(sampled), 0, 255).astype(np.uint8)
                 else:
                     px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)
                     py = np.clip(np.rint(fy), 0, window.surface_height - 1).astype(np.int32)
