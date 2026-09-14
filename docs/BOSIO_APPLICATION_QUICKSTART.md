@@ -18,7 +18,7 @@
 ```
 
 PYNQ-Z2가 부팅되면 systemd가 먼저 PYNQ 초기화와 `bootpy.service`를 끝내고,
-그 다음 BOSIO 데몬이 BS23 bitstream을 로드합니다. 애플리케이션은 데몬이
+그 다음 BOSIO 데몬이 BS24 bitstream을 로드합니다. 애플리케이션은 데몬이
 준비된 후 창을 생성하면 됩니다.
 
 ## 준비 확인

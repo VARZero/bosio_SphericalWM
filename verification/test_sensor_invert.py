@@ -27,6 +27,15 @@ class SensorInvertTest(unittest.TestCase):
             driver.set_sensor_invert(yaw=True, pitch=True, roll=True), 0b111
         )
 
+    def test_antialias_register(self):
+        driver = object.__new__(BosioV2)
+        driver.core = FakeCore()
+        self.assertEqual(driver.set_antialias(True, 24, 64), 0x00401801)
+        self.assertEqual(driver.core.regs[0x1C], 0x00401801)
+        self.assertEqual(driver.set_antialias(False, 8, 0), 0x00000800)
+        with self.assertRaises(ValueError):
+            driver.set_antialias(True, 256, 64)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Install the BS23 bitstream and BOSIO window daemon as a boot service on PYNQ-Z2.
+# Install the BS24 bitstream and BOSIO window daemon as a boot service on PYNQ-Z2.
 set -eu
 
 if [ "$(id -u)" -ne 0 ]; then
@@ -91,4 +91,4 @@ print("BOSIO_BOOT_READY", {
 })
 PY
 
-echo "Installed and enabled $SERVICE. The BS23 overlay will be loaded on every boot."
+echo "Installed and enabled $SERVICE. The BS24 overlay will be loaded on every boot."

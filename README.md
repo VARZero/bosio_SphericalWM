@@ -20,7 +20,7 @@ RTL 출력 코어는 Git submodule로 연결된 별도 저장소인
 애플리케이션 ─ JSON IPC ─ 구면 윈도우 데몬 ─ C++/NEON dirty 합성
                                                    │
                                                    v
-                            BPT1 부분 타일 DMA ─ BS23 출력 코어 ─ HDMI
+                            BPT1 부분 타일 DMA ─ BS24 출력 코어 ─ 경계 AA ─ HDMI
                                                    ^
 GY-521 ─ I²C 센서 허브 ─ 96-bit AXI4-Stream ─ yaw/pitch/roll 자세 엔진
 PYNQ BTN0..3 ─ 독립 AXI GPIO ─ Linux 버튼 입력 ─ 데몬 전역 이벤트 기록
@@ -40,7 +40,7 @@ sw/
   bosio_wm_client.py          # 애플리케이션용 Python SDK
   bosio_native_compositor.py  # C++ 합성기 ctypes 바인딩
   native/                     # C++17/ARM NEON 개발 소스와 빌드 스크립트
-  bosio_driver_v2.py          # BS23 출력 코어 PYNQ 드라이버
+  bosio_driver_v2.py          # BS24 출력 코어 PYNQ 드라이버
   bosio_geometry_v2.py        # 정이십면체 장면 형식과 자세 계수
   bosio_mouse_input.py        # Linux evdev 마우스 입력
   bosio_buttons.py            # 독립 /dev/mem 버튼 입력과 디바운스
@@ -74,7 +74,7 @@ sudo sh ./install_bosio_boot.sh
 
 설치 스크립트는 파일을 `/home/xilinx/bosio_v2`에 배치하고
 `bosio-window-manager.service`를 활성화합니다. 다음 부팅부터 PYNQ의
-`bootpy.service`가 완료된 뒤 데몬이 `BS23` bitstream을 PL에 내려받습니다.
+`bootpy.service`가 완료된 뒤 데몬이 `BS24` bitstream을 PL에 내려받습니다.
 
 ```bash
 systemctl is-enabled bosio-window-manager.service
@@ -132,6 +132,7 @@ IPC 전체 사양은 [구면 윈도우 매니저 문서](docs/BOSIO_SPHERICAL_WI
 애플리케이션을 처음 작성한다면 [애플리케이션 빠른 시작](docs/BOSIO_APPLICATION_QUICKSTART.md)부터
 읽으면 됩니다.
 [PYNQ-Z2 버튼 입력](docs/BOSIO_BUTTONS.md)은 Linux 직접 판독과 데몬 이벤트 API를 설명합니다.
+[투영 경계 안티에일리어싱](docs/BOSIO_ANTIALIASING.md)은 하드웨어 필터와 런타임 설정을 설명합니다.
 
 ## 개발과 검증
 
@@ -169,7 +170,8 @@ commit을 갱신합니다.
 ## 호환성
 
 - 보드: PYNQ-Z2 / Zynq-7020
-- 출력 코어 ABI: `BS23`, signature `0x42533233`
+- 출력 코어 ABI: `BS24`, signature `0x42533234`
+- 투영 AA: 한 줄 경계 적응형 필터, 런타임 enable/threshold/strength 설정
 - 타일 셀 분할: 기본 `M=16`, RTL 지원 `M=8/16/32`
 - 출력: 1280×720 RGB24 AXI4-Stream
 - 자세 입력: signed milliradian yaw/pitch/roll, 96-bit AXI4-Stream

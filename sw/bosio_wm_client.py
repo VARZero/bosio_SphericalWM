@@ -112,11 +112,26 @@ class BosioWMClient:
         self._button_event_id = max(self._button_event_id, int(result["next_id"]))
         return result["events"]
 
+    def claim_scene(self):
+        return self.call("claim_scene")
+
+    def upload_scene_words(self, words):
+        array = np.ascontiguousarray(words, dtype="<u4")
+        data = base64.b64encode(array.tobytes()).decode("ascii")
+        return self.call("upload_scene_words", words32=data)
+
+    def release_scene(self):
+        return self.call("release_scene")
+
     def get_state(self):
         return self.call("get_state")
 
     def set_frame_limit(self, fps):
         return self.call("set_frame_limit", fps=float(fps))
+
+    def set_antialias(self, enabled=True, threshold=24, strength=64):
+        return self.call("set_antialias", enabled=bool(enabled),
+                         threshold=int(threshold), strength=int(strength))
 
     def reset_performance(self):
         return self.call("reset_performance")

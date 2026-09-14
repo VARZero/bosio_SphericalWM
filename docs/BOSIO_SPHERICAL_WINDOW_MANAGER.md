@@ -154,7 +154,7 @@ sudo sh ./install_bosio_boot.sh
 ```
 
 Zynq PL 설정은 전원을 끄면 사라진다. 부팅할 때 systemd가 데몬을 시작하고,
-데몬의 PYNQ `Overlay` 호출이 `BS23` bitstream을 다시 내려받는다. 서비스는
+데몬의 PYNQ `Overlay` 호출이 `BS24` bitstream을 다시 내려받는다. 서비스는
 bitstream, HWH, NEON 합성 라이브러리가 모두 있을 때만 시작하며 예기치 않게
 종료되면 3초 뒤 재시작한다. PYNQ의 `bootpy.service`가 기본 overlay와 부팅
 스크립트를 처리한 뒤 BOSIO 서비스를 시작하도록 순서를 지정해, 두 서비스가

@@ -4,31 +4,40 @@ import numpy as np
 from bosio_geometry_v2 import camera_coefficients,pack_scene
 
 class BosioV2:
- def __init__(self,bitstream,m=16):
+ def __init__(self,bitstream,m=16,download=True):
   if m not in (8,16,32):raise ValueError('M must be 8,16,32')
   import pynq
   from pynq.pl_server import embedded_device
   if pynq.Device.devices:pynq.Device.active_device=pynq.Device.devices[0]
-  self.overlay=pynq.Overlay(str(bitstream))
-  # The running board was actually at 62.5MHz although Linux clk_summary said
-  # 100MHz. The MMCM was designed for 100MHz; 62.5MHz produces ~37.5Hz HDMI.
-  pynq.Clocks.fclk0_mhz=100.0
-  self.clock_mhz=float(pynq.Clocks.fclk0_mhz)
-  if abs(self.clock_mhz-100)>0.1:raise RuntimeError(f'Unexpected FCLK0 {self.clock_mhz}')
-  time.sleep(.05)
-  self.core=self.overlay.output_core_0
   from bosio_buttons import BosioButtons
-  if not hasattr(self.overlay,'buttons_gpio'):raise RuntimeError('Wrong bitstream: buttons_gpio is required')
-  self.buttons=BosioButtons(self.overlay.buttons_gpio)
-  if self.core.read(0x7c)!=0x42533233:raise RuntimeError('Wrong bitstream: BS23 partial-tile core required')
+  if download:
+   self.overlay=pynq.Overlay(str(bitstream))
+   # The running board was actually at 62.5MHz although Linux clk_summary said
+   # 100MHz. The MMCM was designed for 100MHz; 62.5MHz produces ~37.5Hz HDMI.
+   pynq.Clocks.fclk0_mhz=100.0
+   self.clock_mhz=float(pynq.Clocks.fclk0_mhz)
+   if abs(self.clock_mhz-100)>0.1:raise RuntimeError(f'Unexpected FCLK0 {self.clock_mhz}')
+   time.sleep(.05)
+   self.core=self.overlay.output_core_0
+   if not hasattr(self.overlay,'buttons_gpio'):raise RuntimeError('Wrong bitstream: buttons_gpio is required')
+   self.buttons=BosioButtons(self.overlay.buttons_gpio)
+  else:
+   # Attach to the design programmed by the boot service. Constructing an
+   # Overlay object on this board can disturb the running PL even when its
+   # download flag is false, so use the fixed HWH addresses directly.
+   self.overlay=None
+   self.clock_mhz=100.0
+   self.core=pynq.MMIO(0x43C00000,0x10000)
+   self.buttons=BosioButtons.from_address(0x41200000)
+  if self.core.read(0x7c)!=0x42533234:raise RuntimeError('Wrong bitstream: BS24 antialiased partial-tile core required')
   self.m=m;self.allocate=pynq.allocate;self.buffer=None;self.running=False
   self.core.write(0x5c,{8:0,16:1,32:2}[m]);self.core.write(0x78,0)
  def status(self):
   s=self.core.read(4)
   sensor=self.core.read(0x78)
   signed32=lambda value:value-(1<<32) if value&(1<<31) else value
-  inv=self.core.read(0x20)&7
-  return dict(raw=s,enabled=bool(s&1),scene_valid=bool(s&2),dma_busy=bool(s&4),pose_pending=bool(s&8),scene_pending=bool(s&16),error=bool(s&32),frames=s>>16,received=self.core.read(0x70),fclk0_mhz=self.clock_mhz,sensor_mode=bool(sensor&1),sensor_active=bool(sensor&2),sensor_pose_busy=bool(sensor&4),sensor_applied=(sensor>>16)&0xffff,sensor_packets=self.core.read(0x30),sensor_yaw_mrad=signed32(self.core.read(0x24)),sensor_pitch_mrad=signed32(self.core.read(0x28)),sensor_roll_mrad=signed32(self.core.read(0x2c)),sensor_invert_yaw=bool(inv&1),sensor_invert_pitch=bool(inv&2),sensor_invert_roll=bool(inv&4))
+  inv=self.core.read(0x20)&7;aa=self.core.read(0x1c)
+  return dict(raw=s,enabled=bool(s&1),scene_valid=bool(s&2),dma_busy=bool(s&4),pose_pending=bool(s&8),scene_pending=bool(s&16),error=bool(s&32),frames=s>>16,received=self.core.read(0x70),fclk0_mhz=self.clock_mhz,aa_enabled=bool(aa&1),aa_threshold=(aa>>8)&255,aa_strength=(aa>>16)&255,sensor_mode=bool(sensor&1),sensor_active=bool(sensor&2),sensor_pose_busy=bool(sensor&4),sensor_applied=(sensor>>16)&0xffff,sensor_packets=self.core.read(0x30),sensor_yaw_mrad=signed32(self.core.read(0x24)),sensor_pitch_mrad=signed32(self.core.read(0x28)),sensor_roll_mrad=signed32(self.core.read(0x2c)),sensor_invert_yaw=bool(inv&1),sensor_invert_pitch=bool(inv&2),sensor_invert_roll=bool(inv&4))
  def _wait(self,predicate,timeout=3):
   end=time.monotonic()+timeout
   while time.monotonic()<end:
@@ -58,6 +67,12 @@ class BosioV2:
   value=(1 if yaw else 0)|(2 if pitch else 0)|(4 if roll else 0)
   self.core.write(0x20,value)
   return value
+ def set_antialias(self,enabled=True,threshold=24,strength=64):
+  """Configure projected-stream edge AA. Threshold and strength are 0..255."""
+  threshold=int(threshold);strength=int(strength)
+  if not 0<=threshold<=255 or not 0<=strength<=255:raise ValueError('AA threshold and strength must be 0..255')
+  value=(1 if enabled else 0)|(threshold<<8)|(strength<<16)
+  self.core.write(0x1c,value);return value
  def upload(self,rgb):
   try:
    from bosio_native_compositor import pack_scene as native_pack_scene
@@ -79,10 +94,10 @@ class BosioV2:
   if self.running:self._wait(lambda s:not s['dma_busy'])
 
  def upload_patch(self,patch):
-  """Apply a BPT1 tile patch atomically to both cache banks (ABI BS23)."""
+  """Apply a BPT1 tile patch atomically to both cache banks (ABI BS24)."""
   patch=np.asarray(patch,dtype=np.uint32)
   if not len(patch):return 0
-  if self.core.read(0x7c)!=0x42533233:raise RuntimeError('Output core does not support partial tile updates')
+  if self.core.read(0x7c)!=0x42533234:raise RuntimeError('Output core does not support BS24 partial tile updates')
   if len(patch)%16 or int(patch[0])!=0x42505431:raise ValueError('Invalid BPT1 patch packet')
   self._wait(lambda s:not s['dma_busy'])
   if self.buffer is None or len(self.buffer)<len(patch):
@@ -102,3 +117,4 @@ class BosioV2:
   if self.running:self._wait(lambda s:not s['dma_busy'])
   self.core.write(0,0);self.running=False
   if self.buffer is not None:self.buffer.freebuffer();self.buffer=None
+  if self.overlay is None:self.buttons.close()
