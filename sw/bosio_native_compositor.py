@@ -6,7 +6,7 @@ import numpy as np
 
 _pack_library = None
 
-def pack_scene(rgb,m=32):
+def pack_scene(rgb,m=16):
  global _pack_library
  array=np.ascontiguousarray(rgb,dtype=np.uint8)
  if array.shape!=(20,211,m*m,3):raise ValueError('Invalid triangular cell array shape')

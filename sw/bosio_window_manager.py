@@ -83,7 +83,7 @@ class SphericalWindowManager:
     MAX_WINDOWS = 64
     MAX_SURFACE_PIXELS = 1024 * 1024
 
-    def __init__(self, m=32, background=(2, 6, 14), projection_aa=True):
+    def __init__(self, m=16, background=(2, 6, 14), projection_aa=True):
         self.m = int(m)
         self._rays = cell_rays(self.m).astype(np.float32)
         self._flat_rays = self._rays.reshape(-1, 3)

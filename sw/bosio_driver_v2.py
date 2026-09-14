@@ -4,7 +4,7 @@ import numpy as np
 from bosio_geometry_v2 import camera_coefficients,pack_scene
 
 class BosioV2:
- def __init__(self,bitstream,m=32,download=True):
+ def __init__(self,bitstream,m=16,download=True):
   if m not in (8,16,32):raise ValueError('M must be 8,16,32')
   import pynq
   from pynq.pl_server import embedded_device

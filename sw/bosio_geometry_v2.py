@@ -40,7 +40,7 @@ def triangle_centers(n):
                 out.append([(a+2/3)/n,(row-col-1+2/3)/n,(col+2/3)/n])
     return np.asarray(out)
 
-def cell_barycentrics(m=32):
+def cell_barycentrics(m=16):
     if m not in (8,16,32):raise ValueError('M must be 8,16,32')
     cells=triangle_centers(m)
     result=[]
@@ -58,7 +58,7 @@ def cell_barycentrics(m=32):
                     result.append(parent)
     return np.asarray(result)
 
-def cell_rays(m=32):
+def cell_rays(m=16):
     p=np.einsum('tmv,fvc->ftmc',cell_barycentrics(m),VERTICES)
     return p/np.linalg.norm(p,axis=-1,keepdims=True)
 
@@ -74,7 +74,7 @@ def camera_coefficients(yaw=0,pitch=0,roll=0,fov_h=48,fov_v=36,width=1280,height
     coeff=np.stack([INVERSES@start,INVERSES@dx,INVERSES@dy],axis=-1)
     return np.rint(coeff*Q).astype(np.int32).reshape(60,3)
 
-def locate(bary,m=32):
+def locate(bary,m=16):
     """Floating reference mapping. Input shape (...,3), nonnegative sum=1."""
     b=np.asarray(bary);reg=np.where(b[...,0]>=.5,0,np.where(b[...,1]>=.5,1,np.where(b[...,2]>=.5,2,3)))
     local=np.where((reg==3)[...,None],1-2*b,2*b-np.eye(3)[np.minimum(reg,2)])
@@ -88,7 +88,7 @@ def locate(bary,m=32):
     cell=rin*rin+2*g[...,2]+iin
     return tile,cell
 
-def pack_scene(rgb,m=32):
+def pack_scene(rgb,m=16):
     """RGB[20,211,M*M,3] -> palette + directory + dense active triangle cells.
 
     Black cells index 0, invalid directory 0xffffffff. Palette RGB332 preserves
