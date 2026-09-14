@@ -4,7 +4,7 @@ import numpy as np
 from bosio_geometry_v2 import camera_coefficients,pack_scene
 
 class BosioV2:
- def __init__(self,bitstream,m=16,download=True):
+ def __init__(self,bitstream,m=32,download=True):
   if m not in (8,16,32):raise ValueError('M must be 8,16,32')
   import pynq
   from pynq.pl_server import embedded_device
@@ -67,7 +67,7 @@ class BosioV2:
   value=(1 if yaw else 0)|(2 if pitch else 0)|(4 if roll else 0)
   self.core.write(0x20,value)
   return value
- def set_antialias(self,enabled=True,threshold=24,strength=64):
+ def set_antialias(self,enabled=True,threshold=24,strength=32):
   """Configure projected-stream edge AA. Threshold and strength are 0..255."""
   threshold=int(threshold);strength=int(strength)
   if not 0<=threshold<=255 or not 0<=strength<=255:raise ValueError('AA threshold and strength must be 0..255')

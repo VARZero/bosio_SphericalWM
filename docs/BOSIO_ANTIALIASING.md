@@ -31,14 +31,14 @@ AXI-Lite `0x1c` 레지스터 형식은 다음과 같다.
 | 15:8 | threshold | 밝기 차이 임계값, 0~255 |
 | 23:16 | strength | 이웃 색상 혼합량, 0~255 |
 
-초기값은 `enable=1`, `threshold=24`, `strength=64`다. 강도 64는 약 25% 혼합을
+초기값은 `enable=1`, `threshold=24`, `strength=32`다. 강도 32는 약 12.5% 혼합을
 의미한다.
 
 ```python
-driver.set_antialias(True, threshold=24, strength=64)
+driver.set_antialias(True, threshold=24, strength=32)
 
 with BosioWMClient("settings") as client:
-    client.set_antialias(True, threshold=24, strength=64)
+    client.set_antialias(True, threshold=24, strength=32)
 ```
 
 임계값을 낮추면 더 많은 경계에 적용되고, 강도를 높이면 계단은 부드러워지지만

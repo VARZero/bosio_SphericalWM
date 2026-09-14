@@ -172,7 +172,7 @@ commit을 갱신합니다.
 - 보드: PYNQ-Z2 / Zynq-7020
 - 출력 코어 ABI: `BS24`, signature `0x42533234`
 - 투영 AA: 한 줄 경계 적응형 필터, 런타임 enable/threshold/strength 설정
-- 타일 셀 분할: 기본 `M=16`, RTL 지원 `M=8/16/32`
+- 타일 셀 분할: 기본 `M=32`, RTL 지원 `M=8/16/32`
 - 출력: 1280×720 RGB24 AXI4-Stream
 - 자세 입력: signed milliradian yaw/pitch/roll, 96-bit AXI4-Stream
 

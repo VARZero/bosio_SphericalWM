@@ -129,7 +129,7 @@ class BosioWMClient:
     def set_frame_limit(self, fps):
         return self.call("set_frame_limit", fps=float(fps))
 
-    def set_antialias(self, enabled=True, threshold=24, strength=64):
+    def set_antialias(self, enabled=True, threshold=24, strength=32):
         return self.call("set_antialias", enabled=bool(enabled),
                          threshold=int(threshold), strength=int(strength))
 

@@ -70,7 +70,7 @@ class _Handler(socketserver.StreamRequestHandler):
 
 
 class BosioWindowDaemon:
-    def __init__(self, socket_path, m=16, fps=12, bitstream=None, headless=False,
+    def __init__(self, socket_path, m=32, fps=12, bitstream=None, headless=False,
                  sensor=True, invert_mask=0, mouse=None, mouse_sensitivity=0.12,
                  socket_group=None, antialias=True, aa_threshold=24, aa_strength=32):
         self.socket_path = Path(socket_path)
@@ -396,7 +396,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--socket", default="/tmp/bosio-wm.sock")
     parser.add_argument("--bit", default="bitstream/bosio_output_disp.bit")
-    parser.add_argument("--m", type=int, choices=(8, 16, 32), default=16)
+    parser.add_argument("--m", type=int, choices=(8, 16, 32), default=32)
     parser.add_argument("--fps", type=float, default=12)
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--no-sensor", action="store_true")

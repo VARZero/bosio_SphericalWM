@@ -63,7 +63,7 @@ IPC 연결이 끊기면 그 연결의 애플리케이션이 소유한 창은 자
 ```bash
 python3 bosio_wm_daemon.py \
   --bit bitstream/bosio_output_disp.bit \
-  --m 16 --fps 12 --mouse auto --mouse-sensitivity 0.12 \
+  --m 32 --fps 12 --mouse auto --mouse-sensitivity 0.12 \
   --socket-group xilinx
 ```
 

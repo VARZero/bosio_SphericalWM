@@ -79,7 +79,7 @@ with BosioWMClient("boot-installer") as client:
     pong = client.ping()
     state = client.get_state()
 output = state.get("output") or {}
-if pong.get("m") != 16:
+if pong.get("m") != 32:
     raise SystemExit(f"Unexpected compositor resolution: {pong}")
 if not output.get("scene_valid") or output.get("error"):
     raise SystemExit(f"Output core did not start cleanly: {output}")
