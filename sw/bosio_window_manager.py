@@ -96,6 +96,9 @@ class SphericalWindowManager:
         self.pointer_azimuth = 0.0
         self.pointer_elevation = 0.0
         self.pointer_visible = True
+        self.pointer_buttons = set()
+        self.pointer_scroll_serial = 0
+        self.pointer_scroll_delta = 0.0
         self._drag: tuple[int, float, float] | None = None
         self._events = defaultdict(lambda: deque(maxlen=256))
         self._next_id = 1
@@ -309,6 +312,10 @@ class SphericalWindowManager:
     def pointer_button(self, button, pressed):
         button, pressed = str(button), bool(pressed)
         with self.lock:
+            if pressed:
+                self.pointer_buttons.add(button)
+            else:
+                self.pointer_buttons.discard(button)
             hit = self.hit_test(self.pointer_azimuth, self.pointer_elevation)
             if pressed and button == "left" and hit:
                 window, _, _, zone = hit
@@ -334,7 +341,17 @@ class SphericalWindowManager:
             "window_id": hit[0].window_id if hit else None,
             "zone": hit[3] if hit else None,
             "dragging": self._drag is not None,
+            "buttons": sorted(self.pointer_buttons),
+            "scroll_serial": self.pointer_scroll_serial,
+            "scroll_delta": self.pointer_scroll_delta,
         }
+
+    def pointer_scroll(self, delta):
+        with self.lock:
+            self.pointer_scroll_serial += 1
+            self.pointer_scroll_delta = float(delta)
+            self._changed()
+            return self.pointer_state()
 
     def poll_events(self, owner, limit=64):
         with self.lock:

@@ -10,7 +10,7 @@ import threading
 
 EV_SYN, EV_KEY, EV_REL = 0, 1, 2
 SYN_REPORT = 0
-REL_X, REL_Y = 0, 1
+REL_X, REL_Y, REL_WHEEL = 0, 1, 8
 BUTTONS = {272: "left", 273: "right", 274: "middle"}
 
 
@@ -57,6 +57,8 @@ class EvdevMouse:
                             dx += value
                         elif code == REL_Y:
                             dy += value
+                        elif code == REL_WHEEL and value:
+                            self.manager.pointer_scroll(value)
                     elif event_type == EV_KEY and code in BUTTONS:
                         self.manager.pointer_button(BUTTONS[code], value != 0)
                     elif event_type == EV_SYN and code == SYN_REPORT and (dx or dy):
