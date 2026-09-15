@@ -58,10 +58,11 @@ class BosioWMClient:
         return self.call("ping")
 
     def create_window(self, title, azimuth=0, elevation=0, width_deg=34, height_deg=24,
-                      surface_width=320, surface_height=200):
+                      surface_width=320, surface_height=200, always_on_top=False):
         return self.call("create_window", title=title, azimuth=azimuth, elevation=elevation,
                          width_deg=width_deg, height_deg=height_deg,
-                         surface_width=surface_width, surface_height=surface_height)
+                         surface_width=surface_width, surface_height=surface_height,
+                         always_on_top=bool(always_on_top))
 
     def destroy_window(self, window_id):
         return self.call("destroy_window", window_id=window_id)
