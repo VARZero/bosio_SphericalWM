@@ -55,6 +55,7 @@ class SphericalWindow:
     surface_height: int
     roll: float = 0.0
     mapped: bool = True
+    always_on_top: bool = False
     surface_revision: int = 1
     dirty_rect: tuple[int, int, int, int] | None = None
     surface: np.ndarray = field(repr=False, default=None)
@@ -72,6 +73,7 @@ class SphericalWindow:
             "surface_width": self.surface_width,
             "surface_height": self.surface_height,
             "mapped": self.mapped,
+            "always_on_top": self.always_on_top,
             "focused": focused,
             "z": z,
         }
@@ -127,7 +129,7 @@ class SphericalWindowManager:
         self._events[owner].append({"type": event_type, **payload})
 
     def create_window(self, owner, title, azimuth=0, elevation=0, width_deg=34,
-                      height_deg=24, surface_width=320, surface_height=200):
+                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False):
         with self.lock:
             if len(self.windows) >= self.MAX_WINDOWS:
                 raise WindowManagerError("window limit reached")
@@ -142,6 +144,7 @@ class SphericalWindowManager:
                 wid, str(owner), str(title)[:96], _azimuth(azimuth), _elevation(elevation),
                 float(width_deg), float(height_deg), sw, sh,
                 surface=np.full((sh, sw, 3), (16, 24, 32), dtype=np.uint8),
+                always_on_top=bool(always_on_top),
                 dirty_rect=(0, 0, sw, sh),
             )
             self.windows[wid] = window
@@ -187,7 +190,11 @@ class SphericalWindowManager:
             self._set_focus_locked(window.window_id)
             if raise_window:
                 self.z_order.remove(window.window_id)
-                self.z_order.append(window.window_id)
+                if window.always_on_top:
+                    self.z_order.append(window.window_id)
+                else:
+                    top = [wid for wid in self.z_order if self.windows[wid].always_on_top]
+                    self.z_order.insert(len(self.z_order) - len(top), window.window_id)
             self._changed()
             return window.public(True, self.z_order.index(window.window_id))
 
@@ -214,6 +221,8 @@ class SphericalWindowManager:
                 window.height_deg = value
             if "mapped" in changes:
                 window.mapped = bool(changes["mapped"])
+            if "always_on_top" in changes:
+                window.always_on_top = bool(changes["always_on_top"])
             self._changed()
             return window.public(window.window_id == self.focused_window, self.z_order.index(window.window_id))
 
@@ -221,7 +230,12 @@ class SphericalWindowManager:
         with self.lock:
             window = self._window(window_id, owner)
             self.z_order.remove(window.window_id)
-            self.z_order.append(window.window_id)
+            if window.always_on_top:
+                self.z_order.append(window.window_id)
+            else:
+                top = [wid for wid in self.z_order if self.windows[wid].always_on_top]
+                insert = len(self.z_order) - len(top)
+                self.z_order.insert(insert, window.window_id)
             self._changed()
 
     def lower_window(self, owner, window_id):
