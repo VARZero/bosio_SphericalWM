@@ -3,7 +3,10 @@ import time
 
 import numpy as np
 
-from sw.bosio_window_manager import SphericalWindowManager
+try:
+    from bosio_window_manager import SphericalWindowManager
+except ModuleNotFoundError:
+    from sw.bosio_window_manager import SphericalWindowManager
 
 
 def measure(aa):

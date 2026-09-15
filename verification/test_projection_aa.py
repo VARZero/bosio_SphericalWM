@@ -50,14 +50,44 @@ class ProjectionAATests(unittest.TestCase):
         difference = np.abs(scene.astype(np.int16) - reference.astype(np.int16))
         self.assertLess(float(np.mean(difference[visible])), 8.)
 
+    def test_window_silhouette_blends_across_triangle_cells(self):
+        def make(aa):
+            wm = SphericalWindowManager(16, background=(0, 0, 0), projection_aa=aa)
+            win = wm.create_window("edge", "EDGE", width_deg=42, height_deg=30,
+                                   surface_width=320, surface_height=200)
+            wm.fill("edge", win["window_id"], (255, 255, 255))
+            return wm.render(), wm
+
+        hard, hard_wm = make(False)
+        smooth, smooth_wm = make(True)
+        window = next(iter(smooth_wm.windows.values()))
+        dot, x, y = smooth_wm._project(window, smooth_wm._flat_rays)
+        outside = (dot > 0) & ((np.abs(x) > 1) | (np.abs(y) > 1))
+        self.assertFalse(np.any(hard.reshape(-1, 3)[outside]))
+        self.assertTrue(np.any(smooth.reshape(-1, 3)[outside]))
+        edge_values = smooth.reshape(-1, 3)[outside, 0]
+        self.assertTrue(np.any((edge_values > 0) & (edge_values < 255)))
+
+    def test_perimeter_change_uses_safe_full_snapshot(self):
+        _, wm = self._scene(True)
+        if wm.native is None:
+            self.skipTest("native BPT1 path requires a built compositor")
+        wm.render_update()
+        window = next(iter(wm.windows.values()))
+        patch = np.zeros((20, 2, 3), dtype=np.uint8)
+        wm.update_surface("aa-test", window.window_id, 0, 90, 2, 20,
+                          base64.b64encode(patch.tobytes()).decode("ascii"))
+        _, _, kind = wm.render_update()
+        self.assertEqual(kind, "full")
+
     def test_dirty_update_reaches_aa_neighbor_cells(self):
         scene, wm = self._scene(True)
         if wm.native is None:
             self.skipTest("native BPT1 path requires a built compositor")
         wm.render_update()  # Establish an immutable snapshot first.
         window = next(iter(wm.windows.values()))
-        patch = np.full((200, 2, 3), 255, dtype=np.uint8)
-        wm.update_surface("aa-test", window.window_id, 159, 0, 2, 200,
+        patch = np.full((120, 2, 3), 255, dtype=np.uint8)
+        wm.update_surface("aa-test", window.window_id, 159, 40, 2, 120,
                           base64.b64encode(patch.tobytes()).decode("ascii"))
         words, tiles, kind = wm.render_update()
         self.assertEqual(kind, "patch")

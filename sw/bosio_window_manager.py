@@ -407,12 +407,15 @@ class SphericalWindowManager:
                 if not window.mapped:
                     continue
                 dot, x, y = self._project(window, self._flat_rays)
-                mask = (dot > 0) & (np.abs(x) <= 1) & (np.abs(y) <= 1)
+                margin_x = min(.8, .05 + 1 / window.width_deg) if self.projection_aa else 0
+                margin_y = min(.8, .05 + 1 / window.height_deg) if self.projection_aa else 0
+                mask = (dot > 0) & (np.abs(x) <= 1 + margin_x) & (np.abs(y) <= 1 + margin_y)
                 indices = np.flatnonzero(mask)
                 if not len(indices):
                     continue
                 fx = (x[mask] + 1) * 0.5 * (window.surface_width - 1)
                 fy = (1 - y[mask]) * 0.5 * (window.surface_height - 1)
+                projected_x, projected_y = x[mask], y[mask]
                 if self.projection_aa:
                     if self._aa_local_neighbors is None:
                         centers = triangle_centers(self.m)
@@ -426,6 +429,22 @@ class SphericalWindowManager:
                     ny = (1 - y[neighbor_indices]) * .5 * (window.surface_height - 1)
                     hx = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(nx - fx[:, None]), 0), axis=1)))
                     hy = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(ny - fy[:, None]), 0), axis=1)))
+                    norm_x = (hx * 2 / (window.surface_width - 1) if window.surface_width > 1 else
+                              np.maximum(.01, np.max(np.where(neighbor_valid,
+                                  np.abs(x[neighbor_indices] - projected_x[:, None]), 0), axis=1)))
+                    norm_y = (hy * 2 / (window.surface_height - 1) if window.surface_height > 1 else
+                              np.maximum(.01, np.max(np.where(neighbor_valid,
+                                  np.abs(y[neighbor_indices] - projected_y[:, None]), 0), axis=1)))
+                    coverage = np.zeros(len(fx), dtype=np.uint8)
+                    for oy in (-.75, -.25, .25, .75):
+                        for ox in (-.75, -.25, .25, .75):
+                            coverage += ((np.abs(projected_x + ox * norm_x) <= 1) &
+                                         (np.abs(projected_y + oy * norm_y) <= 1)).astype(np.uint8)
+                    covered = coverage > 0
+                    if not np.any(covered):
+                        continue
+                    indices, fx, fy, hx, hy = indices[covered], fx[covered], fy[covered], hx[covered], hy[covered]
+                    projected_x, projected_y, coverage = projected_x[covered], projected_y[covered], coverage[covered]
                     def bilinear(sx, sy):
                         sx = np.clip(sx, 0, window.surface_width - 1)
                         sy = np.clip(sy, 0, window.surface_height - 1)
@@ -470,23 +489,30 @@ class SphericalWindowManager:
                         preserve = high - low >= 500
                         if np.any(preserve):
                             mean = sampled[edge][preserve]
-                            coverage = np.clip((high[preserve] - (mean[:, 0] * 3 + mean[:, 1] * 6 + mean[:, 2])) /
-                                               (high[preserve] - low[preserve]), 0, 1)
-                            amount = np.clip(coverage + .3 * np.sqrt(coverage) * (1 - coverage), 0, 1)[:, None]
+                            stroke_coverage = np.clip((high[preserve] - (mean[:, 0] * 3 + mean[:, 1] * 6 + mean[:, 2])) /
+                                                      (high[preserve] - low[preserve]), 0, 1)
+                            chroma = np.ptp(dark[preserve], axis=1)
+                            gain = np.where(chroma >= 40, .7, .3)
+                            amount = np.clip(stroke_coverage + gain * np.sqrt(stroke_coverage) * (1 - stroke_coverage), 0, 1)[:, None]
                             restored = bright[preserve] * (1 - amount) + dark[preserve] * amount
                             edge_values = sampled[edge]
                             edge_values[preserve] = restored
                             sampled[edge] = edge_values
-                    flat[indices] = np.clip(np.rint(sampled), 0, 255).astype(np.uint8)
+                    colors = np.clip(np.rint(sampled), 0, 255).astype(np.uint8)
                 else:
                     px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)
                     py = np.clip(np.rint(fy), 0, window.surface_height - 1).astype(np.int32)
-                    flat[indices] = window.surface[py, px]
+                    colors = window.surface[py, px].copy()
                 if window.decorated:
-                    title = y[mask] > 0.72
-                    border = (np.abs(x[mask]) > 0.94) | (np.abs(y[mask]) > 0.92)
-                    flat[indices[title]] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)
-                    flat[indices[border]] = (250, 204, 21) if wid == self.focused_window else (120, 130, 145)
+                    title = projected_y > 0.72
+                    border = (np.abs(projected_x) > 0.94) | (np.abs(projected_y) > 0.92)
+                    colors[title] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)
+                    colors[border] = (250, 204, 21) if wid == self.focused_window else (120, 130, 145)
+                if self.projection_aa:
+                    fraction = (coverage.astype(np.float32) / 16)[:, None]
+                    flat[indices] = np.rint(colors * fraction + flat[indices] * (1 - fraction)).astype(np.uint8)
+                else:
+                    flat[indices] = colors
             if self.pointer_visible:
                 pointer = _direction(self.pointer_azimuth, self.pointer_elevation)
                 dots = self._flat_rays @ pointer
