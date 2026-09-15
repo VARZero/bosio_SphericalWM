@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstdint>
 #include <cstring>
@@ -12,7 +13,7 @@
 
 namespace {
 constexpr float kPi = 3.14159265358979323846f;
-struct Sample { uint32_t dst; float fx,fy; uint8_t flags,aa; };
+struct Sample { uint32_t dst; float fx,fy,hx,hy; uint8_t flags,aa; };
 struct Window {
   float az=0, el=0, roll=0, width=0, height=0;
   uint32_t sw=0, sh=0; uint64_t surface_revision=0;
@@ -21,6 +22,7 @@ struct Window {
 };
 struct Context {
   uint32_t count=0; std::vector<float> rays;
+  std::vector<std::array<uint32_t,3>> neighbors;
   std::unordered_map<uint64_t,Window> windows;
   float pointer_az=9999, pointer_el=9999; bool pointer_visible=false;
   std::vector<uint32_t> pointer_outer, pointer_inner;
@@ -33,7 +35,56 @@ struct Context {
   std::string error;
 };
 inline float rad(float x){return x*kPi/180.0f;}
+void build_neighbors(Context&ctx){
+  constexpr uint32_t tiles=20*211;
+  if(!ctx.count||ctx.count%tiles)return;
+  uint32_t cells=ctx.count/tiles,m=(uint32_t)std::sqrt((float)cells);
+  if(m*m!=cells)return;
+  ctx.neighbors.resize(ctx.count);
+  for(uint32_t tile=0;tile<tiles;tile++)for(uint32_t local=0;local<cells;local++){
+    uint32_t row=(uint32_t)std::sqrt((float)local),col=(local-row*row)/2;
+    const float*q=&ctx.rays[((size_t)tile*cells+local)*3];
+    std::array<float,3> best={1e9f,1e9f,1e9f};
+    std::array<uint32_t,3> ids={tile*cells+local,tile*cells+local,tile*cells+local};
+    for(int rr=std::max(0,(int)row-1);rr<=std::min((int)m-1,(int)row+1);rr++)
+      for(int cc=std::max(0,(int)col-1);cc<=std::min(rr,(int)col+1);cc++)
+        for(int inv=0;inv<(cc<rr?2:1);inv++){
+          uint32_t candidate=(uint32_t)(rr*rr+2*cc+inv);
+          if(candidate==local)continue;
+          const float*p=&ctx.rays[((size_t)tile*cells+candidate)*3];
+          float d=(q[0]-p[0])*(q[0]-p[0])+(q[1]-p[1])*(q[1]-p[1])+(q[2]-p[2])*(q[2]-p[2]);
+          for(int k=0;k<3;k++)if(d<best[k]){
+            for(int j=2;j>k;j--){best[j]=best[j-1];ids[j]=ids[j-1];}
+            best[k]=d;ids[k]=tile*cells+candidate;break;
+          }
+        }
+    ctx.neighbors[tile*cells+local]=ids;
+  }
+}
+std::array<float,2> footprint(const Context&ctx,uint32_t dst,float fx,float fy,
+                              const float*c,const float*r,const float*u,float tx,float ty,uint32_t sw,uint32_t sh){
+  float hx=.5f,hy=.5f;
+  if(dst>=ctx.neighbors.size())return {hx,hy};
+  for(uint32_t id:ctx.neighbors[dst]){
+    if(id==dst)continue;
+    const float*q=&ctx.rays[(size_t)id*3];
+    float d=q[0]*c[0]+q[1]*c[1]+q[2]*c[2];if(d<=.05f)continue;
+    float x=(q[0]*r[0]+q[1]*r[1]+q[2]*r[2])/d/tx;
+    float y=(q[0]*u[0]+q[1]*u[1]+q[2]*u[2])/d/ty;
+    hx=std::max(hx,std::fabs((x+1.f)*.5f*(sw-1)-fx));
+    hy=std::max(hy,std::fabs((1.f-y)*.5f*(sh-1)-fy));
+  }
+  return {std::min(hx,6.f),std::min(hy,6.f)};
+}
 inline uint8_t rgb_index(uint8_t r,uint8_t g,uint8_t b){return (r&224)|((g>>3)&28)|(b>>6);}
+inline uint32_t palette_word(uint32_t k){
+  uint32_t red=(k>>5)*255/7,green=((k>>2)&7)*255/7,blue=(k&3)*255/3;
+  uint32_t level=k>>5;
+  if(((k>>2)&7)==level&&(k&3)==((level*255/7)>>6)){
+    red=green=blue=level*255/7;
+  }
+  return (red<<16)|(blue<<8)|green;
+}
 inline float clampf(float v,float lo,float hi){return std::max(lo,std::min(hi,v));}
 inline void bilinear_rgb(const Window&w,float fx,float fy,float& r,float& g,float& b){
   fx=clampf(fx,0.f,(float)(w.sw-1));fy=clampf(fy,0.f,(float)(w.sh-1));
@@ -43,17 +94,47 @@ inline void bilinear_rgb(const Window&w,float fx,float fy,float& r,float& g,floa
   r=p00[0]*w00+p10[0]*w10+p01[0]*w01+p11[0]*w11;g=p00[1]*w00+p10[1]*w10+p01[1]*w01+p11[1]*w11;b=p00[2]*w00+p10[2]*w10+p01[2]*w01+p11[2]*w11;
 }
 inline uint16_t luma(const uint8_t*p){return (uint16_t)(p[0]*3+p[1]*6+p[2]);}
-inline bool high_contrast(const Window&w,float fx,float fy){
-  uint32_t x0=(uint32_t)clampf(std::floor(fx),0.f,(float)(w.sw-1)),y0=(uint32_t)clampf(std::floor(fy),0.f,(float)(w.sh-1)),x1=std::min(w.sw-1,x0+1),y1=std::min(w.sh-1,y0+1);
-  uint16_t lo=2295,hi=0;const uint32_t ids[4]={y0*w.sw+x0,y0*w.sw+x1,y1*w.sw+x0,y1*w.sw+x1};for(auto id:ids){uint16_t v=luma(&w.surface[(size_t)id*3]);lo=std::min(lo,v);hi=std::max(hi,v);}return hi-lo>=216;
+inline bool high_contrast(const Window&w,const Sample&s,std::array<float,3>&dark,std::array<float,3>&bright,uint16_t&low,uint16_t&high){
+  uint16_t lo=2550,hi=0;uint8_t min_rgb[3]={255,255,255},max_rgb[3]={0,0,0};
+  for(float oy:{-.65f,0.f,.65f})for(float ox:{-.65f,0.f,.65f}){
+    uint32_t x=(uint32_t)clampf(std::round(s.fx+ox*s.hx),0.f,(float)(w.sw-1));
+    uint32_t y=(uint32_t)clampf(std::round(s.fy+oy*s.hy),0.f,(float)(w.sh-1));
+    const uint8_t*p=&w.surface[((size_t)y*w.sw+x)*3];uint16_t v=luma(p);
+    if(v<lo){lo=v;dark={(float)p[0],(float)p[1],(float)p[2]};}
+    if(v>hi){hi=v;bright={(float)p[0],(float)p[1],(float)p[2]};}
+    for(int k=0;k<3;k++){min_rgb[k]=std::min(min_rgb[k],p[k]);max_rgb[k]=std::max(max_rgb[k],p[k]);}
+  }
+  low=lo;high=hi;
+  return hi-lo>=216||max_rgb[0]-min_rgb[0]>=28||max_rgb[1]-min_rgb[1]>=28||max_rgb[2]-min_rgb[2]>=28;
 }
 inline void sample_rgb(const Window&w,const Sample&s,uint8_t& r,uint8_t& g,uint8_t& b){
   if(!s.aa){long x=std::lround(s.fx),y=std::lround(s.fy);x=std::max(0l,std::min((long)w.sw-1,x));y=std::max(0l,std::min((long)w.sh-1,y));const uint8_t*p=&w.surface[((size_t)y*w.sw+x)*3];r=p[0];g=p[1];b=p[2];return;}
-  float rr=0,gg=0,bb=0;if(!high_contrast(w,s.fx,s.fy)){bilinear_rgb(w,s.fx,s.fy,rr,gg,bb);}else{constexpr float o[4]={-.375f,-.125f,.125f,.375f};for(float oy:o)for(float ox:o){float tr,tg,tb;bilinear_rgb(w,s.fx+ox,s.fy+oy,tr,tg,tb);rr+=tr;gg+=tg;bb+=tb;}rr*=.0625f;gg*=.0625f;bb*=.0625f;}r=(uint8_t)clampf(std::round(rr),0.f,255.f);g=(uint8_t)clampf(std::round(gg),0.f,255.f);b=(uint8_t)clampf(std::round(bb),0.f,255.f);
+  float rr=0,gg=0,bb=0;
+  if(s.hx<=.5f&&s.hy<=.5f){bilinear_rgb(w,s.fx,s.fy,rr,gg,bb);}
+  else{
+    std::array<float,3> dark={},bright={};uint16_t low=0,high=0;
+    if(high_contrast(w,s,dark,bright,low,high)){
+    constexpr float o[4]={-.75f,-.25f,.25f,.75f};
+    for(float oy:o)for(float ox:o){float tr,tg,tb;bilinear_rgb(w,s.fx+ox*s.hx,s.fy+oy*s.hy,tr,tg,tb);rr+=tr;gg+=tg;bb+=tb;}
+    rr*=.0625f;gg*=.0625f;bb*=.0625f;
+    if(high-low>=500){
+      float coverage=clampf((high-(rr*3+gg*6+bb))/(high-low),0.f,1.f);
+      float preserved=clampf(coverage+.3f*std::sqrt(coverage)*(1.f-coverage),0.f,1.f);
+      rr=bright[0]*(1.f-preserved)+dark[0]*preserved;
+      gg=bright[1]*(1.f-preserved)+dark[1]*preserved;
+      bb=bright[2]*(1.f-preserved)+dark[2]*preserved;
+    }
+    }else{
+      for(float oy:{-.5f,.5f})for(float ox:{-.5f,.5f}){float tr,tg,tb;bilinear_rgb(w,s.fx+ox*s.hx,s.fy+oy*s.hy,tr,tg,tb);rr+=tr;gg+=tg;bb+=tb;}
+      rr*=.25f;gg*=.25f;bb*=.25f;
+    }
+  }
+  r=(uint8_t)clampf(std::round(rr),0.f,255.f);g=(uint8_t)clampf(std::round(gg),0.f,255.f);b=(uint8_t)clampf(std::round(bb),0.f,255.f);
 }
 inline uint8_t sample_index(const Window&w,const Sample&s){uint8_t r,g,b;sample_rgb(w,s,r,g,b);return rgb_index(r,g,b);}
 inline bool sample_hits_dirty(const Window&w,const Sample&s,uint32_t x1,uint32_t y1){
-  float radius=s.aa?.375f:0.f;int sx0=(int)std::floor(s.fx-radius),sy0=(int)std::floor(s.fy-radius),sx1=(int)std::floor(s.fx+radius)+1,sy1=(int)std::floor(s.fy+radius)+1;
+  float rx=s.aa?s.hx:0.f,ry=s.aa?s.hy:0.f;
+  int sx0=(int)std::floor(s.fx-rx),sy0=(int)std::floor(s.fy-ry),sx1=(int)std::floor(s.fx+rx)+1,sy1=(int)std::floor(s.fy+ry)+1;
   sx0=std::max(0,sx0);sy0=std::max(0,sy0);sx1=std::min((int)w.sw-1,sx1);sy1=std::min((int)w.sh-1,sy1);return sx1>=(int)w.dirty_x&&sx0<(int)x1&&sy1>=(int)w.dirty_y&&sy0<(int)y1;
 }
 void convert_surface(Window&w){
@@ -108,7 +189,8 @@ void rebuild(Context&ctx,Window&w){
     for(int lane=0;lane<4;lane++)if(ds[lane]>0&&std::fabs(xs[lane])<=1&&std::fabs(ys[lane])<=1){
       float fx=(xs[lane]+1.f)*.5f*(w.sw-1),fy=(1.f-ys[lane])*.5f*(w.sh-1);
       uint8_t f=0;
-      w.samples.push_back({i+(uint32_t)lane,fx,fy,f,(uint8_t)ctx.projection_aa});
+      auto half=ctx.projection_aa?footprint(ctx,i+(uint32_t)lane,fx,fy,c,r,u,tx,ty,w.sw,w.sh):std::array<float,2>{0.f,0.f};
+      w.samples.push_back({i+(uint32_t)lane,fx,fy,half[0],half[1],f,(uint8_t)ctx.projection_aa});
     }
   }
 #else
@@ -118,7 +200,9 @@ void rebuild(Context&ctx,Window&w){
     const float*q=&ctx.rays[i*3];float d=q[0]*c[0]+q[1]*c[1]+q[2]*c[2];if(d<=0)continue;
     float x=(q[0]*r[0]+q[1]*r[1]+q[2]*r[2])/d/tx,y=(q[0]*u[0]+q[1]*u[1]+q[2]*u[2])/d/ty;
     if(std::fabs(x)>1||std::fabs(y)>1)continue;
-    float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);uint8_t f=0;w.samples.push_back({i,fx,fy,f,(uint8_t)ctx.projection_aa});
+    float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);uint8_t f=0;
+    auto half=ctx.projection_aa?footprint(ctx,i,fx,fy,c,r,u,tx,ty,w.sw,w.sh):std::array<float,2>{0.f,0.f};
+    w.samples.push_back({i,fx,fy,half[0],half[1],f,(uint8_t)ctx.projection_aa});
   }
 }
 void rebuild_pointer(Context&ctx,float az,float el,bool visible){
@@ -142,7 +226,7 @@ int bosio_compositor_render_packed(void*ptr,const uint64_t*order,uint32_t order_
     const uint8_t tf=rgb_index(22,112,190),ti=rgb_index(55,65,81),bf=rgb_index(250,204,21),bi=rgb_index(120,130,145);
     for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;bool focused=order[z]==focus;for(const auto&s:w.samples){uint8_t value=sample_index(w,s);if(s.flags&1)value=focused?tf:ti;if(s.flags&2)value=focused?bf:bi;ctx.image[s.dst]=value;ctx.owner[s.dst]=s.flags?UINT64_MAX:order[z];}}
     rebuild_pointer(ctx,paz,pel,pvisible!=0);for(auto i:ctx.pointer_outer){ctx.image[i]=rgb_index(10,10,10);ctx.owner[i]=UINT64_MAX;}for(auto i:ctx.pointer_inner){ctx.image[i]=rgb_index(255,255,255);ctx.owner[i]=UINT64_MAX;}
-    for(uint32_t k=0;k<256;k++){uint32_t red=(k>>5)*255/7,green=((k>>2)&7)*255/7,blue=(k&3)*255/3;out[k]=(red<<16)|(blue<<8)|green;}
+    for(uint32_t k=0;k<256;k++)out[k]=palette_word(k);
     std::fill(out+256,out+prefix,0xffffffffu);ctx.directory.assign(tiles,0xffffffffu);uint8_t*data=reinterpret_cast<uint8_t*>(out+prefix);uint32_t active=0,bytes=0;
     for(uint32_t tile=0;tile<tiles;tile++){const uint8_t*src=ctx.image.data()+(size_t)tile*cells;bool used=false;for(uint32_t j=0;j<cells;j++)used|=src[j]!=0;if(!used)continue;if(bytes+cells>max_bytes)return -2;out[256+tile]=bytes;ctx.directory[tile]=bytes;std::memcpy(data+bytes,src,cells);bytes+=cells;active++;}
     uint32_t padded=(bytes+63u)&~63u,words=(prefix+padded/4+15u)&~15u;if(words>capacity)return -1;std::memset(data+bytes,0,(size_t)(words-prefix)*4-bytes);
@@ -174,7 +258,7 @@ int bosio_compositor_render_patch(void*ptr,const uint64_t*order,uint32_t order_c
 int bosio_pack_scene(const uint8_t*rgb,uint32_t m,uint32_t*out,uint32_t capacity,uint32_t*active_out){
   const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles,max_bytes=196608;
   if((m!=8&&m!=16&&m!=32)||capacity<prefix+16)return -1;
-  for(uint32_t k=0;k<256;k++){uint32_t red=(k>>5)*255/7,green=((k>>2)&7)*255/7,blue=(k&3)*255/3;out[k]=(red<<16)|(blue<<8)|green;}
+  for(uint32_t k=0;k<256;k++)out[k]=palette_word(k);
   std::fill(out+256,out+prefix,0xffffffffu);uint8_t*data=reinterpret_cast<uint8_t*>(out+prefix);uint32_t active=0,bytes=0;
   std::vector<uint8_t> converted(cells);
   for(uint32_t tile=0;tile<tiles;tile++){
@@ -189,7 +273,7 @@ int bosio_pack_scene(const uint8_t*rgb,uint32_t m,uint32_t*out,uint32_t capacity
   uint32_t padded_bytes=(bytes+63u)&~63u;uint32_t words=prefix+padded_bytes/4;words=(words+15u)&~15u;if(words>capacity)return -1;
   std::memset(data+bytes,0,(size_t)(words-prefix)*4-bytes);if(active_out)*active_out=active;return (int)words;
 }
-void* bosio_compositor_create(const float*rays,uint32_t count){try{auto*c=new Context;c->count=count;c->rays.assign(rays,rays+(size_t)count*3);return c;}catch(...){return nullptr;}}
+void* bosio_compositor_create(const float*rays,uint32_t count){try{auto*c=new Context;c->count=count;c->rays.assign(rays,rays+(size_t)count*3);build_neighbors(*c);return c;}catch(...){return nullptr;}}
 void bosio_compositor_set_projection_aa(void*ptr,int enabled){auto&ctx=*static_cast<Context*>(ptr);bool v=enabled!=0;if(ctx.projection_aa==v)return;ctx.projection_aa=v;for(auto&kv:ctx.windows)rebuild(ctx,kv.second);ctx.structural_dirty=true;ctx.packed_valid=false;}
 void bosio_compositor_destroy(void*ptr){delete static_cast<Context*>(ptr);}
 int bosio_compositor_sync_window(void*ptr,uint64_t id,float az,float el,float roll,float width,float height,uint32_t sw,uint32_t sh,uint64_t revision,const uint8_t*rgb){

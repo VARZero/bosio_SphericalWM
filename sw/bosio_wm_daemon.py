@@ -142,7 +142,7 @@ class BosioWindowDaemon:
             if len(raw) % 4:
                 raise WindowManagerError("packed scene is not uint32 aligned")
             words = np.frombuffer(raw, dtype="<u4").copy()
-            if not 16 <= len(words) <= 53664:
+            if not 256 + 20 * 211 <= len(words) <= 53664:
                 raise WindowManagerError("packed scene word count is invalid")
             # Keep the BoAYO scene as a compositing background. External
             # application windows are overlaid by the render loop.

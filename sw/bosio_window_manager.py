@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from bosio_geometry_v2 import cell_rays
+from bosio_geometry_v2 import cell_rays, triangle_centers
 
 
 class WindowManagerError(RuntimeError):
@@ -94,6 +94,7 @@ class SphericalWindowManager:
         self._shape = self._rays.shape[:-1]
         self.background = np.asarray(background, dtype=np.uint8)
         self.projection_aa = bool(projection_aa)
+        self._aa_local_neighbors = None
         self.windows: dict[int, SphericalWindow] = {}
         self.z_order: list[int] = []
         self.focused_window: int | None = None
@@ -413,6 +414,18 @@ class SphericalWindowManager:
                 fx = (x[mask] + 1) * 0.5 * (window.surface_width - 1)
                 fy = (1 - y[mask]) * 0.5 * (window.surface_height - 1)
                 if self.projection_aa:
+                    if self._aa_local_neighbors is None:
+                        centers = triangle_centers(self.m)
+                        distances = np.sum((centers[:, None] - centers[None, :]) ** 2, axis=-1)
+                        np.fill_diagonal(distances, np.inf)
+                        self._aa_local_neighbors = np.argpartition(distances, 3, axis=1)[:, :3]
+                    cells = self.m * self.m
+                    neighbor_indices = (indices[:, None] // cells) * cells + self._aa_local_neighbors[indices % cells]
+                    neighbor_valid = dot[neighbor_indices] > .05
+                    nx = (x[neighbor_indices] + 1) * .5 * (window.surface_width - 1)
+                    ny = (1 - y[neighbor_indices]) * .5 * (window.surface_height - 1)
+                    hx = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(nx - fx[:, None]), 0), axis=1)))
+                    hy = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(ny - fy[:, None]), 0), axis=1)))
                     def bilinear(sx, sy):
                         sx = np.clip(sx, 0, window.surface_width - 1)
                         sy = np.clip(sy, 0, window.surface_height - 1)
@@ -427,21 +440,43 @@ class SphericalWindowManager:
                         p11 = window.surface[y1, x1].astype(np.float32)
                         return p00 * (1 - ax) * (1 - ay) + p10 * ax * (1 - ay) + p01 * (1 - ax) * ay + p11 * ax * ay
 
-                    sampled = bilinear(fx, fy)
-                    x0 = np.clip(np.floor(fx).astype(np.int32), 0, window.surface_width - 1)
-                    y0 = np.clip(np.floor(fy).astype(np.int32), 0, window.surface_height - 1)
-                    x1 = np.minimum(x0 + 1, window.surface_width - 1)
-                    y1 = np.minimum(y0 + 1, window.surface_height - 1)
-                    neighbors = np.stack((window.surface[y0, x0], window.surface[y0, x1],
-                                          window.surface[y1, x0], window.surface[y1, x1]), axis=0).astype(np.int16)
-                    luminance = neighbors[..., 0] * 3 + neighbors[..., 1] * 6 + neighbors[..., 2]
-                    edge = np.ptp(luminance, axis=0) >= 216
+                    sampled = np.zeros((len(fx), 3), dtype=np.float32)
+                    for oy in (-.5, .5):
+                        for ox in (-.5, .5):
+                            sampled += bilinear(fx + ox * hx, fy + oy * hy)
+                    sampled *= .25
+                    small = (hx <= .5) & (hy <= .5)
+                    if np.any(small):
+                        sampled[small] = bilinear(fx[small], fy[small])
+                    probes = []
+                    for oy in (-.65, 0., .65):
+                        for ox in (-.65, 0., .65):
+                            px = np.clip(np.rint(fx + ox * hx), 0, window.surface_width - 1).astype(np.int32)
+                            py = np.clip(np.rint(fy + oy * hy), 0, window.surface_height - 1).astype(np.int32)
+                            probes.append(window.surface[py, px])
+                    probes = np.stack(probes).astype(np.int16)
+                    luminance = probes[..., 0] * 3 + probes[..., 1] * 6 + probes[..., 2]
+                    edge = ((np.ptp(luminance, axis=0) >= 216) | np.any(np.ptp(probes, axis=0) >= 28, axis=1)) & ~small
                     if np.any(edge):
                         accum = np.zeros((int(np.count_nonzero(edge)), 3), dtype=np.float32)
-                        for oy in (-.375, -.125, .125, .375):
-                            for ox in (-.375, -.125, .125, .375):
-                                accum += bilinear(fx[edge] + ox, fy[edge] + oy)
+                        for oy in (-.75, -.25, .25, .75):
+                            for ox in (-.75, -.25, .25, .75):
+                                accum += bilinear(fx[edge] + ox * hx[edge], fy[edge] + oy * hy[edge])
                         sampled[edge] = accum * (1.0 / 16.0)
+                        dark = probes[np.argmin(luminance, axis=0), np.arange(len(fx))][edge]
+                        bright = probes[np.argmax(luminance, axis=0), np.arange(len(fx))][edge]
+                        low = np.min(luminance, axis=0)[edge].astype(np.float32)
+                        high = np.max(luminance, axis=0)[edge].astype(np.float32)
+                        preserve = high - low >= 500
+                        if np.any(preserve):
+                            mean = sampled[edge][preserve]
+                            coverage = np.clip((high[preserve] - (mean[:, 0] * 3 + mean[:, 1] * 6 + mean[:, 2])) /
+                                               (high[preserve] - low[preserve]), 0, 1)
+                            amount = np.clip(coverage + .3 * np.sqrt(coverage) * (1 - coverage), 0, 1)[:, None]
+                            restored = bright[preserve] * (1 - amount) + dark[preserve] * amount
+                            edge_values = sampled[edge]
+                            edge_values[preserve] = restored
+                            sampled[edge] = edge_values
                     flat[indices] = np.clip(np.rint(sampled), 0, 255).astype(np.uint8)
                 else:
                     px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)

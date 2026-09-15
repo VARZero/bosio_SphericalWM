@@ -21,7 +21,8 @@ bosio_buttons.py
 bosio_driver_v2.py
 bosio_geometry_v2.py
 bosio_wm_client.py
-libbosio_compositor.so
+native/bosio_compositor.cpp
+native/build_pynq.sh
 bitstream/bosio_output_disp.bit
 bitstream/bosio_output_disp.hwh
 bosio-window-manager.service
@@ -38,7 +39,7 @@ if [ ! -x "$PYTHON" ]; then
     exit 1
 fi
 
-install -d -m 0755 "$INSTALL_DIR" "$INSTALL_DIR/bitstream"
+install -d -m 0755 "$INSTALL_DIR" "$INSTALL_DIR/bitstream" "$INSTALL_DIR/native"
 for relative in $required_files; do
     case "$relative" in
         bosio-window-manager.service) continue ;;
@@ -49,6 +50,10 @@ for relative in $required_files; do
         install -m 0644 "$source_path" "$target_path"
     fi
 done
+
+# The checked-in ARM library may predate the current source. Build it on the
+# target before restarting the service so projection changes reach HDMI.
+sh "$INSTALL_DIR/native/build_pynq.sh"
 
 install -m 0644 "$SOURCE_DIR/bosio-window-manager.service" "/etc/systemd/system/$SERVICE"
 chown -R xilinx:xilinx "$INSTALL_DIR"

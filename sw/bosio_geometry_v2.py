@@ -105,6 +105,12 @@ def pack_scene(rgb,m=16):
     directory[active]=np.arange(active.sum(),dtype=np.uint32)*(m*m)
     k=np.arange(256,dtype=np.uint32)
     red=((k>>5)*255//7);green=(((k>>2)&7)*255//7);blue=((k&3)*255//3)
+    level = k >> 5
+    neutral = (((k >> 2) & 7) == level) & ((k & 3) == ((level * 255 // 7) >> 6))
+    gray = level * 255 // 7
+    red = np.where(neutral, gray, red)
+    green = np.where(neutral, gray, green)
+    blue = np.where(neutral, gray, blue)
     palette=(red<<16)|(blue<<8)|green
     data=np.pad(data,(0,(-len(data))%64))
     words=np.concatenate([palette,directory,data.view('<u4')])

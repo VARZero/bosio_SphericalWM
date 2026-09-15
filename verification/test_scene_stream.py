@@ -19,10 +19,11 @@ class SceneStreamTests(unittest.TestCase):
         self.assertEqual(claim["m"], 8)
         with self.assertRaisesRegex(Exception, "owned by another"):
             self.daemon.dispatch(self.request("other", "claim_scene"))
-        words = np.zeros(16, dtype="<u4")
+        words = np.zeros(4480, dtype="<u4")
+        words[256:256 + 20 * 211] = 0xffffffff  # No active tiles.
         payload = base64.b64encode(words.tobytes()).decode("ascii")
         result = self.daemon.dispatch(self.request("boayo", "upload_scene_words", words32=payload))
-        self.assertEqual(result["words"], 16)
+        self.assertEqual(result["words"], len(words))
         self.daemon.dispatch(self.request("boayo", "release_scene"))
         self.assertIsNone(self.daemon.scene_owner)
 
