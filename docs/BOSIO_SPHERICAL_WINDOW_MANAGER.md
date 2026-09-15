@@ -67,6 +67,11 @@ python3 bosio_wm_daemon.py \
   --socket-group xilinx
 ```
 
+PYNQ-Z2 자동 시작 서비스는 고DPI Logitech G102 마우스 실측에 맞춰
+`--mouse-sensitivity 0.03`을 사용한다. 마우스가 서비스 시작 후 연결되었다면
+`bosio-window-manager.service`와 `boayo-desktop.service`를 다시 시작해야
+evdev 입력 장치가 연결된다. 다른 마우스는 이 값을 조정할 수 있다.
+
 마우스 장치가 없더라도 IPC의 `pointer_warp()`와 `pointer_move()`는 사용할 수
 있다. 포인터는 구면 공간에 남아 있고 센서로 시점을 돌려 다시 볼 수 있다.
 
