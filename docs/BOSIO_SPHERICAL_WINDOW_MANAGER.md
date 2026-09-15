@@ -124,6 +124,10 @@ with BosioWMClient("my-app") as wm:
 `zone`은 `title` 또는 `content`다. 이벤트 종류는 `focus`, `pointer_motion`,
 `pointer_button`이다.
 
+`get_state()`의 `pointer.left_press_serial`은 왼쪽 버튼을 새로 누를 때마다 증가한다.
+`pointer.last_left_press`에는 그 클릭 순간의 구면 위치와 창 ID(빈 공간이면 `null`)가
+남는다. 짧게 눌렀다 뗀 클릭도 다른 프로세스가 다음 상태 조회에서 감지할 수 있다.
+
 ## IPC 프로토콜
 
 기본 소켓은 `/tmp/bosio-wm.sock`이다. 한 줄에 하나의 UTF-8 JSON 요청과 응답을

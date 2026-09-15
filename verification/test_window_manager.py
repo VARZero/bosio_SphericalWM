@@ -29,6 +29,24 @@ class WindowManagerTests(unittest.TestCase):
         self.assertAlmostEqual(self.wm.windows[window["window_id"]].elevation, 3)
         self.assertEqual(self.wm.pointer_azimuth, -177)
 
+    def test_short_outside_click_remains_visible_after_release(self):
+        panel = self.wm.create_window("panel", "PANEL", 0, 0, 42, 30)
+        self.wm.pointer_warp(80, 0)
+        self.wm.pointer_button("left", True)
+        self.wm.pointer_button("left", False)
+        press = self.wm.state()["pointer"]
+        self.assertEqual(press["left_press_serial"], 1)
+        self.assertEqual(press["last_left_press"],
+                         {"azimuth": 80.0, "elevation": 0.0, "window_id": None})
+        self.assertEqual(press["buttons"], [])
+        self.wm.pointer_warp(0, 0)
+        self.wm.pointer_button("left", True)
+        self.wm.pointer_button("left", True)
+        self.assertEqual(self.wm.state()["pointer"]["left_press_serial"], 2)
+        self.assertEqual(self.wm.state()["pointer"]["last_left_press"]["window_id"],
+                         panel["window_id"])
+        self.wm.pointer_button("left", False)
+
     def test_surface_update_and_ownership(self):
         window = self.wm.create_window("a", "PIXELS", 0, 0, surface_width=2, surface_height=2)
         pixels = np.arange(12, dtype=np.uint8).reshape(2, 2, 3)

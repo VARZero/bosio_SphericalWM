@@ -102,6 +102,8 @@ class SphericalWindowManager:
         self.pointer_elevation = 0.0
         self.pointer_visible = False
         self.pointer_buttons = set()
+        self.pointer_left_press_serial = 0
+        self.pointer_last_left_press = None
         self.pointer_scroll_serial = 0
         self.pointer_scroll_delta = 0.0
         self._drag: tuple[int, float, float] | None = None
@@ -332,11 +334,19 @@ class SphericalWindowManager:
     def pointer_button(self, button, pressed):
         button, pressed = str(button), bool(pressed)
         with self.lock:
+            was_pressed = button in self.pointer_buttons
             if pressed:
                 self.pointer_buttons.add(button)
             else:
                 self.pointer_buttons.discard(button)
             hit = self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+            if pressed and button == "left" and not was_pressed:
+                self.pointer_left_press_serial += 1
+                self.pointer_last_left_press = {
+                    "azimuth": self.pointer_azimuth,
+                    "elevation": self.pointer_elevation,
+                    "window_id": hit[0].window_id if hit else None,
+                }
             if pressed and button == "left" and hit:
                 window, _, _, zone = hit
                 self.focus_window(window.window_id, True)
@@ -362,6 +372,8 @@ class SphericalWindowManager:
             "zone": hit[3] if hit else None,
             "dragging": self._drag is not None,
             "buttons": sorted(self.pointer_buttons),
+            "left_press_serial": self.pointer_left_press_serial,
+            "last_left_press": self.pointer_last_left_press,
             "scroll_serial": self.pointer_scroll_serial,
             "scroll_delta": self.pointer_scroll_delta,
         }
