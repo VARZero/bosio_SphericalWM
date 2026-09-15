@@ -117,6 +117,8 @@ class BosioWindowDaemon:
         self.scene_lock = threading.RLock()
         self.scene_owner = None
         self.scene_base = None
+        self.scene_generation = 0
+        self.last_scene_generation = 0
 
     def dispatch(self, request):
         op = request["op"]
@@ -145,6 +147,7 @@ class BosioWindowDaemon:
             # Keep the BoAYO scene as a compositing background. External
             # application windows are overlaid by the render loop.
             self.scene_base = self._unpack_scene_words(words)
+            self.scene_generation += 1
             if self.driver is not None and not self.manager.windows:
                 with self.driver_lock:
                     self.driver.upload_words(words)
@@ -292,7 +295,8 @@ class BosioWindowDaemon:
             with self.scene_lock:
                 external_scene = self.scene_owner is not None
                 has_windows = bool(self.manager.windows)
-            if (not external_scene or has_windows) and generation != self.last_rendered:
+            scene_dirty = self.scene_generation != self.last_scene_generation
+            if (not external_scene or has_windows) and (generation != self.last_rendered or scene_dirty):
                 try:
                     compose_started = time.monotonic()
                     packed_direct = self.manager.native is not None
@@ -328,6 +332,7 @@ class BosioWindowDaemon:
                     else:
                         self.full_update_count += 1
                     self.last_rendered = generation
+                    self.last_scene_generation = self.scene_generation
                     self.render_error = None
                 except Exception as exc:
                     self.render_error = repr(exc)
@@ -378,6 +383,8 @@ class BosioWindowDaemon:
                 return False
             self.scene_owner = None
         self.scene_base = None
+        self.scene_generation = 0
+        self.last_scene_generation = 0
         self.last_rendered = 0
         self.manager._changed()
         return True
