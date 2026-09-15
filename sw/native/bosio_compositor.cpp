@@ -107,7 +107,7 @@ void rebuild(Context&ctx,Window&w){
     vst1q_f32(ds,d);vst1q_f32(xs,vmulq_n_f32(vmulq_f32(nx,recip),1.0f/tx));vst1q_f32(ys,vmulq_n_f32(vmulq_f32(ny,recip),1.0f/ty));
     for(int lane=0;lane<4;lane++)if(ds[lane]>0&&std::fabs(xs[lane])<=1&&std::fabs(ys[lane])<=1){
       float fx=(xs[lane]+1.f)*.5f*(w.sw-1),fy=(1.f-ys[lane])*.5f*(w.sh-1);
-      uint8_t f=(ys[lane]>.72f?1:0)|((std::fabs(xs[lane])>.94f||std::fabs(ys[lane])>.92f)?2:0);
+      uint8_t f=0;
       w.samples.push_back({i+(uint32_t)lane,fx,fy,f,(uint8_t)ctx.projection_aa});
     }
   }
@@ -118,7 +118,7 @@ void rebuild(Context&ctx,Window&w){
     const float*q=&ctx.rays[i*3];float d=q[0]*c[0]+q[1]*c[1]+q[2]*c[2];if(d<=0)continue;
     float x=(q[0]*r[0]+q[1]*r[1]+q[2]*r[2])/d/tx,y=(q[0]*u[0]+q[1]*u[1]+q[2]*u[2])/d/ty;
     if(std::fabs(x)>1||std::fabs(y)>1)continue;
-    float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);uint8_t f=(y>.72f?1:0)|((std::fabs(x)>.94f||std::fabs(y)>.92f)?2:0);w.samples.push_back({i,fx,fy,f,(uint8_t)ctx.projection_aa});
+    float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);uint8_t f=0;w.samples.push_back({i,fx,fy,f,(uint8_t)ctx.projection_aa});
   }
 }
 void rebuild_pointer(Context&ctx,float az,float el,bool visible){
