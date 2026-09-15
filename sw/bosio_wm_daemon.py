@@ -17,6 +17,8 @@ from pathlib import Path
 
 import numpy as np
 
+from bosio_geometry_v2 import pack_scene
+
 try:
     from bosio_window_manager import SphericalWindowManager, WindowManagerError
 except ImportError:
@@ -114,6 +116,7 @@ class BosioWindowDaemon:
         self.driver_lock = threading.RLock()
         self.scene_lock = threading.RLock()
         self.scene_owner = None
+        self.scene_base = None
 
     def dispatch(self, request):
         op = request["op"]
@@ -139,7 +142,10 @@ class BosioWindowDaemon:
             words = np.frombuffer(raw, dtype="<u4").copy()
             if not 16 <= len(words) <= 53664:
                 raise WindowManagerError("packed scene word count is invalid")
-            if self.driver is not None:
+            # Keep the BoAYO scene as a compositing background. External
+            # application windows are overlaid by the render loop.
+            self.scene_base = self._unpack_scene_words(words)
+            if self.driver is not None and not self.manager.windows:
                 with self.driver_lock:
                     self.driver.upload_words(words)
             self.update_words += len(words)
@@ -285,11 +291,15 @@ class BosioWindowDaemon:
             generation = self.manager.generation
             with self.scene_lock:
                 external_scene = self.scene_owner is not None
-            if not external_scene and generation != self.last_rendered:
+                has_windows = bool(self.manager.windows)
+            if (not external_scene or has_windows) and generation != self.last_rendered:
                 try:
                     compose_started = time.monotonic()
                     packed_direct = self.manager.native is not None
-                    if packed_direct:
+                    if external_scene and has_windows and self.scene_base is not None:
+                        scene = self._compose_scene_with_windows()
+                        update_kind = "full"
+                    elif packed_direct:
                         scene, _, update_kind = self.manager.render_update()
                     else:
                         scene = self.manager.render()
@@ -332,11 +342,42 @@ class BosioWindowDaemon:
                     self.render_error = repr(exc)
             time.sleep(self.frame_period)
 
+    def _unpack_scene_words(self, words):
+        m = self.manager.m
+        tile_cells = m * m
+        palette_words = np.asarray(words[:256], dtype=np.uint32)
+        palette = np.empty((256, 3), dtype=np.uint8)
+        palette[:, 0] = (palette_words >> 16) & 0xff
+        palette[:, 1] = palette_words & 0xff
+        palette[:, 2] = (palette_words >> 8) & 0xff
+        directory = np.asarray(words[256:256 + 20 * 211], dtype=np.uint32)
+        packed = np.asarray(words[256 + 20 * 211:], dtype='<u4').view(np.uint8)
+        out = np.zeros((20, 211, tile_cells, 3), dtype=np.uint8)
+        flat = out.reshape(-1, 3)
+        for index, offset in enumerate(directory):
+            if offset == 0xffffffff:
+                continue
+            start = int(offset)
+            idx = packed[start:start + tile_cells]
+            flat[index * tile_cells:(index + 1) * tile_cells] = palette[idx]
+        return out
+
+    def _compose_scene_with_windows(self):
+        base = self.scene_base
+        overlay = self.manager.render()
+        if base is None:
+            return pack_scene(overlay, self.manager.m)[0]
+        scene = base.copy()
+        mask = np.any(overlay != 0, axis=-1)
+        scene[mask] = overlay[mask]
+        return pack_scene(scene, self.manager.m)[0]
+
     def release_scene_owner(self, app):
         with self.scene_lock:
             if self.scene_owner != str(app):
                 return False
             self.scene_owner = None
+        self.scene_base = None
         self.last_rendered = 0
         self.manager._changed()
         return True
