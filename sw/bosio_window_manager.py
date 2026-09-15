@@ -56,6 +56,7 @@ class SphericalWindow:
     roll: float = 0.0
     mapped: bool = True
     always_on_top: bool = False
+    decorated: bool = False
     surface_revision: int = 1
     dirty_rect: tuple[int, int, int, int] | None = None
     surface: np.ndarray = field(repr=False, default=None)
@@ -74,6 +75,7 @@ class SphericalWindow:
             "surface_height": self.surface_height,
             "mapped": self.mapped,
             "always_on_top": self.always_on_top,
+            "decorated": self.decorated,
             "focused": focused,
             "z": z,
         }
@@ -129,7 +131,7 @@ class SphericalWindowManager:
         self._events[owner].append({"type": event_type, **payload})
 
     def create_window(self, owner, title, azimuth=0, elevation=0, width_deg=34,
-                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False):
+                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False, decorated=False):
         with self.lock:
             if len(self.windows) >= self.MAX_WINDOWS:
                 raise WindowManagerError("window limit reached")
@@ -145,6 +147,7 @@ class SphericalWindowManager:
                 float(width_deg), float(height_deg), sw, sh,
                 surface=np.full((sh, sw, 3), (16, 24, 32), dtype=np.uint8),
                 always_on_top=bool(always_on_top),
+                decorated=bool(decorated),
                 dirty_rect=(0, 0, sw, sh),
             )
             self.windows[wid] = window
@@ -223,6 +226,8 @@ class SphericalWindowManager:
                 window.mapped = bool(changes["mapped"])
             if "always_on_top" in changes:
                 window.always_on_top = bool(changes["always_on_top"])
+            if "decorated" in changes:
+                window.decorated = bool(changes["decorated"])
             self._changed()
             return window.public(window.window_id == self.focused_window, self.z_order.index(window.window_id))
 
@@ -442,10 +447,11 @@ class SphericalWindowManager:
                     px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)
                     py = np.clip(np.rint(fy), 0, window.surface_height - 1).astype(np.int32)
                     flat[indices] = window.surface[py, px]
-                title = y[mask] > 0.72
-                border = (np.abs(x[mask]) > 0.94) | (np.abs(y[mask]) > 0.92)
-                flat[indices[title]] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)
-                flat[indices[border]] = (250, 204, 21) if wid == self.focused_window else (120, 130, 145)
+                if window.decorated:
+                    title = y[mask] > 0.72
+                    border = (np.abs(x[mask]) > 0.94) | (np.abs(y[mask]) > 0.92)
+                    flat[indices[title]] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)
+                    flat[indices[border]] = (250, 204, 21) if wid == self.focused_window else (120, 130, 145)
             if self.pointer_visible:
                 pointer = _direction(self.pointer_azimuth, self.pointer_elevation)
                 dots = self._flat_rays @ pointer
