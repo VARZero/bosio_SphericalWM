@@ -99,7 +99,7 @@ class SphericalWindowManager:
         self.focused_window: int | None = None
         self.pointer_azimuth = 0.0
         self.pointer_elevation = 0.0
-        self.pointer_visible = True
+        self.pointer_visible = False
         self.pointer_buttons = set()
         self.pointer_scroll_serial = 0
         self.pointer_scroll_delta = 0.0
@@ -486,3 +486,4 @@ class SphericalWindowManager:
                 )
         words, count = self.render_packed()
         return words, count, "full"
+

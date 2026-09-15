@@ -208,3 +208,4 @@ int bosio_compositor_render(void*ptr,const uint64_t*order,uint32_t order_count,u
   }catch(const std::exception&e){static_cast<Context*>(ptr)->error=e.what();return -1;}}
 const char* bosio_compositor_error(void*ptr){return static_cast<Context*>(ptr)->error.c_str();}
 }
+
