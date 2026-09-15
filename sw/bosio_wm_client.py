@@ -58,7 +58,7 @@ class BosioWMClient:
         return self.call("ping")
 
     def create_window(self, title, azimuth=0, elevation=0, width_deg=34, height_deg=24,
-                      surface_width=320, surface_height=200, always_on_top=False):
+                      surface_width=320, surface_height=200, always_on_top=False, decorated=False):
         return self.call("create_window", title=title, azimuth=azimuth, elevation=elevation,
                          width_deg=width_deg, height_deg=height_deg,
                          surface_width=surface_width, surface_height=surface_height,
@@ -136,3 +136,4 @@ class BosioWMClient:
 
     def reset_performance(self):
         return self.call("reset_performance")
+
