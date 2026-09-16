@@ -21,6 +21,8 @@ bosio_buttons.py
 bosio_driver_v2.py
 bosio_geometry_v2.py
 bosio_wm_client.py
+bosio_input_client.py
+bosio_input_demo.py
 native/bosio_compositor.cpp
 native/build_pynq.sh
 bitstream/bosio_output_disp.bit

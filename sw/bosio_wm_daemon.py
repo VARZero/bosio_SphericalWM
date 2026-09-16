@@ -61,6 +61,7 @@ class _Handler(socketserver.StreamRequestHandler):
                     self._reply(request_id, error=f"internal error: {exc}")
         finally:
             for app in applications:
+                self.server.daemon.release_input_source(app)
                 self.server.manager.destroy_owner_windows(app)
                 self.server.daemon.release_scene_owner(app)
 
@@ -119,6 +120,43 @@ class BosioWindowDaemon:
         self.scene_base = None
         self.scene_generation = 0
         self.last_scene_generation = 0
+        self.input_lock = threading.RLock()
+        self.input_buttons = {}
+
+    def _input_button(self, app, button, pressed):
+        """Merge one IPC input source into the global pointer button state."""
+        button = str(button)
+        if button not in ("left", "middle", "right"):
+            raise WindowManagerError("button must be left, middle, or right")
+        pressed = bool(pressed)
+        with self.input_lock:
+            source = self.input_buttons.setdefault(app, set())
+            was_global = any(button in buttons for buttons in self.input_buttons.values())
+            if pressed:
+                source.add(button)
+            else:
+                source.discard(button)
+                if not source:
+                    self.input_buttons.pop(app, None)
+            is_global = any(button in buttons for buttons in self.input_buttons.values())
+            if was_global != is_global:
+                return self.manager.pointer_button(button, is_global)
+            return self.manager.pointer_state()
+
+    def release_input_source(self, app):
+        """Release buttons held by a disconnected external input process."""
+        with self.input_lock:
+            held = set(self.input_buttons.pop(str(app), set()))
+            for button in held:
+                if not any(button in buttons for buttons in self.input_buttons.values()):
+                    self.manager.pointer_button(button, False)
+
+    def _input_status(self, app):
+        with self.input_lock:
+            pointer = self.manager.pointer_state()
+            pointer["source_buttons"] = sorted(self.input_buttons.get(app, ()))
+            pointer["active_button_source_count"] = len(self.input_buttons)
+            return pointer
 
     def dispatch(self, request):
         op = request["op"]
@@ -127,7 +165,8 @@ class BosioWindowDaemon:
         wm = self.manager
         if op == "ping":
             return {"version": 2, "m": wm.m, "headless": self.headless,
-                    "features": ["windows", "pointer", "button-events", "scene-stream"]}
+                    "features": ["windows", "pointer", "input-injection",
+                                 "button-events", "scene-stream"]}
         if op == "claim_scene":
             with self.scene_lock:
                 if self.scene_owner not in (None, app):
@@ -208,6 +247,23 @@ class BosioWindowDaemon:
             return wm.pointer_move(args["delta_azimuth"], args["delta_elevation"])
         if op == "pointer_button":
             return wm.pointer_button(args.get("button", "left"), args["pressed"])
+        if op == "input_warp":
+            return wm.pointer_warp(args["azimuth"], args["elevation"])
+        if op == "input_move":
+            return wm.pointer_move(args["delta_azimuth"], args["delta_elevation"])
+        if op == "input_button":
+            return self._input_button(app, args.get("button", "left"), args["pressed"])
+        if op == "input_click":
+            button = str(args.get("button", "left"))
+            with self.input_lock:
+                if button in self.input_buttons.get(app, ()):
+                    raise WindowManagerError("input source already holds this button")
+                self._input_button(app, button, True)
+                return self._input_button(app, button, False)
+        if op == "input_scroll":
+            return wm.pointer_scroll(args["delta"])
+        if op == "input_status":
+            return self._input_status(app)
         if op == "poll_events":
             return wm.poll_events(app, args.get("limit", 64))
         if op == "get_button_state":

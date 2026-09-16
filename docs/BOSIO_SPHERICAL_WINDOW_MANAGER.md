@@ -26,6 +26,7 @@ USB 마우스 ──────┘                 │                       �
 | `bosio_window_manager.py` | 창 상태, z 순서, 포커스, hit-test, 구면 합성기 |
 | `bosio_wm_daemon.py` | Unix socket 서버, 출력 코어 갱신 루프 |
 | `bosio_wm_client.py` | 애플리케이션용 Python IPC SDK |
+| `bosio_input_client.py` | 외부 입력 프로세스용 Python API |
 | `bosio_mouse_input.py` | Linux evdev 상대 좌표 마우스 입력 |
 | `bosio_native_compositor.py` | C++/NEON 합성기 ctypes 바인딩 |
 | `native/bosio_compositor.cpp` | LUT 합성·포인터·RGB332 네이티브 엔진 |
@@ -74,6 +75,11 @@ evdev 입력 장치가 연결된다. 다른 마우스는 이 값을 조정할 �
 
 마우스 장치가 없더라도 IPC의 `pointer_warp()`와 `pointer_move()`는 사용할 수
 있다. 포인터는 구면 공간에 남아 있고 센서로 시점을 돌려 다시 볼 수 있다.
+
+관성 추적기나 카메라 손동작 인식기처럼 별도 프로세스가 입력을 만드는 경우에는
+창 API와 분리된 `BosioInputClient`를 사용한다. 입력원별 버튼 상태와 연결 종료
+시 자동 해제를 지원한다. 자세한 사용법은 [외부 포인터 입력 API](BOSIO_EXTERNAL_INPUT.md)에
+정리했다.
 
 ## 애플리케이션 API
 

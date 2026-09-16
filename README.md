@@ -38,6 +38,8 @@ sw/
   bosio_wm_daemon.py          # system daemon과 JSON IPC 서버
   bosio_window_manager.py     # 창, 포커스, 구면 포인터 모델
   bosio_wm_client.py          # 애플리케이션용 Python SDK
+  bosio_input_client.py       # 외부 입력 데몬용 포인터 API
+  bosio_input_demo.py         # 절대 이동·클릭·드래그 예제
   bosio_native_compositor.py  # C++ 합성기 ctypes 바인딩
   native/                     # C++17/ARM NEON 개발 소스와 빌드 스크립트
   bosio_driver_v2.py          # BS24 출력 코어 PYNQ 드라이버
@@ -132,6 +134,8 @@ IPC 전체 사양은 [구면 윈도우 매니저 문서](docs/BOSIO_SPHERICAL_WI
 애플리케이션을 처음 작성한다면 [애플리케이션 빠른 시작](docs/BOSIO_APPLICATION_QUICKSTART.md)부터
 읽으면 됩니다.
 [PYNQ-Z2 버튼 입력](docs/BOSIO_BUTTONS.md)은 Linux 직접 판독과 데몬 이벤트 API를 설명합니다.
+[외부 포인터 입력 API](docs/BOSIO_EXTERNAL_INPUT.md)는 관성 추적기·카메라 손동작
+인식기 같은 별도 프로세스에서 구면 이동과 클릭을 전달하는 방법을 설명합니다.
 [투영 경계 안티에일리어싱](docs/BOSIO_ANTIALIASING.md)은 하드웨어 필터와 런타임 설정을 설명합니다.
 
 ## 개발과 검증
