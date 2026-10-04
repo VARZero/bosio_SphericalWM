@@ -28,7 +28,9 @@ PYNQ BTN0..3 ─ 독립 AXI GPIO ─ Linux 버튼 입력 ─ 데몬 전역 이�
 
 창 surface의 변경 영역은 dirty rectangle로 합쳐집니다. 네이티브 합성기는
 투영 LUT에서 이 영역을 참조하는 셀만 다시 계산하고, 실제 색이 바뀐 구면
-타일만 `BPT1` 패킷으로 전송합니다. 창 이동, 포커스, z-order 또는 타일 활성
+타일만 `BPT1` 패킷으로 드라이버에 전달합니다. BS25 드라이버는 비활성 DDR
+장면의 타일을 수정하고 출력 코어의 프레임 경계 주소 전환을 확인합니다.
+창 이동, 포커스, z-order 또는 타일 활성
 구조가 바뀌면 전체 snapshot으로 자동 전환합니다.
 
 ## 저장소 구성
@@ -157,7 +159,7 @@ sh native/build_pynq.sh
 호스트에서 하드웨어 비의존 단위 테스트를 실행할 수 있습니다.
 
 ```bash
-python -m unittest discover -s verification -p "test_*.py" -v
+PYTHONPATH=sw python -m unittest discover -s verification -p "test_*.py" -v
 python -m py_compile sw/*.py
 ```
 
@@ -174,9 +176,14 @@ vivado -mode batch -source hw/scripts/build_output_bitstream.tcl
 뒤에는 submodule 저장소에서 먼저 검증·커밋하고, 이 저장소의 submodule
 commit을 갱신합니다.
 
-실제 PYNQ-Z2 검증에서는 16×16 국소 변경을 평균 496워드의 부분 패킷으로
-전송했고, 60 Hz paced test에서 유효 패치 58.4회/초와 HDMI 58.47 FPS를
-확인했습니다.
+현재 BS25 보드 검증은 M=16 전체 구면 4,220타일에서 RTL 출력 스트림
+59.92 FPS를 확인했습니다. 한 타일의 96워드 BPT1 갱신 8회는 평균 15.0ms였으며
+프레임 경계 대기가 포함됩니다. 이 값은 앱의 전체 합성 FPS와 다릅니다.
+
+이전 BRAM 캐시 단계에서는 16×16 국소 변경을 평균 496워드로 전송하고,
+60 Hz paced test에서 유효 패치 58.4회/초를 확인했습니다. 두 실험은 패치 크기와
+측정 조건이 달라 직접 비교할 수 없습니다. 원본과 조건은
+[성능 문서](docs/BOSIO_WM_PERFORMANCE.md)에 구분해 기록했습니다.
 
 ## 호환성
 

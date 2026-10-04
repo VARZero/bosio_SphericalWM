@@ -1,7 +1,7 @@
 # BOSIO 애플리케이션 빠른 시작
 
 이 문서는 PYNQ-Z2에서 실행 중인 BOSIO 윈도우 데몬에 애플리케이션을 연결하는
-방법을 설명합니다. 애플리케이션은 bitstream, HDMI, AXI 레지스터와 DMA를 직접
+방법을 설명합니다. 애플리케이션은 비트스트림, HDMI, AXI 레지스터와 DDR 버퍼를 직접
 다루지 않습니다. 데몬이 출력 코어를 소유하고, 애플리케이션은 Unix socket IPC로
 창 상태와 RGB surface만 전달합니다.
 
@@ -14,7 +14,7 @@
             └─ bosio-window-manager.service
                  ├─ 구면 창 합성
                  ├─ C++/NEON dirty tile 패킹
-                 └─ 출력 코어 DMA → HDMI
+                 └─ DDR 장면 갱신 → BS25 읽기 캐시 → RTL 투영 → HDMI
 ```
 
 PYNQ-Z2가 부팅되면 systemd가 먼저 PYNQ 초기화와 `bootpy.service`를 끝내고,
@@ -110,7 +110,9 @@ wm.update_surface(window_id, button, x=32, y=40)
 ```
 
 데몬은 dirty rectangle을 누적하고, C++ 합성기는 해당 영역과 교차하는 셀만
-계산합니다. 출력 코어에는 실제로 색이 바뀐 타일만 BPT1 패킷으로 전송됩니다.
+계산합니다. 실제로 색이 바뀐 타일만 BPT1 패킷으로 드라이버에 전달합니다.
+BS25 드라이버가 비활성 DDR 장면의 타일을 수정하면 출력 코어는 프레임 경계에서
+그 장면 주소로 전환합니다. 앱의 API나 RGB 표면 형식은 바뀌지 않습니다.
 창 이동, 포커스, z-order 변경처럼 합성 구조가 바뀌면 데몬이 자동으로 전체
 장면을 다시 만듭니다.
 
@@ -250,5 +252,7 @@ systemctl is-active bosio-window-manager.service
 test -S /tmp/bosio-wm.sock && echo SOCKET_READY
 ```
 
-출력 코어의 bitstream과 DMA는 애플리케이션에서 직접 초기화하지 마십시오.
+출력 코어의 비트스트림과 장면 버퍼는 애플리케이션에서 직접 초기화하지 마십시오.
 하드웨어 소유권은 `bosio-window-manager.service`가 유지합니다.
+캐시와 장면 버퍼 관리의 상세 설명은 [BS25 DDR 캐시 문서](BOSIO_DDR_CACHE.md)에
+있습니다.

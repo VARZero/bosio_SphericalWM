@@ -46,5 +46,18 @@ with BosioWMClient("boayo-shell") as client:
 
 `get_button_state()`는 `state`, `available`, `last_event_id`를 반환한다. 각 이벤트에는
 `id`, `type`, `button`, `name`, `pressed`, `state`, `monotonic_ns`가 들어간다.
-현재는 BTN0 등에 홈이나 설정 의미를 부여하지 않았다. UI가 결정되면 BoAYo 셸이
-이 이벤트를 원하는 동작으로 매핑하면 된다.
+버튼 GPIO 자체에는 앱 실행이나 UI 의미가 없다. BoAYo가 전역 이벤트를 읽고
+아래와 같이 매핑한다. 일반 앱도 버튼 이벤트를 읽을 수 있지만, 셸과 중복해서
+같은 버튼의 시스템 동작을 실행하지 않도록 한다.
+
+## BoAYo의 현재 버튼 매핑
+
+| 버튼 | 동작 |
+|---|---|
+| BTN0 / BTN1 | 유일한 런처 패널을 현재 시선 위치에 열고 최상위 표시·포커스 지정 |
+| BTN2 | 현재 시선 위치에서 누름·뗌 전달; 누른 채 시선을 움직이면 캡션 드래그 |
+| BTN3 | 기본 런처의 동작 매핑 없음 |
+
+런처 밖을 클릭하면 패널만 닫히며 실행 중인 앱 창은 유지된다. 앱 창의 하단
+캡션은 BoAYo SDK가 처리하고, 패널에는 캡션이 없다. 입력·창 합성은 Linux,
+GY-521 자세 전달은 FPGA 센서 허브의 직접 AXI4-Stream 경로다.
