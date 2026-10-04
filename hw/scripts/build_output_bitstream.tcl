@@ -22,6 +22,16 @@ if {[get_property PROGRESS [get_runs impl_1]] != "100%"} {
 }
 
 # 3. Export Bitstream & Hardware Handoff
+open_run impl_1
+report_timing_summary -file [file join $proj_dir "bs25_timing_summary.rpt"]
+report_utilization -file [file join $proj_dir "bs25_utilization.rpt"]
+set worst_setup [get_timing_paths -delay_type max -max_paths 1]
+set worst_hold [get_timing_paths -delay_type min -max_paths 1]
+if {[llength $worst_setup] == 0 || [llength $worst_hold] == 0 ||
+    [get_property SLACK $worst_setup] < 0 || [get_property SLACK $worst_hold] < 0} {
+    puts "ERROR: Timing checks failed; bitstream is not exported for deployment."
+    exit 1
+}
 set bit_dir [file join $root_dir "sw" "bitstream"]
 file mkdir $bit_dir
 

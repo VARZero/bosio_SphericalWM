@@ -9,7 +9,7 @@ import numpy as np
 
 TILES = 211
 Q = 1 << 24
-MAX_CACHE_BYTES = 196608
+MAX_CACHE_BYTES = 20 * TILES * 32 * 32  # BS25 full-sphere DDR capacity.
 
 def vertices():
     y=1/math.sqrt(5);r=2/math.sqrt(5)

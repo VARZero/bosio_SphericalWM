@@ -6,6 +6,10 @@ import numpy as np
 
 _pack_library = None
 
+def _scene_capacity(m):
+ # Include room for either a full scene or an all-tile BPT1 packet.
+ return (max(4476 + 4220*m*m//4 + 16, 16 + 4220*(16+m*m//4)) + 15) & ~15
+
 def pack_scene(rgb,m=16):
  global _pack_library
  array=np.ascontiguousarray(rgb,dtype=np.uint8)
@@ -13,9 +17,9 @@ def pack_scene(rgb,m=16):
  if _pack_library is None:
   path=Path(os.environ.get('BOSIO_COMPOSITOR_LIB',Path(__file__).with_name('libbosio_compositor.so')))
   _pack_library=ctypes.CDLL(str(path));_pack_library.bosio_pack_scene.argtypes=[ctypes.POINTER(ctypes.c_uint8),ctypes.c_uint32,ctypes.POINTER(ctypes.c_uint32),ctypes.c_uint32,ctypes.POINTER(ctypes.c_uint32)];_pack_library.bosio_pack_scene.restype=ctypes.c_int
- output=np.empty(53664,dtype=np.uint32);active=ctypes.c_uint32()
+ output=np.empty(_scene_capacity(m),dtype=np.uint32);active=ctypes.c_uint32()
  words=_pack_library.bosio_pack_scene(array.ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)),m,output.ctypes.data_as(ctypes.POINTER(ctypes.c_uint32)),len(output),ctypes.byref(active))
- if words==-2:raise ValueError('Active tiles exceed 196608-byte cache')
+ if words==-2:raise ValueError('Packed scene exceeds output buffer capacity')
  if words<0:raise RuntimeError('native scene pack failed')
  return output[:words].copy(),int(active.value)
 
@@ -55,19 +59,19 @@ class NativeCompositor:
   if rc:raise RuntimeError(self.lib.bosio_compositor_error(self.ctx).decode())
   return out
  def render_packed(self,windows,z_order,focus,pointer,background,m):
-  order=self._sync(windows,z_order);out=np.empty(53664,dtype=np.uint32);active=ctypes.c_uint32();bg=list(map(int,background))
+  order=self._sync(windows,z_order);out=np.empty(_scene_capacity(m),dtype=np.uint32);active=ctypes.c_uint32();bg=list(map(int,background))
   words=self.lib.bosio_compositor_render_packed(self.ctx,order.ctypes.data_as(ctypes.POINTER(ctypes.c_uint64)),len(order),focus or 0,pointer[0],pointer[1],int(pointer[2]),*bg,m,out.ctypes.data_as(ctypes.POINTER(ctypes.c_uint32)),len(out),ctypes.byref(active))
-  if words==-2:raise ValueError('Active tiles exceed 196608-byte cache')
+  if words==-2:raise ValueError('Packed scene exceeds output buffer capacity')
   if words<0:raise RuntimeError(self.lib.bosio_compositor_error(self.ctx).decode() or 'native packed render failed')
   for w in windows.values():w.dirty_rect=None
   return out[:words].copy(),int(active.value)
  def render_update(self,windows,z_order,focus,pointer,background,m):
-  order=self._sync(windows,z_order);out=np.empty(53664,dtype=np.uint32);tiles=ctypes.c_uint32();bg=list(map(int,background));args=(self.ctx,order.ctypes.data_as(ctypes.POINTER(ctypes.c_uint64)),len(order),focus or 0,pointer[0],pointer[1],int(pointer[2]),*bg,m,out.ctypes.data_as(ctypes.POINTER(ctypes.c_uint32)),len(out),ctypes.byref(tiles))
+  order=self._sync(windows,z_order);out=np.empty(_scene_capacity(m),dtype=np.uint32);tiles=ctypes.c_uint32();bg=list(map(int,background));args=(self.ctx,order.ctypes.data_as(ctypes.POINTER(ctypes.c_uint64)),len(order),focus or 0,pointer[0],pointer[1],int(pointer[2]),*bg,m,out.ctypes.data_as(ctypes.POINTER(ctypes.c_uint32)),len(out),ctypes.byref(tiles))
   words=self.lib.bosio_compositor_render_patch(*args)
   if words==-3:
    words=self.lib.bosio_compositor_render_packed(*args);kind='full'
   else:kind='patch'
-  if words==-2:raise ValueError('Active tiles exceed 196608-byte cache')
+  if words==-2:raise ValueError('Packed scene exceeds output buffer capacity')
   if words<0:raise RuntimeError(self.lib.bosio_compositor_error(self.ctx).decode() or 'native incremental render failed')
   for w in windows.values():w.dirty_rect=None
   return out[:words].copy(),int(tiles.value),kind

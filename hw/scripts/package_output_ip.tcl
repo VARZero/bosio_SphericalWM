@@ -27,7 +27,7 @@ set core [ipx::current_core]
 
 set_property name $ip_name $core
 set_property version $ip_version $core
-set_property core_revision 24 $core
+set_property core_revision 26 $core
 set_property display_name $ip_display_name $core
 set_property description $ip_description $core
 set_property vendor_display_name "VARZero Lab" $core

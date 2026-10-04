@@ -244,7 +244,9 @@ void rebuild_pointer(Context&ctx,float az,float el,bool visible){
 extern "C" {
 int bosio_compositor_render_packed(void*ptr,const uint64_t*order,uint32_t order_count,uint64_t focus,float paz,float pel,int pvisible,uint8_t br,uint8_t bg,uint8_t bb,uint32_t m,uint32_t*out,uint32_t capacity,uint32_t*active_out){
   try{
-    auto&ctx=*static_cast<Context*>(ptr);const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles,max_bytes=196608;if(ctx.count!=tiles*cells||capacity<prefix+16)return -1;
+    auto&ctx=*static_cast<Context*>(ptr);const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles;
+    if(ctx.count!=tiles*cells||capacity<prefix+16)return -1;
+    const uint32_t max_bytes=(capacity-prefix-16)*4;
     ctx.image.assign(ctx.count,rgb_index(br,bg,bb));ctx.owner.assign(ctx.count,0);ctx.partial.assign(ctx.count,0);
     const uint8_t tf=rgb_index(22,112,190),ti=rgb_index(55,65,81),bf=rgb_index(250,204,21),bi=rgb_index(120,130,145);
     for(uint32_t z=0;z<order_count;z++){auto it=ctx.windows.find(order[z]);if(it==ctx.windows.end())continue;const auto&w=it->second;bool focused=order[z]==focus;for(const auto&s:w.samples){uint8_t value=blend_sample_index(w,s,ctx.image[s.dst]);if(s.flags&1)value=focused?tf:ti;if(s.flags&2)value=focused?bf:bi;ctx.image[s.dst]=value;ctx.owner[s.dst]=s.flags?UINT64_MAX:order[z];ctx.partial[s.dst]=s.coverage<16;}}
@@ -282,8 +284,9 @@ int bosio_compositor_render_patch(void*ptr,const uint64_t*order,uint32_t order_c
  }catch(const std::exception&e){static_cast<Context*>(ptr)->error=e.what();return -1;}
 }
 int bosio_pack_scene(const uint8_t*rgb,uint32_t m,uint32_t*out,uint32_t capacity,uint32_t*active_out){
-  const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles,max_bytes=196608;
+  const uint32_t tiles=20*211,cells=m*m,prefix=256+tiles;
   if((m!=8&&m!=16&&m!=32)||capacity<prefix+16)return -1;
+  const uint32_t max_bytes=(capacity-prefix-16)*4;
   for(uint32_t k=0;k<256;k++)out[k]=palette_word(k);
   std::fill(out+256,out+prefix,0xffffffffu);uint8_t*data=reinterpret_cast<uint8_t*>(out+prefix);uint32_t active=0,bytes=0;
   std::vector<uint8_t> converted(cells);

@@ -20,7 +20,7 @@ RTL 출력 코어는 Git submodule로 연결된 별도 저장소인
 애플리케이션 ─ JSON IPC ─ 구면 윈도우 데몬 ─ C++/NEON dirty 합성
                                                    │
                                                    v
-                            BPT1 부분 타일 DMA ─ BS24 출력 코어 ─ 경계 AA ─ HDMI
+                            DDR 장면/부분 갱신 ─ BS25 읽기 캐시 ─ 경계 AA ─ HDMI
                                                    ^
 GY-521 ─ I²C 센서 허브 ─ 96-bit AXI4-Stream ─ yaw/pitch/roll 자세 엔진
 PYNQ BTN0..3 ─ 독립 AXI GPIO ─ Linux 버튼 입력 ─ 데몬 전역 이벤트 기록
@@ -33,6 +33,13 @@ PYNQ BTN0..3 ─ 독립 AXI GPIO ─ Linux 버튼 입력 ─ 데몬 전역 이�
 
 ## 저장소 구성
 
+BS25의 기본 캐시는 64바이트 라인, 16KiB, 2-way입니다. 셀 데이터를 DDR에
+유지하며, BPT1은 드라이버가 비활성 DDR 장면에 적용하고 프레임 경계에서
+전환합니다. 자세 투영과 셀 선택은 RTL에서 수행합니다.
+[DDR 캐시와 드라이버 문서](docs/BOSIO_DDR_CACHE.md)에 버퍼 수명과 설정을
+설명했습니다. 기존 BS24 구조는 출력 IP의 `DDR_CACHE_ENABLE=0`으로 빌드할
+수 있습니다.
+
 ```text
 sw/
   bosio_wm_daemon.py          # system daemon과 JSON IPC 서버
@@ -42,7 +49,7 @@ sw/
   bosio_input_demo.py         # 절대 이동·클릭·드래그 예제
   bosio_native_compositor.py  # C++ 합성기 ctypes 바인딩
   native/                     # C++17/ARM NEON 개발 소스와 빌드 스크립트
-  bosio_driver_v2.py          # BS24 출력 코어 PYNQ 드라이버
+  bosio_driver_v2.py          # BS24/BS25 출력 코어 PYNQ 드라이버
   bosio_geometry_v2.py        # 정이십면체 장면 형식과 자세 계수
   bosio_mouse_input.py        # Linux evdev 마우스 입력
   bosio_buttons.py            # 독립 /dev/mem 버튼 입력과 디바운스
@@ -76,7 +83,7 @@ sudo sh ./install_bosio_boot.sh
 
 설치 스크립트는 파일을 `/home/xilinx/bosio_v2`에 배치하고
 `bosio-window-manager.service`를 활성화합니다. 다음 부팅부터 PYNQ의
-`bootpy.service`가 완료된 뒤 데몬이 `BS24` bitstream을 PL에 내려받습니다.
+`bootpy.service`가 완료된 뒤 데몬이 출력 bitstream을 PL에 내려받습니다.
 
 ```bash
 systemctl is-enabled bosio-window-manager.service
@@ -174,7 +181,7 @@ commit을 갱신합니다.
 ## 호환성
 
 - 보드: PYNQ-Z2 / Zynq-7020
-- 출력 코어 ABI: `BS24`, signature `0x42533234`
+- 출력 코어 ABI: 기본 `BS25`, signature `0x42533235`; 드라이버는 BS24도 지원
 - 투영 AA: 한 줄 경계 적응형 필터, 런타임 enable/threshold/strength 설정
 - 타일 셀 분할: 기본 `M=16`, RTL 지원 `M=8/16/32`
 - 출력: 1280×720 RGB24 AXI4-Stream

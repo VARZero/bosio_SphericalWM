@@ -19,3 +19,6 @@ verification/xsim*/
 *.npz
 *.bak
 *~
+.Xil/
+hw/vivado_proj_output/
+hw/ip_repo/rgb2dvi/
