@@ -27,11 +27,11 @@ Timing Summary Report
   Borrow Time for Max Delay Exceptions       :  Yes
   Merge Timing Exceptions                    :  Yes
 
-  Corner  Analyze    Analyze    
-  Name    Max Paths  Min Paths  
-  ------  ---------  ---------  
-  Slow    Yes        Yes        
-  Fast    Yes        Yes        
+  Corner  Analyze    Analyze
+  Name    Max Paths  Min Paths
+  ------  ---------  ---------
+  Slow    Yes        Yes
+  Fast    Yes        Yes
 
 
 
@@ -126,9 +126,9 @@ Table of Contents
 | ---------------------
 ------------------------------------------------------------------------------------------------
 
-    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
-    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.111        0.000                      0                65511        0.019        0.000                      0                65511        3.000        0.000                       0                 26204  
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------
+      0.111        0.000                      0                65511        0.019        0.000                      0                65511        3.000        0.000                       0                 26204
 
 
 All user specified timing constraints are met.
@@ -141,11 +141,11 @@ All user specified timing constraints are met.
 
 Clock                                      Waveform(ns)       Period(ns)      Frequency(MHz)
 -----                                      ------------       ----------      --------------
-bosio_out_system_i/clk_wiz_0/inst/clk_in1  {0.000 5.000}      10.000          100.000         
-  clk_out1_bosio_out_system_clk_wiz_0_0    {0.000 5.000}      10.000          100.000         
-  clk_out2_bosio_out_system_clk_wiz_0_0    {0.000 6.737}      13.474          74.219          
-  clkfbout_bosio_out_system_clk_wiz_0_0    {0.000 5.000}      10.000          100.000         
-clk_fpga_0                                 {0.000 5.000}      10.000          100.000         
+bosio_out_system_i/clk_wiz_0/inst/clk_in1  {0.000 5.000}      10.000          100.000
+  clk_out1_bosio_out_system_clk_wiz_0_0    {0.000 5.000}      10.000          100.000
+  clk_out2_bosio_out_system_clk_wiz_0_0    {0.000 6.737}      13.474          74.219
+  clkfbout_bosio_out_system_clk_wiz_0_0    {0.000 5.000}      10.000          100.000
+clk_fpga_0                                 {0.000 5.000}      10.000          100.000
 
 
 ------------------------------------------------------------------------------------------------
@@ -153,13 +153,13 @@ clk_fpga_0                                 {0.000 5.000}      10.000          10
 | -----------------
 ------------------------------------------------------------------------------------------------
 
-Clock                                          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
------                                          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-bosio_out_system_i/clk_wiz_0/inst/clk_in1                                                                                                                                                    3.000        0.000                       0                     1  
-  clk_out1_bosio_out_system_clk_wiz_0_0          0.111        0.000                      0                63712        0.019        0.000                      0                63712        3.750        0.000                       0                 25807  
-  clk_out2_bosio_out_system_clk_wiz_0_0          7.665        0.000                      0                  648        0.109        0.000                      0                  648        5.757        0.000                       0                   392  
-  clkfbout_bosio_out_system_clk_wiz_0_0                                                                                                                                                      7.845        0.000                       0                     3  
-clk_fpga_0                                                                                                                                                                                   7.845        0.000                       0                     1  
+Clock                                          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints
+-----                                          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------
+bosio_out_system_i/clk_wiz_0/inst/clk_in1                                                                                                                                                    3.000        0.000                       0                     1
+  clk_out1_bosio_out_system_clk_wiz_0_0          0.111        0.000                      0                63712        0.019        0.000                      0                63712        3.750        0.000                       0                 25807
+  clk_out2_bosio_out_system_clk_wiz_0_0          7.665        0.000                      0                  648        0.109        0.000                      0                  648        5.757        0.000                       0                   392
+  clkfbout_bosio_out_system_clk_wiz_0_0                                                                                                                                                      7.845        0.000                       0                     3
+clk_fpga_0                                                                                                                                                                                   7.845        0.000                       0                     1
 
 
 ------------------------------------------------------------------------------------------------
@@ -167,8 +167,8 @@ clk_fpga_0                                                                      
 | -----------------
 ------------------------------------------------------------------------------------------------
 
-From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
-----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------
 
 
 ------------------------------------------------------------------------------------------------
@@ -176,9 +176,9 @@ From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS
 | -----------------------
 ------------------------------------------------------------------------------------------------
 
-Path Group                             From Clock                             To Clock                                   WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
-----------                             ----------                             --------                                   -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
-**async_default**                      clk_out1_bosio_out_system_clk_wiz_0_0  clk_out1_bosio_out_system_clk_wiz_0_0        1.087        0.000                      0                 1151        0.744        0.000                      0                 1151  
+Path Group                             From Clock                             To Clock                                   WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints
+----------                             ----------                             --------                                   -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------
+**async_default**                      clk_out1_bosio_out_system_clk_wiz_0_0  clk_out1_bosio_out_system_clk_wiz_0_0        1.087        0.000                      0                 1151        0.744        0.000                      0                 1151
 
 
 ------------------------------------------------------------------------------------------------
@@ -235,7 +235,7 @@ Slack (MET) :             0.111ns  (required time - arrival time)
   Data Path Delay:        9.691ns  (logic 4.421ns (45.621%)  route 5.270ns (54.379%))
   Logic Levels:           2  (DSP48E1=1 LUT6=1)
   Clock Path Skew:        -0.059ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    1.556ns = ( 11.556 - 10.000 ) 
+    Destination Clock Delay (DCD):    1.556ns = ( 11.556 - 10.000 )
     Source Clock Delay      (SCD):    1.730ns
     Clock Pessimism Removal (CPR):    0.115ns
   Clock Uncertainty:      0.068ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
@@ -246,7 +246,7 @@ Slack (MET) :             0.111ns  (required time - arrival time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.806     1.806    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -267,7 +267,7 @@ Slack (MET) :             0.111ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                     10.000    10.000 r  
+                                                     10.000    10.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000    10.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.612    11.612    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -276,14 +276,14 @@ Slack (MET) :             0.111ns  (required time - arrival time)
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    10.003 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
                          net (fo=25857, routed)       1.553    11.556    bosio_out_system_i/output_core_0/inst/u_sensor_pose/aclk
     SLICE_X72Y38         FDRE                                         r  bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg[1]/C
-                         clock pessimism              0.115    11.671    
-                         clock uncertainty           -0.068    11.603    
+                         clock pessimism              0.115    11.671
+                         clock uncertainty           -0.068    11.603
     SLICE_X72Y38         FDRE (Setup_fdre_C_D)       -0.071    11.532    bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg[1]
   -------------------------------------------------------------------
-                         required time                         11.532    
-                         arrival time                         -11.421    
+                         required time                         11.532
+                         arrival time                         -11.421
   -------------------------------------------------------------------
-                         slack                                  0.111    
+                         slack                                  0.111
 
 
 
@@ -300,7 +300,7 @@ Slack (MET) :             0.019ns  (arrival time - required time)
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out1_bosio_out_system_clk_wiz_0_0 rise@0.000ns - clk_out1_bosio_out_system_clk_wiz_0_0 rise@0.000ns)
   Data Path Delay:        0.310ns  (logic 0.148ns (47.780%)  route 0.162ns (52.220%))
-  Logic Levels:           0  
+  Logic Levels:           0
   Clock Path Skew:        0.266ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    0.817ns
     Source Clock Delay      (SCD):    0.546ns
@@ -309,7 +309,7 @@ Slack (MET) :             0.019ns  (arrival time - required time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.597     0.597    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -325,7 +325,7 @@ Slack (MET) :             0.019ns  (arrival time - required time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.864     0.864    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -334,13 +334,13 @@ Slack (MET) :             0.019ns  (arrival time - required time)
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     0.002 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
                          net (fo=25857, routed)       0.815     0.817    bosio_out_system_i/output_core_0/inst/u_projector/aclk
     SLICE_X48Y79         FDRE                                         r  bosio_out_system_i/output_core_0/inst/u_projector/dda[44].dx_reg[44][8]/C
-                         clock pessimism             -0.005     0.812    
+                         clock pessimism             -0.005     0.812
     SLICE_X48Y79         FDRE (Hold_fdre_C_D)         0.024     0.836    bosio_out_system_i/output_core_0/inst/u_projector/dda[44].dx_reg[44][8]
   -------------------------------------------------------------------
-                         required time                         -0.836    
-                         arrival time                           0.855    
+                         required time                         -0.836
+                         arrival time                           0.855
   -------------------------------------------------------------------
-                         slack                                  0.019    
+                         slack                                  0.019
 
 
 
@@ -384,7 +384,7 @@ Slack (MET) :             7.665ns  (required time - arrival time)
   Data Path Delay:        5.727ns  (logic 1.378ns (24.060%)  route 4.349ns (75.940%))
   Logic Levels:           4  (LUT2=1 LUT5=1 LUT6=2)
   Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    1.690ns = ( 15.164 - 13.474 ) 
+    Destination Clock Delay (DCD):    1.690ns = ( 15.164 - 13.474 )
     Source Clock Delay      (SCD):    1.844ns
     Clock Pessimism Removal (CPR):    0.115ns
   Clock Uncertainty:      0.071ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
@@ -395,7 +395,7 @@ Slack (MET) :             7.665ns  (required time - arrival time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.806     1.806    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT1)
@@ -420,7 +420,7 @@ Slack (MET) :             7.665ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                     13.474    13.474 r  
+                                                     13.474    13.474 r
     BUFGCTRL_X0Y16       BUFG                         0.000    13.474 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.612    15.086    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT1)
@@ -429,14 +429,14 @@ Slack (MET) :             7.665ns  (required time - arrival time)
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.091    13.477 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
                          net (fo=390, routed)         1.687    15.164    bosio_out_system_i/vid_out_0/inst/SYNC_INST/vid_io_out_clk
     SLICE_X106Y31        FDRE                                         r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/FSM_sequential_state_reg[3]/C
-                         clock pessimism              0.115    15.279    
-                         clock uncertainty           -0.071    15.208    
+                         clock pessimism              0.115    15.279
+                         clock uncertainty           -0.071    15.208
     SLICE_X106Y31        FDRE (Setup_fdre_C_D)        0.029    15.237    bosio_out_system_i/vid_out_0/inst/SYNC_INST/FSM_sequential_state_reg[3]
   -------------------------------------------------------------------
-                         required time                         15.237    
-                         arrival time                          -7.572    
+                         required time                         15.237
+                         arrival time                          -7.572
   -------------------------------------------------------------------
-                         slack                                  7.665    
+                         slack                                  7.665
 
 
 
@@ -453,7 +453,7 @@ Slack (MET) :             0.109ns  (arrival time - required time)
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out2_bosio_out_system_clk_wiz_0_0 rise@0.000ns - clk_out2_bosio_out_system_clk_wiz_0_0 rise@0.000ns)
   Data Path Delay:        0.373ns  (logic 0.141ns (37.849%)  route 0.232ns (62.151%))
-  Logic Levels:           0  
+  Logic Levels:           0
   Clock Path Skew:        0.080ns (DCD - SCD - CPR)
     Destination Clock Delay (DCD):    0.925ns
     Source Clock Delay      (SCD):    0.612ns
@@ -462,7 +462,7 @@ Slack (MET) :             0.109ns  (arrival time - required time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.597     0.597    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT1)
@@ -478,7 +478,7 @@ Slack (MET) :             0.109ns  (arrival time - required time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.864     0.864    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT1)
@@ -487,14 +487,14 @@ Slack (MET) :             0.109ns  (arrival time - required time)
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.029     0.002 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
                          net (fo=390, routed)         0.923     0.925    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clkb
     RAMB18_X5Y16         RAMB18E1                                     r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1/CLKBWRCLK
-                         clock pessimism             -0.233     0.692    
+                         clock pessimism             -0.233     0.692
     RAMB18_X5Y16         RAMB18E1 (Hold_ramb18e1_CLKBWRCLK_ADDRBWRADDR[10])
                                                       0.183     0.875    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1
   -------------------------------------------------------------------
-                         required time                         -0.875    
-                         arrival time                           0.984    
+                         required time                         -0.875
+                         arrival time                           0.984
   -------------------------------------------------------------------
-                         slack                                  0.109    
+                         slack                                  0.109
 
 
 
@@ -583,7 +583,7 @@ Slack (MET) :             1.087ns  (required time - arrival time)
   Data Path Delay:        8.314ns  (logic 0.580ns (6.976%)  route 7.734ns (93.024%))
   Logic Levels:           1  (LUT1=1)
   Clock Path Skew:        -0.126ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    1.651ns = ( 11.651 - 10.000 ) 
+    Destination Clock Delay (DCD):    1.651ns = ( 11.651 - 10.000 )
     Source Clock Delay      (SCD):    1.791ns
     Clock Pessimism Removal (CPR):    0.014ns
   Clock Uncertainty:      0.068ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
@@ -594,7 +594,7 @@ Slack (MET) :             1.087ns  (required time - arrival time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.806     1.806    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -612,7 +612,7 @@ Slack (MET) :             1.087ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                     10.000    10.000 r  
+                                                     10.000    10.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000    10.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           1.612    11.612    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -621,14 +621,14 @@ Slack (MET) :             1.087ns  (required time - arrival time)
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    10.003 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
                          net (fo=25857, routed)       1.648    11.651    bosio_out_system_i/sensor_hub_0/inst/clk
     SLICE_X5Y16          FDCE                                         r  bosio_out_system_i/sensor_hub_0/inst/sample_gy_reg[5]/C
-                         clock pessimism              0.014    11.665    
-                         clock uncertainty           -0.068    11.597    
+                         clock pessimism              0.014    11.665
+                         clock uncertainty           -0.068    11.597
     SLICE_X5Y16          FDCE (Recov_fdce_C_CLR)     -0.405    11.192    bosio_out_system_i/sensor_hub_0/inst/sample_gy_reg[5]
   -------------------------------------------------------------------
-                         required time                         11.192    
-                         arrival time                         -10.105    
+                         required time                         11.192
+                         arrival time                         -10.105
   -------------------------------------------------------------------
-                         slack                                  1.087    
+                         slack                                  1.087
 
 
 
@@ -654,7 +654,7 @@ Slack (MET) :             0.744ns  (arrival time - required time)
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.597     0.597    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -672,7 +672,7 @@ Slack (MET) :             0.744ns  (arrival time - required time)
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0 rise edge)
-                                                      0.000     0.000 r  
+                                                      0.000     0.000 r
     BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  bosio_out_system_i/ps7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
                          net (fo=1, routed)           0.864     0.864    bosio_out_system_i/clk_wiz_0/inst/clk_in1
     MMCME2_ADV_X1Y0      MMCME2_ADV (Prop_mmcme2_adv_CLKIN1_CLKOUT0)
@@ -681,15 +681,10 @@ Slack (MET) :             0.744ns  (arrival time - required time)
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     0.002 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
                          net (fo=25857, routed)       0.877     0.879    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/clk
     SLICE_X3Y25          FDCE                                         r  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i_reg/C
-                         clock pessimism             -0.233     0.646    
+                         clock pessimism             -0.233     0.646
     SLICE_X3Y25          FDCE (Remov_fdce_C_CLR)     -0.092     0.554    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i_reg
   -------------------------------------------------------------------
-                         required time                         -0.554    
-                         arrival time                           1.298    
+                         required time                         -0.554
+                         arrival time                           1.298
   -------------------------------------------------------------------
-                         slack                                  0.744    
-
-
-
-
-
+                         slack                                  0.744
