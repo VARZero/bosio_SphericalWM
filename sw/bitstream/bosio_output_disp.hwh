@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Oct  4 22:27:54 2026" VIVADOVERSION="2020.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Oct  5 00:32:46 2026" VIVADOVERSION="2020.2">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="bosio_out_system" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -142,6 +142,26 @@
     <PORT DIR="I" LEFT="3" NAME="buttons" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_buttons">
       <CONNECTIONS>
         <CONNECTION INSTANCE="buttons_gpio" PORT="gpio_io_i"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="TMDS_clk_p" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Clk_p">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="rgb2dvi_0" PORT="TMDS_Clk_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="TMDS_clk_n" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Clk_n">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="rgb2dvi_0" PORT="TMDS_Clk_n"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="2" NAME="TMDS_data_p" RIGHT="0" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Data_p">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="rgb2dvi_0" PORT="TMDS_Data_p"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="2" NAME="TMDS_data_n" RIGHT="0" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Data_n">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="rgb2dvi_0" PORT="TMDS_Data_n"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -1737,7 +1757,7 @@
       </PORTS>
       <BUSINTERFACES/>
     </MODULE>
-    <MODULE COREREVISION="25" FULLNAME="/output_core_0" HWVERSION="1.0" INSTANCE="output_core_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="bosio_output_core" VLNV="varzero.org:user:bosio_output_core:1.0">
+    <MODULE COREREVISION="26" FULLNAME="/output_core_0" HWVERSION="1.0" INSTANCE="output_core_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="bosio_output_core" VLNV="varzero.org:user:bosio_output_core:1.0">
       <DOCUMENTS/>
       <ADDRESSBLOCKS>
         <ADDRESSBLOCK ACCESS="" INTERFACE="s_axi_lite" NAME="reg0" RANGE="4096" USAGE="register"/>
@@ -4630,10 +4650,26 @@
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="TMDS_Clk_p" SIGIS="clk"/>
-        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="TMDS_Clk_n" SIGIS="clk"/>
-        <PORT DIR="O" LEFT="2" NAME="TMDS_Data_p" RIGHT="0" SIGIS="undef"/>
-        <PORT DIR="O" LEFT="2" NAME="TMDS_Data_n" RIGHT="0" SIGIS="undef"/>
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="TMDS_Clk_p" SIGIS="clk" SIGNAME="rgb2dvi_0_TMDS_Clk_p">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TMDS_clk_p"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="TMDS_Clk_n" SIGIS="clk" SIGNAME="rgb2dvi_0_TMDS_Clk_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TMDS_clk_n"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="TMDS_Data_p" RIGHT="0" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Data_p">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TMDS_data_p"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="2" NAME="TMDS_Data_n" RIGHT="0" SIGIS="undef" SIGNAME="rgb2dvi_0_TMDS_Data_n">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="TMDS_data_n"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" NAME="aRst_n" POLARITY="ACTIVE_LOW" SIGIS="rst" SIGNAME="rst_ps7_74M_peripheral_aresetn">
           <CONNECTIONS>
             <CONNECTION INSTANCE="rst_ps7_74M" PORT="peripheral_aresetn"/>

@@ -2,17 +2,19 @@
 ## Constraints File for PYNQ-Z2 HDMI Out (TMDS) & Clock Timing
 ## ============================================================================
 
+# Physical HDMI pins are also checked by validate_hdmi_io.tcl before bitgen.
+
 # HDMI Out TMDS Clock
-set_property -dict { PACKAGE_PIN L16   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Clk_p TMDS_clk_p }];
-set_property -dict { PACKAGE_PIN L17   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Clk_n TMDS_clk_n }];
+set_property -dict { PACKAGE_PIN L16   IOSTANDARD TMDS_33  } [get_ports {TMDS_clk_p}];
+set_property -dict { PACKAGE_PIN L17   IOSTANDARD TMDS_33  } [get_ports {TMDS_clk_n}];
 
 # HDMI Out TMDS Data Channels
-set_property -dict { PACKAGE_PIN K17   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_p[0] TMDS_data_p[0] }];
-set_property -dict { PACKAGE_PIN K18   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_n[0] TMDS_data_n[0] }];
-set_property -dict { PACKAGE_PIN K19   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_p[1] TMDS_data_p[1] }];
-set_property -dict { PACKAGE_PIN J19   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_n[1] TMDS_data_n[1] }];
-set_property -dict { PACKAGE_PIN J18   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_p[2] TMDS_data_p[2] }];
-set_property -dict { PACKAGE_PIN H18   IOSTANDARD TMDS_33  } [get_ports -quiet { TMDS_Data_n[2] TMDS_data_n[2] }];
+set_property -dict { PACKAGE_PIN K17   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_p[0]}];
+set_property -dict { PACKAGE_PIN K18   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_n[0]}];
+set_property -dict { PACKAGE_PIN K19   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_p[1]}];
+set_property -dict { PACKAGE_PIN J19   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_n[1]}];
+set_property -dict { PACKAGE_PIN J18   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_p[2]}];
+set_property -dict { PACKAGE_PIN H18   IOSTANDARD TMDS_33  } [get_ports {TMDS_data_n[2]}];
 
 # HDMI HPD (Input on PYNQ-Z2 board, port removed from BD)
 # set_property -dict { PACKAGE_PIN R19   IOSTANDARD LVCMOS33 } [get_ports -quiet { hdmi_out_hpd }];

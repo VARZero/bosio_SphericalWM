@@ -1,0 +1,133 @@
+{
+  "verified_date": "2026-10-05",
+  "board": "PYNQ-Z2",
+  "tool": "Vivado 2020.2",
+  "abi": "BS25",
+  "m": 16,
+  "scope": "HDMI physical output port repair; BOSIO core RTL and clock architecture unchanged",
+  "bitstream_sha256": "2ed5e6e0cd4347a88f20bc26db5bb68baa5f0fba50230d6633edcd5ce97d307c",
+  "hwh_sha256": "96024b1d81492c77199ce1d143d1f3e1d3f8edfa572131bd5bad4124045d37ef",
+  "implemented_design": {
+    "wns_ns": 0.033,
+    "whs_ns": 0.05,
+    "bus_skew_slack_ns": [
+      8.986,
+      8.543,
+      8.419
+    ],
+    "lut": 24546,
+    "register": 25257,
+    "bram_tile": 22.5,
+    "dsp": 83,
+    "iob": 14,
+    "oserdes": 8,
+    "obufds": 4,
+    "hdmi_pins": {
+      "TMDS_clk_p": "L16",
+      "TMDS_clk_n": "L17",
+      "TMDS_data_p[0]": "K17",
+      "TMDS_data_n[0]": "K18",
+      "TMDS_data_p[1]": "K19",
+      "TMDS_data_n[1]": "J19",
+      "TMDS_data_p[2]": "J18",
+      "TMDS_data_n[2]": "H18"
+    },
+    "hdmi_iostandard": "TMDS_33"
+  },
+  "capture": {
+    "device": "USB3.0 Video",
+    "resolution": [
+      1280,
+      720
+    ],
+    "sdk_dashboard_visible": true,
+    "launcher_visible_after_btn0": true,
+    "dashboard_png_sha256": "6d91499cdebe5ce1baa26b6efb21abd310d7b973596a4a2e5f0b097a1a4867c2",
+    "launcher_png_sha256": "bd2aeda9b528ee8718dac51fc48b13963521d55b462fa9316875eb155894699e"
+  },
+  "btn0": {
+    "observed_pressed_and_released": true,
+    "last_event_id": 2,
+    "focused_window": 1,
+    "windows": [
+      {
+        "window_id": 2,
+        "owner": "dashboard:7049:5db601b3",
+        "title": "Dashboard",
+        "azimuth": 2.291831180523303,
+        "elevation": -58.9573571189617,
+        "roll": 0.0,
+        "width_deg": 38.0,
+        "height_deg": 28.0,
+        "surface_width": 400,
+        "surface_height": 300,
+        "mapped": true,
+        "always_on_top": false,
+        "decorated": false,
+        "focused": false,
+        "z": 0
+      },
+      {
+        "window_id": 1,
+        "owner": "boayo-desktop:6851:13f306c3",
+        "title": "BoAYO Launcher",
+        "azimuth": 4.640958140559661,
+        "elevation": -62.68158278731207,
+        "roll": 0.0,
+        "width_deg": 42.0,
+        "height_deg": 30.0,
+        "surface_width": 640,
+        "surface_height": 360,
+        "mapped": true,
+        "always_on_top": true,
+        "decorated": false,
+        "focused": true,
+        "z": 1
+      }
+    ]
+  },
+  "services": {
+    "bosio-window-manager": "active",
+    "boayo-desktop": "active"
+  },
+  "output_status": {
+    "raw": 1514405899,
+    "enabled": true,
+    "scene_valid": true,
+    "dma_busy": false,
+    "pose_pending": true,
+    "scene_pending": false,
+    "error": false,
+    "frames": 23108,
+    "received": 35840,
+    "fclk0_mhz": 100.0,
+    "aa_enabled": true,
+    "aa_threshold": 24,
+    "aa_strength": 32,
+    "sensor_mode": true,
+    "sensor_active": true,
+    "sensor_pose_busy": true,
+    "sensor_applied": 38439,
+    "sensor_packets": 38442,
+    "sensor_yaw_mrad": 230,
+    "sensor_pitch_mrad": -1029,
+    "sensor_roll_mrad": -45,
+    "sensor_invert_yaw": false,
+    "sensor_invert_pitch": false,
+    "sensor_invert_roll": false,
+    "ddr_cache": true,
+    "cache_line_bytes": 64,
+    "cache_bytes": 16384,
+    "cache_ways": 2,
+    "cache_hits": 4108066156,
+    "cache_misses": 9133447,
+    "cache_stall_cycles": 429903709
+  },
+  "render_error": null,
+  "limits": [
+    "Cold boot was not repeated after the final deployment.",
+    "This validation does not measure application rendering FPS.",
+    "An external red-background probe did not display red and is not counted as a passed color-pattern test.",
+    "Capture PNGs are local evidence and excluded from this repository."
+  ]
+}

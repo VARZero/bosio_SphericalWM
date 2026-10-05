@@ -13,6 +13,9 @@ source $create_script
 
 # 2. Launch Synthesis, Implementation, and Write Bitstream
 puts "==> Starting Synthesis & Implementation (Jobs: 4)..."
+set hdmi_check [file join $root_dir "hw" "scripts" "validate_hdmi_io.tcl"]
+add_files -fileset utils_1 -norecurse $hdmi_check
+set_property STEPS.WRITE_BITSTREAM.TCL.PRE $hdmi_check [get_runs impl_1]
 launch_runs impl_1 -to_step write_bitstream -jobs 4
 wait_on_run impl_1
 
@@ -23,6 +26,8 @@ if {[get_property PROGRESS [get_runs impl_1]] != "100%"} {
 
 # 3. Export Bitstream & Hardware Handoff
 open_run impl_1
+report_io -file [file join $proj_dir "bs25_io.rpt"]
+source $hdmi_check
 report_timing_summary -file [file join $proj_dir "bs25_timing_summary.rpt"]
 report_utilization -file [file join $proj_dir "bs25_utilization.rpt"]
 set worst_setup [get_timing_paths -delay_type max -max_paths 1]

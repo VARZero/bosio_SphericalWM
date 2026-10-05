@@ -194,8 +194,18 @@ connect_bd_net [get_bd_pins vid_out_0/vid_active_video] [get_bd_pins rgb2dvi_0/v
 connect_bd_net [get_bd_pins vid_out_0/vid_hsync] [get_bd_pins rgb2dvi_0/vid_pHSync]
 connect_bd_net [get_bd_pins vid_out_0/vid_vsync] [get_bd_pins rgb2dvi_0/vid_pVSync]
 
-# External TMDS port for HDMI Output
-make_bd_intf_pins_external [get_bd_intf_pins rgb2dvi_0/TMDS] -name "TMDS"
+# Export physical TMDS pins explicitly. The rgb2dvi custom bus abstraction is
+# optional in a locally installed IP repository: exporting only its interface
+# can silently omit all HDMI ports from the generated HDL wrapper when that
+# abstraction is unavailable. Scalar/vector ports do not need that definition.
+foreach {pin port} {TMDS_Clk_p TMDS_clk_p TMDS_Clk_n TMDS_clk_n} {
+    create_bd_port -dir O $port
+    connect_bd_net [get_bd_pins rgb2dvi_0/$pin] [get_bd_ports $port]
+}
+foreach {pin port} {TMDS_Data_p TMDS_data_p TMDS_Data_n TMDS_data_n} {
+    create_bd_port -dir O -from 2 -to 0 $port
+    connect_bd_net [get_bd_pins rgb2dvi_0/$pin] [get_bd_ports $port]
+}
 
 # Validate and Save BD
 puts "==> Validating Block Design..."

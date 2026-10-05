@@ -176,6 +176,20 @@ vivado -mode batch -source hw/scripts/build_output_bitstream.tcl
 뒤에는 submodule 저장소에서 먼저 검증·커밋하고, 이 저장소의 submodule
 commit을 갱신합니다.
 
+HDMI의 TMDS 클럭·데이터는 `rgb2dvi`의 개별 핀을 최상위 포트에 직접
+연결합니다. 커스텀 TMDS 인터페이스 정의가 없는 IP 패키지에서도 실제 출력
+포트가 생성되도록 하기 위한 연결입니다. 비트스트림 생성 직전에
+`hw/scripts/validate_hdmi_io.tcl`이 8개 핀의 패키지 위치와 `TMDS_33`,
+4개 차동 출력 버퍼를 검사하며, 누락되면 빌드를 중단합니다.
+
+2026-10-05 HDMI 핀 연결을 복구한 BS25 빌드를 보드에 적용하고 USB 캡처보드로
+BoAYo 런처와 SDK Dashboard 출력을 확인했습니다. BTN0을 누르면 런처가 현재
+시선에 최상위로 열리고 기존 앱 창이 유지되는 것도 확인했습니다. 해당 빌드의
+WNS는 +0.033ns, WHS는 +0.050ns입니다. 검증 정보는
+[HDMI 보드 검증 기록](verification/results/bosio_hdmi_board_validation.json)에 있습니다.
+출력 코어의 프레임 카운터는 내부 AXI 스트림 진행을 나타내므로, 이것만으로
+HDMI 커넥터의 실제 신호 출력을 확인할 수는 없습니다.
+
 현재 BS25 보드 검증은 M=16 전체 구면 4,220타일에서 RTL 출력 스트림
 59.92 FPS를 확인했습니다. 한 타일의 96워드 BPT1 갱신 8회는 평균 15.0ms였으며
 프레임 경계 대기가 포함됩니다. 이 값은 앱의 전체 합성 FPS와 다릅니다.
