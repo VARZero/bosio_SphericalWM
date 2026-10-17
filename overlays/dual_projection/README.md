@@ -54,3 +54,6 @@ The PS now caches rounded-rectangle shape coverage while FPGA engines project
 content tiles. Shape-only changes reuse projected pixels. See
 [BoAYO M32 results](BOAYO_M32_RESULTS.md) for SDK delta uploads, chrome caching
 and actual Dashboard validation. Decorated/unsupported-size windows retain native fallback.
+
+The currently deployed original-bitstream configuration, metadata reload fix,
+and boot service are recorded in [STABLE_RUNTIME.md](STABLE_RUNTIME.md).

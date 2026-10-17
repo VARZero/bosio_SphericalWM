@@ -1,5 +1,5 @@
 {
-  "output_core_commit": "25b2e04cfa930c8cb514186c90e8aeae962790ac",
+  "output_core_commit": "addaa9d784f7b9b4f2d2d91b2dc6c57836542708",
   "projection_core_commit": "60943cc825e47779c8175c2d411939dc68b106e1",
   "output_m": 32,
   "projector_count": 2,
@@ -9,7 +9,7 @@
   },
   "validation": {
     "incremental_host_tests": 14,
-    "output_driver_host_tests": 4,
+    "output_driver_host_tests": 5,
     "projection_model_host_tests": 4,
     "partition_host_tests": 4,
     "workspace_input_host_tests": 14,
@@ -17,9 +17,10 @@
     "live_hardware_reference_checks": 13,
     "boayo_host_tests": 42,
     "boayo_live_cases": 8,
-    "dashboard_minimize_restore": true
+    "dashboard_minimize_restore": true,
+    "metadata_reload_live_cases": 3
   },
-  "packaging": "M32 BoAYo runtime adds cached rounded-shape coverage. Bitstream unchanged. Output driver and projection scheduler use the pinned IP submodules. Source snapshots use LF normalization.",
+  "packaging": "Current deployed original M32 dual bitstream. Rounded-shape caches, BPT2 hardware metadata reload fix, and Dashboard boot startup. Cache/FIFO expansion candidate excluded.",
   "runtime_sources": {
     "bosio_buttons.py": "775ec50de1327371ef48906a3ff57629ca751aa4c5164d5d3b2936f2b7876201",
     "bosio_geometry_v2.py": "fcff37f73139cfb6327bfdb5012a59fd6e668fe54267231b06e47aaa0e00bedd",
@@ -34,5 +35,16 @@
     "validate_incremental.py": "b7a9baeed2021c5ac0b1fc7fe0aa58994e3be51cdb8bea22ee315fe4f0f856f0",
     "show_preview_window.py": "e4599f0913979195a1f308dee2e9d1bacf975bd97b327c08e367ba2eb6f14752"
   },
-  "runtime_source_hash_format": "SHA-256 of UTF-8 source with LF line endings"
+  "runtime_source_hash_format": "SHA-256 of UTF-8 source with LF line endings",
+  "deployed_configuration": {
+    "output_m": 32,
+    "projector_count": 2,
+    "cache_bytes": 16384,
+    "cache_ways": 2,
+    "video_fifo_pixels": 2048,
+    "dashboard_autostart": true,
+    "metadata_reload_fix": true,
+    "hardware_candidate_deployed": false
+  },
+  "deployed_driver_sha256": "ab9899b4855319aed21b071a2611f2cc3c62c258734e33a0d1aa6533e2227516"
 }

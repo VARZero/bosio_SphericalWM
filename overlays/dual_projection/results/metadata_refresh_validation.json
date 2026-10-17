@@ -1,0 +1,116 @@
+{
+  "cases": [
+    {
+      "name": "activate",
+      "metadata_words_received": 4480,
+      "reference": {
+        "tiles": 4220,
+        "cached_mismatched_words": 0,
+        "output_mismatched_words": 0,
+        "active_matches": true
+      }
+    },
+    {
+      "name": "content_only",
+      "metadata_words_received": 0,
+      "reference": {
+        "tiles": 4220,
+        "cached_mismatched_words": 0,
+        "output_mismatched_words": 0,
+        "active_matches": true
+      }
+    },
+    {
+      "name": "clear",
+      "metadata_words_received": 4480,
+      "reference": {
+        "tiles": 4220,
+        "cached_mismatched_words": 0,
+        "output_mismatched_words": 0,
+        "active_matches": true
+      }
+    }
+  ],
+  "passed": true,
+  "m": 32,
+  "dashboard": [
+    {
+      "window_id": 2,
+      "owner": "dashboard:2036:392f5cb4",
+      "title": "Dashboard",
+      "azimuth": 0.05729577951308329,
+      "elevation": -58.9573571189617,
+      "roll": 0.0,
+      "width_deg": 38.0,
+      "height_deg": 28.0,
+      "surface_width": 640,
+      "surface_height": 440,
+      "mapped": true,
+      "always_on_top": false,
+      "decorated": false,
+      "input_enabled": true,
+      "workspace": {
+        "role": "app",
+        "state": "open"
+      },
+      "shape": [
+        [
+          48.0,
+          4.0,
+          544.0,
+          428.0,
+          14.0
+        ],
+        [
+          5.0,
+          196.0,
+          24.0,
+          48.0,
+          8.0
+        ],
+        [
+          604.0,
+          402.0,
+          28.0,
+          28.0,
+          8.0
+        ]
+      ],
+      "focused": true,
+      "z": 0
+    }
+  ],
+  "output": {
+    "raw": 82444299,
+    "enabled": true,
+    "scene_valid": true,
+    "dma_busy": false,
+    "pose_pending": true,
+    "scene_pending": false,
+    "error": false,
+    "frames": 1258,
+    "received": 17920,
+    "fclk0_mhz": 100.0,
+    "aa_enabled": true,
+    "aa_threshold": 24,
+    "aa_strength": 32,
+    "sensor_mode": true,
+    "sensor_active": true,
+    "sensor_pose_busy": true,
+    "sensor_applied": 1893,
+    "sensor_packets": 1896,
+    "sensor_yaw_mrad": -450,
+    "sensor_pitch_mrad": -273,
+    "sensor_roll_mrad": 8,
+    "sensor_invert_yaw": false,
+    "sensor_invert_pitch": false,
+    "sensor_invert_roll": false,
+    "ddr_cache": true,
+    "cache_line_bytes": 64,
+    "cache_bytes": 16384,
+    "cache_ways": 2,
+    "cache_hits": 1157563684,
+    "cache_misses": 2430255,
+    "cache_stall_cycles": 120546100
+  }
+}
