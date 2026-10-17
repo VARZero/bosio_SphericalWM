@@ -1,0 +1,190 @@
+{
+  "passed": true,
+  "output_m": 32,
+  "output_fps": 59.84233093720664,
+  "dashboard": {
+    "window_id": 13,
+    "owner": "dashboard:22093:8742efb3",
+    "title": "Dashboard",
+    "azimuth": 3.495042550298024,
+    "elevation": -59.01465289847479,
+    "roll": 0.0,
+    "width_deg": 38.0,
+    "height_deg": 28.0,
+    "surface_width": 640,
+    "surface_height": 440,
+    "mapped": true,
+    "always_on_top": false,
+    "decorated": false,
+    "input_enabled": true,
+    "workspace": {
+      "role": "app",
+      "state": "open",
+      "restore": {
+        "azimuth": 3.4950425502980216,
+        "elevation": -59.01465289847479,
+        "width_deg": 38.0,
+        "height_deg": 28.0
+      }
+    },
+    "shape": [
+      [
+        48.0,
+        4.0,
+        544.0,
+        428.0,
+        14.0
+      ],
+      [
+        5.0,
+        196.0,
+        24.0,
+        48.0,
+        8.0
+      ],
+      [
+        604.0,
+        402.0,
+        28.0,
+        28.0,
+        8.0
+      ]
+    ],
+    "focused": true,
+    "z": 0
+  },
+  "minimize_restore_passed": true,
+  "reference": {
+    "tiles": 4220,
+    "cached_mismatched_words": 0,
+    "output_mismatched_words": 0,
+    "active_matches": true
+  },
+  "projection": {
+    "mode": "fpga-dual+ps-incremental",
+    "hardware_frames": 68,
+    "fallback_frames": 0,
+    "windows": [
+      13
+    ],
+    "projected_windows": [],
+    "jobs_per_core": [
+      0,
+      0
+    ],
+    "written_cells_per_core": [
+      0,
+      0
+    ],
+    "hardware_ms": 0.0,
+    "driver_ms": 0.0,
+    "shaped_windows": [
+      13
+    ],
+    "texture_upload_words": 0,
+    "reused_window_tiles": 131,
+    "dirty_tiles": 19,
+    "changed_tiles": 17,
+    "total_hw_jobs": 2545,
+    "cached_window_tiles": 291,
+    "update_kind": "patch",
+    "output_words": 4640,
+    "active_tiles": 114,
+    "compose_ms": 5.315016000167816,
+    "sampling": "fixed-point bilinear RGB332"
+  },
+  "performance": {
+    "render_count": 67,
+    "full_update_count": 0,
+    "patch_update_count": 52,
+    "update_words": 835600,
+    "no_op_update_count": 15,
+    "uptime_seconds": 406.10594819499966,
+    "average_compose_ms": 271.8624192836899,
+    "average_upload_ms": 54.28452125379951,
+    "last_compose_ms": 5.562745000133873,
+    "last_upload_ms": 20.94656000008399,
+    "frame_limit": 30.0
+  },
+  "windows": [
+    {
+      "window_id": 13,
+      "owner": "dashboard:22093:8742efb3",
+      "title": "Dashboard",
+      "azimuth": 3.495042550298024,
+      "elevation": -59.01465289847479,
+      "roll": 0.0,
+      "width_deg": 38.0,
+      "height_deg": 28.0,
+      "surface_width": 640,
+      "surface_height": 440,
+      "mapped": true,
+      "always_on_top": false,
+      "decorated": false,
+      "input_enabled": true,
+      "workspace": {
+        "role": "app",
+        "state": "open",
+        "restore": {
+          "azimuth": 3.4950425502980216,
+          "elevation": -59.01465289847479,
+          "width_deg": 38.0,
+          "height_deg": 28.0
+        }
+      },
+      "shape": [
+        [
+          48.0,
+          4.0,
+          544.0,
+          428.0,
+          14.0
+        ],
+        [
+          5.0,
+          196.0,
+          24.0,
+          48.0,
+          8.0
+        ],
+        [
+          604.0,
+          402.0,
+          28.0,
+          28.0,
+          8.0
+        ]
+      ],
+      "focused": true,
+      "z": 0
+    },
+    {
+      "window_id": 12,
+      "owner": "boayo-desktop:22080:97bb2007",
+      "title": "BoAYO Launcher",
+      "azimuth": 0.0,
+      "elevation": 0.0,
+      "roll": 0.0,
+      "width_deg": 42.0,
+      "height_deg": 30.0,
+      "surface_width": 640,
+      "surface_height": 360,
+      "mapped": false,
+      "always_on_top": true,
+      "decorated": false,
+      "input_enabled": true,
+      "workspace": {},
+      "shape": [
+        [
+          51.2,
+          36.0,
+          537.6,
+          251.99999999999997,
+          18.0
+        ]
+      ],
+      "focused": false,
+      "z": 1
+    }
+  ]
+}

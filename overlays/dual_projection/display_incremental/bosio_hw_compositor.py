@@ -51,6 +51,26 @@ def coverage_masks(desc):
     return masks
 
 
+def shaped_coverage(desc, base_masks, shape):
+    """Cache PS rounded-rectangle coverage at the HW sample coordinates."""
+    if not shape:
+        return base_masks
+    from projection_model import cell_coordinates
+    masks = np.zeros_like(base_masks)
+    for index, descriptor in enumerate(desc):
+        u, v, d = cell_coordinates(descriptor)
+        x = np.divide(u, d, out=np.zeros_like(u,dtype=np.float64), where=d>0)
+        y = np.divide(v, d, out=np.zeros_like(v,dtype=np.float64), where=d>0)
+        inside = np.zeros(1024,dtype=bool)
+        for rx, ry, width, height, radius in shape:
+            dx = np.maximum(np.maximum(rx+radius-x, x-(rx+width-radius)),0)
+            dy = np.maximum(np.maximum(ry+radius-y, y-(ry+height-radius)),0)
+            inside |= ((x>=rx)&(x<rx+width)&(y>=ry)&(y<ry+height)&
+                       (dx*dx+dy*dy<=radius*radius))
+        masks[index] = base_masks[index] & inside
+    return masks
+
+
 def tile_patch(scene, ids):
     ids = np.asarray(ids,dtype=np.int32)
     if not len(ids):
@@ -121,8 +141,9 @@ class HardwareCompositor:
         ids = np.flatnonzero(visible)
         lookup = np.full(TILES,-1,dtype=np.int32)
         lookup[ids] = np.arange(len(ids))
+        base_masks = coverage_masks(desc[visible])
         return dict(key=key,desc=desc[visible],ids=ids,lookup=lookup,
-            masks=coverage_masks(desc[visible]),pixels=np.zeros((len(ids),1024),dtype=np.uint8),
+            base_masks=base_masks,masks=base_masks,shape_key=None,pixels=np.zeros((len(ids),1024),dtype=np.uint8),
             invalid=set(range(len(ids))),revision=None,source=None)
 
     def _source_changes(self, cache, w):
@@ -201,11 +222,11 @@ class HardwareCompositor:
         return True
 
     def _update(self,windows,order,focus,pointer,background,m,full=False):
-        if m != 32 or any(windows[i].shape or windows[i].decorated or
+        if m != 32 or any(windows[i].decorated or
                 not (1 <= windows[i].surface_width <= 2048 and 1 <= windows[i].surface_height <= 2048) or
                 not (0 < windows[i].width_deg < 160 and 0 < windows[i].height_deg < 160) for i in order):
             return self._fallback(windows,order,focus,pointer,background,m,
-                                  'shape, decoration, or dimensions require native renderer',full)
+                                  'decoration or dimensions require native renderer',full)
         started = time.perf_counter()
         dirty,current = self.pending_dirty,set(order)
         for wid in set(self.previous_order)-current:
@@ -225,6 +246,11 @@ class HardwareCompositor:
                 if old is not None and old['source'] is not None and old['source'].shape == (w.surface_height,w.surface_width):
                     cache['source'],cache['revision'] = old['source'],old['revision']
                 self.caches[wid] = cache
+                dirty.update(map(int,cache['ids']))
+            shape_key = tuple(tuple(rect) for rect in w.shape)
+            if cache['shape_key'] != shape_key:
+                cache['masks'] = shaped_coverage(cache['desc'],cache['base_masks'],shape_key)
+                cache['shape_key'] = shape_key
                 dirty.update(map(int,cache['ids']))
             self._source_changes(cache,w)
             if wid not in self.previous_order:
@@ -290,6 +316,7 @@ class HardwareCompositor:
         self.metrics = dict(mode=self.name,hardware_frames=self.metrics['hardware_frames']+1,
             fallback_frames=self.metrics['fallback_frames'],windows=list(order),projected_windows=projected_windows,
             jobs_per_core=jobs,written_cells_per_core=cells,hardware_ms=hw_ms,driver_ms=driver_ms,
+            shaped_windows=[wid for wid in order if windows[wid].shape],
             texture_upload_words=uploaded,reused_window_tiles=reused,dirty_tiles=len(ids),changed_tiles=len(changed),
             total_hw_jobs=self.total_hw_jobs,cached_window_tiles=sum(len(c['ids']) for c in self.caches.values()),
             update_kind=kind,output_words=len(result),active_tiles=int(np.count_nonzero(self.scene[256:HEADER] != 0xffffffff)),

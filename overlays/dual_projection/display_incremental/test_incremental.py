@@ -67,7 +67,17 @@ class CompositorTests(unittest.TestCase):
             texture=((rgb[:,:,0]<<16)|(rgb[:,:,1]<<8)|rgb[:,:,2]).reshape(-1)
             desc,mask=prepare_window(w.surface_width,w.surface_height,dst=HEADER,yaw=w.azimuth,
                 pitch=w.elevation,roll=w.roll,fov_h=w.width_deg,fov_v=w.height_deg,clear=False)
-            for d in desc[mask]:reference_job(texture,scene,d)
+            for d in desc[mask]:
+                offset=int(d[1]);previous=scene[offset:offset+256].copy()
+                reference_job(texture,scene,d)
+                if w.shape:
+                    from projection_model import cell_coordinates
+                    from bosio_window_manager import _shape_contains
+                    u,v,den=cell_coordinates(d)
+                    x=np.divide(u,den,out=np.zeros_like(u,dtype=float),where=den>0)
+                    y=np.divide(v,den,out=np.zeros_like(v,dtype=float),where=den>0)
+                    inside=_shape_contains(w.shape,x,y)&(den>0)
+                    scene[offset:offset+256].view(np.uint8)[~inside]=previous.view(np.uint8)[~inside]
         if self.pointer[2]:
             az,el=np.radians(self.pointer[:2]);v=np.array([np.cos(el)*np.sin(az),np.sin(el),-np.cos(el)*np.cos(az)],dtype=np.float32)
             dots=self.rays@v;pixels=scene[HEADER:HEADER+TILES*TILE_WORDS].view(np.uint8)
@@ -118,10 +128,10 @@ class CompositorTests(unittest.TestCase):
             self.assertEqual(self.hw.metrics['jobs_per_core'],[0,0]);self.assert_full_equal()
             self.assertLessEqual(self.hw.metrics['dirty_tiles'],1)
     def test_fallback_return_and_failed_commit_reuse_projection(self):
-        self.render();self.windows[1].shape=[[0,0,128,96,4]]
+        self.render();self.windows[1].decorated=True
         self.assertEqual(self.render()[2],'full')
         self.assertEqual(self.render()[2],'patch')
-        self.windows[1].shape=[]
+        self.windows[1].decorated=False
         self.assertEqual(self.render()[2],'full')
         self.assertEqual(self.hw.metrics['jobs_per_core'],[0,0]);self.assert_full_equal()
         self.hw.invalidate_presentation()
@@ -140,6 +150,20 @@ class CompositorTests(unittest.TestCase):
     def test_opaque_black_layer_still_occludes_cached_underlay(self):
         self.render();self.change(2,0,0,128,96,(0,0,0))
         self.render();self.assertEqual(self.hw.metrics['projected_windows'],[2]);self.assert_full_equal()
+    def test_rounded_shapes_preserve_gaps_and_reuse_projection(self):
+        self.windows[2].shape=[[12,8,104,72,12],[0,40,8,20,3]]
+        self.render();self.assert_full_equal()
+        self.assertEqual(self.hw.metrics['mode'],self.hw.name)
+        self.assertEqual(self.hw.metrics['shaped_windows'],[2])
+        self.change(1,55,40,3,3,(0,255,0));self.render();self.assert_full_equal()
+        self.assertEqual(self.hw.metrics['projected_windows'],[1])
+        self.windows[2].shape=[[30,20,64,50,8]]
+        self.render();self.assert_full_equal()
+        self.assertEqual(self.hw.metrics['jobs_per_core'],[0,0])
+        self.windows[2].shape=[]
+        self.render();self.assert_full_equal()
+        self.assertEqual(self.hw.metrics['jobs_per_core'],[0,0])
+
     def test_pointer_tile_caps_cover_full_scan(self):
         from geometry_reference import triangle_centers
         q=np.einsum('ic,tcd->tid',triangle_centers(32),all_tile_vertices())
