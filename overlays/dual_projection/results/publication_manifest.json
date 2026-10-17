@@ -16,19 +16,20 @@
     "previous_live_board_cases": 14,
     "live_hardware_reference_checks": 13
   },
-  "packaging": "12 runtime/validation/preview modules and bit/HWH match deployed files. Output driver and projection scheduler resolve from pinned submodules. Test import path and launcher adapted; board runtime unchanged.",
+  "packaging": "12 runtime/validation/preview modules match deployed sources after LF normalization. Bit/HWH match deployed bytes. Output driver and projection scheduler load from pinned submodules. Launcher and test imports adapt repository paths; board runtime unchanged.",
   "runtime_sources": {
     "bosio_buttons.py": "775ec50de1327371ef48906a3ff57629ca751aa4c5164d5d3b2936f2b7876201",
     "bosio_geometry_v2.py": "fcff37f73139cfb6327bfdb5012a59fd6e668fe54267231b06e47aaa0e00bedd",
     "bosio_hw_compositor.py": "df5b135091d4cec9aff71876ba24f5ab775e82f3d092e09db06a3233f1c93d71",
     "bosio_mouse_input.py": "6408948f09b02e7def281f904c5ffc8e95edc1e2e427b60fa79526a83210a867",
-    "bosio_native_compositor.py": "ff7bdc106e369a0bb57c976b18a2dba02ecc4a6c6d30bb1912e3d1225dc90023",
-    "bosio_window_manager.py": "b542839b787f4cd8eda9e301104028e8ba3c697d5ed6d4a01d40061d7fde06a0",
-    "bosio_wm_client.py": "8d9332e97c9b20f630003d11108b57ca20cf19731b9916ecfa8bb569bc2cd313",
-    "bosio_wm_daemon.py": "5f8555e1b085918afe075729a2727193faeae76bc551d01736c7b2ffc4938c82",
+    "bosio_native_compositor.py": "1aa473d08cf53271763bcd292d69a2ac97d798d8bef200ccc1a66fb6fdb97f03",
+    "bosio_window_manager.py": "1719d117ed27c91963370433b235db85d8d6af9ab4f0d2b3c0b6e3512b714126",
+    "bosio_wm_client.py": "cbbd0537bc432937230d120b9cbc98ea65ebf64d9f32ffc4adf295976434819b",
+    "bosio_wm_daemon.py": "6bdc2233e81bf08af78a5284b5d4d8d5a85afb1b61c1b417fd25e5173ce60bcd",
     "check_display_health.py": "2af302ca6d6605164688e395b4610fc761a8f4074448e2542c0a71c4cb6f630f",
     "validate_display_pose.py": "c5ab79f0766b82bbb4001436676c4cdd6a10573fc620832d097634c3d208f9df",
     "validate_incremental.py": "f987b73548a20df0d99c764595c787df62ac41d3b5c36676ecd2cab769b338b1",
     "show_preview_window.py": "e4599f0913979195a1f308dee2e9d1bacf975bd97b327c08e367ba2eb6f14752"
-  }
+  },
+  "runtime_source_hash_format": "SHA-256 of UTF-8 source with LF line endings"
 }
