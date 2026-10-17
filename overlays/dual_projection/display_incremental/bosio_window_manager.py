@@ -1,0 +1,724 @@
+"""Spherical window model, compositor, focus, and pointer routing for BOSIO."""
+
+from __future__ import annotations
+
+import base64
+import math
+import json
+import threading
+from collections import defaultdict, deque
+from dataclasses import dataclass, field
+
+import numpy as np
+
+from bosio_geometry_v2 import cell_rays, triangle_centers
+
+
+class WindowManagerError(RuntimeError):
+    pass
+
+
+def _azimuth(value: float) -> float:
+    return (float(value) + 180.0) % 360.0 - 180.0
+
+
+def _elevation(value: float) -> float:
+    return max(-89.5, min(89.5, float(value)))
+
+
+def _direction(azimuth: float, elevation: float) -> np.ndarray:
+    az, el = np.radians([azimuth, elevation])
+    return np.asarray(
+        [math.cos(el) * math.sin(az), math.sin(el), -math.cos(el) * math.cos(az)],
+        dtype=np.float32,
+    )
+
+
+def _basis(azimuth: float, elevation: float, roll: float = 0.0):
+    center = _direction(azimuth, elevation)
+    az = math.radians(azimuth)
+    right = np.asarray([math.cos(az), 0.0, math.sin(az)], dtype=np.float32)
+    up = np.cross(right, center)
+    angle = math.radians(roll)
+    return center, right * math.cos(angle) + up * math.sin(angle), up * math.cos(angle) - right * math.sin(angle)
+
+
+def _shape_rects(value, width, height):
+    if not isinstance(value, (list, tuple)) or len(value) > 16:
+        raise WindowManagerError("shape must contain at most 16 rounded rectangles")
+    result = []
+    for rect in value:
+        if not isinstance(rect, (list, tuple)) or len(rect) != 5:
+            raise WindowManagerError("shape rectangle requires x,y,width,height,radius")
+        x, y, w, h, r = map(float, rect)
+        if not all(math.isfinite(v) for v in (x,y,w,h,r)) or x < 0 or y < 0 or w <= 0 or h <= 0 or x+w > width or y+h > height or not 0 <= r <= min(w,h)/2:
+            raise WindowManagerError("invalid shape rectangle")
+        result.append([x,y,w,h,r])
+    return result
+
+
+def _shape_contains(shape, x, y):
+    if not shape:
+        return np.ones(np.broadcast(x, y).shape, dtype=bool)
+    inside = np.zeros(np.broadcast(x, y).shape, dtype=bool)
+    for rx, ry, w, h, r in shape:
+        dx = np.maximum(np.maximum(rx+r-x, x-(rx+w-r)), 0)
+        dy = np.maximum(np.maximum(ry+r-y, y-(ry+h-r)), 0)
+        inside |= (x >= rx) & (x < rx+w) & (y >= ry) & (y < ry+h) & (dx*dx+dy*dy <= r*r)
+    return inside
+
+
+@dataclass
+class SphericalWindow:
+    window_id: int
+    owner: str
+    title: str
+    azimuth: float
+    elevation: float
+    width_deg: float
+    height_deg: float
+    surface_width: int
+    surface_height: int
+    roll: float = 0.0
+    mapped: bool = True
+    always_on_top: bool = False
+    decorated: bool = False
+    input_enabled: bool = True
+    workspace: dict = field(default_factory=dict)
+    shape: list = field(default_factory=list)
+    surface_revision: int = 1
+    dirty_rect: tuple[int, int, int, int] | None = None
+    surface: np.ndarray = field(repr=False, default=None)
+
+    def public(self, focused=False, z=0):
+        return {
+            "window_id": self.window_id,
+            "owner": self.owner,
+            "title": self.title,
+            "azimuth": self.azimuth,
+            "elevation": self.elevation,
+            "roll": self.roll,
+            "width_deg": self.width_deg,
+            "height_deg": self.height_deg,
+            "surface_width": self.surface_width,
+            "surface_height": self.surface_height,
+            "mapped": self.mapped,
+            "always_on_top": self.always_on_top,
+            "decorated": self.decorated,
+            "input_enabled": self.input_enabled,
+            "workspace": dict(self.workspace),
+            "shape": [list(rect) for rect in self.shape],
+            "focused": focused,
+            "z": z,
+        }
+
+
+class SphericalWindowManager:
+    """Thread-safe state and cell-center compositor for the 20-face framebuffer."""
+
+    MAX_WINDOWS = 64
+    MAX_SURFACE_PIXELS = 1024 * 1024
+
+    def __init__(self, m=16, background=(2, 6, 14), projection_aa=True):
+        self.m = int(m)
+        self._rays = cell_rays(self.m).astype(np.float32)
+        self._flat_rays = self._rays.reshape(-1, 3)
+        self._shape = self._rays.shape[:-1]
+        self.background = np.asarray(background, dtype=np.uint8)
+        self.projection_aa = bool(projection_aa)
+        self._aa_local_neighbors = None
+        self.windows: dict[int, SphericalWindow] = {}
+        self.z_order: list[int] = []
+        self.focused_window: int | None = None
+        self.pointer_azimuth = 0.0
+        self.pointer_elevation = 0.0
+        self.pointer_visible = False
+        self.pointer_buttons = set()
+        self.pointer_left_press_serial = 0
+        self.pointer_last_left_press = None
+        self.pointer_left_release_serial = 0
+        self.pointer_last_left_release = None
+        self.pointer_cancel_serial = 0
+        self._capture = None
+        self.pointer_scroll_serial = 0
+        self.pointer_scroll_delta = 0.0
+        self._drag: tuple[int, float, float] | None = None
+        self._events = defaultdict(lambda: deque(maxlen=256))
+        self._next_id = 1
+        self.generation = 1
+        self.lock = threading.RLock()
+        self.native = None
+        try:
+            from bosio_native_compositor import NativeCompositor
+            self.native = NativeCompositor(self._rays, projection_aa=self.projection_aa)
+        except (OSError, RuntimeError, ImportError):
+            self.native = None
+
+    def _changed(self):
+        self.generation += 1
+
+    def _window(self, window_id, owner=None):
+        try:
+            window = self.windows[int(window_id)]
+        except (KeyError, ValueError):
+            raise WindowManagerError("unknown window")
+        if owner is not None and window.owner != owner:
+            raise WindowManagerError("window belongs to another application")
+        return window
+
+    def _event(self, owner, event_type, **payload):
+        self._events[owner].append({"type": event_type, **payload})
+
+    def create_window(self, owner, title, azimuth=0, elevation=0, width_deg=34,
+                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False, decorated=False,
+                      input_enabled=True, focus_on_create=True, workspace=None, shape=None):
+        with self.lock:
+            if len(self.windows) >= self.MAX_WINDOWS:
+                raise WindowManagerError("window limit reached")
+            sw, sh = int(surface_width), int(surface_height)
+            if sw < 1 or sh < 1 or sw * sh > self.MAX_SURFACE_PIXELS:
+                raise WindowManagerError("invalid surface size")
+            if not 2 <= float(width_deg) <= 160 or not 2 <= float(height_deg) <= 120:
+                raise WindowManagerError("invalid angular size")
+            wid = self._next_id
+            self._next_id += 1
+            window = SphericalWindow(
+                wid, str(owner), str(title)[:96], _azimuth(azimuth), _elevation(elevation),
+                float(width_deg), float(height_deg), sw, sh,
+                surface=np.full((sh, sw, 3), (16, 24, 32), dtype=np.uint8),
+                always_on_top=bool(always_on_top),
+                decorated=bool(decorated),
+                input_enabled=bool(input_enabled), workspace=self._workspace(workspace or {}),
+                shape=_shape_rects(shape or [], sw, sh),
+                dirty_rect=(0, 0, sw, sh),
+            )
+            self.windows[wid] = window
+            if window.always_on_top:
+                self.z_order.append(wid)
+            else:
+                first_top = next((i for i, existing in enumerate(self.z_order)
+                                  if self.windows[existing].always_on_top), len(self.z_order))
+                self.z_order.insert(first_top, wid)
+            if focus_on_create and input_enabled:
+                self._set_focus_locked(wid)
+            self._changed()
+            return window.public(wid == self.focused_window, self.z_order.index(wid))
+
+    @staticmethod
+    def _workspace(value):
+        if not isinstance(value, dict) or len(json.dumps(value, allow_nan=False)) > 4096:
+            raise WindowManagerError("invalid workspace metadata")
+        return json.loads(json.dumps(value, allow_nan=False))
+
+    def capture_pointer(self, owner, window_id):
+        with self.lock:
+            window = self._window(window_id, owner)
+            if not window.mapped or not window.input_enabled or "left" not in self.pointer_buttons:
+                return False
+            if self._capture is not None and self.windows[self._capture].owner != owner:
+                raise WindowManagerError("pointer is captured by another application")
+            self._capture = window.window_id
+            self._drag = None
+            return True
+
+    def release_pointer(self, owner):
+        with self.lock:
+            if self._capture is not None:
+                self._window(self._capture, owner)
+                self._capture = None
+            return True
+
+    def cancel_pointer(self):
+        with self.lock:
+            hit = self._pointer_hit()
+            if hit:
+                window, u, v, zone = hit
+                self._event(window.owner, "pointer_cancel", window_id=window.window_id,
+                            u=u, v=v, zone=zone, azimuth=self.pointer_azimuth,
+                            elevation=self.pointer_elevation)
+            self.pointer_buttons.clear()
+            self._capture = self._drag = None
+            self.pointer_cancel_serial += 1
+            self._changed()
+            return self.pointer_state()
+
+    def request_window_action(self, requester, window_id, action, azimuth=None, elevation=None):
+        with self.lock:
+            window = self._window(window_id)
+            if window.workspace.get("role") != "app" or action not in ("minimize", "restore", "close"):
+                raise WindowManagerError("window does not accept workspace actions")
+            payload = {}
+            if azimuth is not None or elevation is not None:
+                if azimuth is None or elevation is None or not all(math.isfinite(float(v)) for v in (azimuth, elevation)):
+                    raise WindowManagerError("invalid restore position")
+                payload = {"azimuth": _azimuth(azimuth), "elevation": _elevation(elevation)}
+            self._event(window.owner, "window_action", window_id=window.window_id,
+                        action=action, requester=str(requester), **payload)
+            return True
+
+    def key(self, key, pressed=True):
+        with self.lock:
+            if key not in ("tab", "enter", "space", "escape", "next"):
+                raise WindowManagerError("unsupported workspace key")
+            if key == "escape" and pressed:
+                self.cancel_pointer()
+            if key == "next" and pressed:
+                visible = [wid for wid in self.z_order if self.windows[wid].mapped and self.windows[wid].input_enabled]
+                if visible:
+                    index = visible.index(self.focused_window) if self.focused_window in visible else -1
+                    self.focus_window(visible[(index + 1) % len(visible)], raise_window=False)
+                return True
+            window = self.windows.get(self.focused_window)
+            if window and window.mapped and window.input_enabled:
+                self._event(window.owner, "key", window_id=window.window_id, key=key, pressed=bool(pressed))
+            return True
+
+    def _pointer_hit(self):
+        if self._capture in self.windows:
+            window = self.windows[self._capture]
+            dot, x, y = self._project(window, _direction(self.pointer_azimuth, self.pointer_elevation)[None, :])
+            return window, float((x[0] + 1) / 2), float((1 - y[0]) / 2), "content"
+        return self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+
+    def _focus_visible(self):
+        self._set_focus_locked(next((wid for wid in reversed(self.z_order)
+                                    if self.windows[wid].mapped and self.windows[wid].input_enabled), None))
+
+    def destroy_window(self, owner, window_id):
+        with self.lock:
+            window = self._window(window_id, owner)
+            if self._capture == window.window_id:
+                self._capture = None
+            if self._drag and self._drag[0] == window.window_id:
+                self._drag = None
+            self.windows.pop(window.window_id)
+            self.z_order.remove(window.window_id)
+            if self.focused_window == window.window_id:
+                self._focus_visible()
+            self._changed()
+
+    def destroy_owner_windows(self, owner):
+        with self.lock:
+            owned = [wid for wid in self.z_order if self.windows[wid].owner == owner]
+            for wid in owned:
+                self.destroy_window(owner, wid)
+            self._events.pop(owner, None)
+            return len(owned)
+
+    def _set_focus_locked(self, window_id):
+        if self.focused_window == window_id:
+            return
+        previous = self.windows.get(self.focused_window)
+        if previous:
+            self._event(previous.owner, "focus", window_id=previous.window_id, focused=False)
+        self.focused_window = window_id
+        if window_id is not None:
+            current = self.windows[window_id]
+            self._event(current.owner, "focus", window_id=window_id, focused=True)
+
+    def focus_window(self, window_id, raise_window=True):
+        with self.lock:
+            window = self._window(window_id)
+            if not window.mapped or not window.input_enabled:
+                raise WindowManagerError("cannot focus an inactive window")
+            self._set_focus_locked(window.window_id)
+            if raise_window:
+                self.z_order.remove(window.window_id)
+                if window.always_on_top:
+                    self.z_order.append(window.window_id)
+                else:
+                    top = [wid for wid in self.z_order if self.windows[wid].always_on_top]
+                    self.z_order.insert(len(self.z_order) - len(top), window.window_id)
+            self._changed()
+            return window.public(True, self.z_order.index(window.window_id))
+
+    def configure_window(self, owner, window_id, **changes):
+        with self.lock:
+            window = self._window(window_id, owner)
+            if "title" in changes:
+                window.title = str(changes["title"])[:96]
+            if "azimuth" in changes:
+                window.azimuth = _azimuth(changes["azimuth"])
+            if "elevation" in changes:
+                window.elevation = _elevation(changes["elevation"])
+            if "roll" in changes:
+                window.roll = _azimuth(changes["roll"])
+            if "width_deg" in changes:
+                value = float(changes["width_deg"])
+                if not 2 <= value <= 160:
+                    raise WindowManagerError("invalid width")
+                window.width_deg = value
+            if "height_deg" in changes:
+                value = float(changes["height_deg"])
+                if not 2 <= value <= 120:
+                    raise WindowManagerError("invalid height")
+                window.height_deg = value
+            if "mapped" in changes:
+                window.mapped = bool(changes["mapped"])
+            if "always_on_top" in changes:
+                window.always_on_top = bool(changes["always_on_top"])
+            if "decorated" in changes:
+                window.decorated = bool(changes["decorated"])
+            if "input_enabled" in changes:
+                window.input_enabled = bool(changes["input_enabled"])
+            if "shape" in changes:
+                window.shape = _shape_rects(changes["shape"], window.surface_width, window.surface_height)
+            if "workspace" in changes:
+                window.workspace = self._workspace(changes["workspace"])
+            if not window.mapped or not window.input_enabled:
+                if self._capture == window.window_id:
+                    self._capture = None
+                if self._drag and self._drag[0] == window.window_id:
+                    self._drag = None
+                if self.focused_window == window.window_id:
+                    self._focus_visible()
+            self._changed()
+            return window.public(window.window_id == self.focused_window, self.z_order.index(window.window_id))
+
+    def raise_window(self, owner, window_id):
+        with self.lock:
+            window = self._window(window_id, owner)
+            self.z_order.remove(window.window_id)
+            if window.always_on_top:
+                self.z_order.append(window.window_id)
+            else:
+                top = [wid for wid in self.z_order if self.windows[wid].always_on_top]
+                insert = len(self.z_order) - len(top)
+                self.z_order.insert(insert, window.window_id)
+            self._changed()
+
+    def lower_window(self, owner, window_id):
+        with self.lock:
+            window = self._window(window_id, owner)
+            self.z_order.remove(window.window_id)
+            self.z_order.insert(0, window.window_id)
+            self._changed()
+
+    def fill(self, owner, window_id, rgb):
+        with self.lock:
+            window = self._window(window_id, owner)
+            color = np.asarray(rgb, dtype=np.int64)
+            if color.shape != (3,) or np.any(color < 0) or np.any(color > 255):
+                raise WindowManagerError("rgb must contain three bytes")
+            window.surface[:] = color.astype(np.uint8)
+            window.surface_revision += 1
+            window.dirty_rect = (0, 0, window.surface_width, window.surface_height)
+            self._changed()
+
+    def update_surface(self, owner, window_id, x, y, width, height, rgb24):
+        with self.lock:
+            window = self._window(window_id, owner)
+            x, y, width, height = map(int, (x, y, width, height))
+            if x < 0 or y < 0 or width < 1 or height < 1 or x + width > window.surface_width or y + height > window.surface_height:
+                raise WindowManagerError("surface update is out of bounds")
+            try:
+                raw = base64.b64decode(rgb24, validate=True)
+            except Exception as exc:
+                raise WindowManagerError("invalid rgb24 base64") from exc
+            if len(raw) != width * height * 3:
+                raise WindowManagerError("rgb24 byte count does not match rectangle")
+            window.surface[y:y + height, x:x + width] = np.frombuffer(raw, dtype=np.uint8).reshape(height, width, 3)
+            window.surface_revision += 1
+            if window.dirty_rect is None:
+                window.dirty_rect = (x, y, width, height)
+            else:
+                ox, oy, ow, oh = window.dirty_rect
+                x0, y0 = min(ox, x), min(oy, y)
+                x1, y1 = max(ox + ow, x + width), max(oy + oh, y + height)
+                window.dirty_rect = (x0, y0, x1 - x0, y1 - y0)
+            self._changed()
+
+    def _project(self, window, directions):
+        center, right, up = _basis(window.azimuth, window.elevation, window.roll)
+        dot = directions @ center
+        safe = np.maximum(dot, 1e-8)
+        x = (directions @ right) / safe / math.tan(math.radians(window.width_deg / 2))
+        y = (directions @ up) / safe / math.tan(math.radians(window.height_deg / 2))
+        return dot, x, y
+
+    def hit_test(self, azimuth, elevation):
+        direction = _direction(_azimuth(azimuth), _elevation(elevation))[None, :]
+        with self.lock:
+            for wid in reversed(self.z_order):
+                window = self.windows[wid]
+                if not window.mapped or not window.input_enabled:
+                    continue
+                dot, x, y = self._project(window, direction)
+                if dot[0] > 0 and abs(x[0]) <= 1 and abs(y[0]) <= 1:
+                    u = float((x[0] + 1) * 0.5)
+                    v = float((1 - y[0]) * 0.5)
+                    if not _shape_contains(window.shape, u * (window.surface_width - 1), v * (window.surface_height - 1)):
+                        continue
+                    return window, u, v, "title" if window.decorated and v < 0.14 else "content"
+        return None
+
+    def pointer_warp(self, azimuth, elevation):
+        with self.lock:
+            previous_hit = self._pointer_hit()
+            old_az, old_el = self.pointer_azimuth, self.pointer_elevation
+            self.pointer_azimuth, self.pointer_elevation = _azimuth(azimuth), _elevation(elevation)
+            if self._drag:
+                wid, base_az, base_el = self._drag
+                window = self.windows.get(wid)
+                if window:
+                    delta_az = _azimuth(self.pointer_azimuth - old_az)
+                    window.azimuth = _azimuth(window.azimuth + delta_az)
+                    window.elevation = _elevation(window.elevation + self.pointer_elevation - old_el)
+            hit = self._pointer_hit()
+            if previous_hit and (not hit or previous_hit[0].window_id != hit[0].window_id):
+                previous = previous_hit[0]
+                self._event(previous.owner, "pointer_leave", window_id=previous.window_id)
+            if hit:
+                window, u, v, zone = hit
+                self._event(window.owner, "pointer_motion", window_id=window.window_id, u=u, v=v, zone=zone,
+                            azimuth=self.pointer_azimuth, elevation=self.pointer_elevation)
+            self._changed()
+            return self.pointer_state(hit)
+
+    def pointer_move(self, delta_azimuth, delta_elevation):
+        return self.pointer_warp(self.pointer_azimuth + float(delta_azimuth), self.pointer_elevation + float(delta_elevation))
+
+    def pointer_button(self, button, pressed):
+        button, pressed = str(button), bool(pressed)
+        with self.lock:
+            was_pressed = button in self.pointer_buttons
+            if pressed:
+                self.pointer_buttons.add(button)
+            else:
+                self.pointer_buttons.discard(button)
+            hit = self._pointer_hit()
+            if not pressed and button == "left" and was_pressed:
+                self.pointer_left_release_serial += 1
+                self.pointer_last_left_release = {"azimuth": self.pointer_azimuth,
+                                                  "elevation": self.pointer_elevation}
+            if pressed and button == "left" and not was_pressed:
+                self.pointer_left_press_serial += 1
+                self.pointer_last_left_press = {
+                    "azimuth": self.pointer_azimuth,
+                    "elevation": self.pointer_elevation,
+                    "window_id": hit[0].window_id if hit else None,
+                }
+            if pressed and button == "left" and hit:
+                window, _, _, zone = hit
+                self.focus_window(window.window_id, True)
+                if zone == "title":
+                    self._drag = (window.window_id, window.azimuth, window.elevation)
+            if not pressed and button == "left":
+                self._drag = None
+            if hit:
+                window, u, v, zone = hit
+                self._event(window.owner, "pointer_button", window_id=window.window_id, button=button,
+                            pressed=pressed, u=u, v=v, zone=zone,
+                            azimuth=self.pointer_azimuth, elevation=self.pointer_elevation,
+                            cancel_serial=self.pointer_cancel_serial)
+            if not pressed and button == "left":
+                self._capture = None
+            self._changed()
+            return self.pointer_state(hit)
+
+    def pointer_state(self, hit=None):
+        if hit is None:
+            hit = self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+        return {
+            "azimuth": self.pointer_azimuth,
+            "elevation": self.pointer_elevation,
+            "visible": self.pointer_visible,
+            "window_id": hit[0].window_id if hit else None,
+            "zone": hit[3] if hit else None,
+            "dragging": self._drag is not None,
+            "buttons": sorted(self.pointer_buttons),
+            "left_press_serial": self.pointer_left_press_serial,
+            "last_left_press": self.pointer_last_left_press,
+            "left_release_serial": self.pointer_left_release_serial,
+            "last_left_release": self.pointer_last_left_release,
+            "cancel_serial": self.pointer_cancel_serial,
+            "captured_window": self._capture,
+            "scroll_serial": self.pointer_scroll_serial,
+            "scroll_delta": self.pointer_scroll_delta,
+        }
+
+    def pointer_scroll(self, delta):
+        with self.lock:
+            self.pointer_scroll_serial += 1
+            self.pointer_scroll_delta = float(delta)
+            self._changed()
+            return self.pointer_state()
+
+    def poll_events(self, owner, limit=64):
+        with self.lock:
+            queue = self._events[str(owner)]
+            return [queue.popleft() for _ in range(min(max(0, int(limit)), len(queue)))]
+
+    def state(self):
+        with self.lock:
+            return {
+                "generation": self.generation,
+                "compositor": getattr(self.native, 'name', "cpp-neon") if self.native is not None else "numpy",
+                "projection": dict(getattr(self.native, 'metrics', {})),
+                "focused_window": self.focused_window,
+                "pointer": self.pointer_state(),
+                "windows": [self.windows[wid].public(wid == self.focused_window, z)
+                            for z, wid in enumerate(self.z_order)],
+            }
+
+    def render(self):
+        """Return RGB[20,211,M*M,3], composited from back to front."""
+        with self.lock:
+            if self.native is not None:
+                order = [wid for wid in self.z_order if self.windows[wid].mapped]
+                return self.native.render(
+                    self.windows, order, self.focused_window,
+                    (self.pointer_azimuth, self.pointer_elevation, self.pointer_visible),
+                    self.background, self._shape,
+                )
+            image = np.empty((*self._shape, 3), dtype=np.uint8)
+            image[:] = self.background
+            flat = image.reshape(-1, 3)
+            for wid in self.z_order:
+                window = self.windows[wid]
+                if not window.mapped:
+                    continue
+                dot, x, y = self._project(window, self._flat_rays)
+                margin_x = min(.8, .05 + 1 / window.width_deg) if self.projection_aa else 0
+                margin_y = min(.8, .05 + 1 / window.height_deg) if self.projection_aa else 0
+                mask = (dot > 0) & (np.abs(x) <= 1 + margin_x) & (np.abs(y) <= 1 + margin_y)
+                if window.shape:
+                    mask &= _shape_contains(window.shape, (x+1)*.5*(window.surface_width-1), (1-y)*.5*(window.surface_height-1))
+                indices = np.flatnonzero(mask)
+                if not len(indices):
+                    continue
+                fx = (x[mask] + 1) * 0.5 * (window.surface_width - 1)
+                fy = (1 - y[mask]) * 0.5 * (window.surface_height - 1)
+                projected_x, projected_y = x[mask], y[mask]
+                if self.projection_aa:
+                    if self._aa_local_neighbors is None:
+                        centers = triangle_centers(self.m)
+                        distances = np.sum((centers[:, None] - centers[None, :]) ** 2, axis=-1)
+                        np.fill_diagonal(distances, np.inf)
+                        self._aa_local_neighbors = np.argpartition(distances, 3, axis=1)[:, :3]
+                    cells = self.m * self.m
+                    neighbor_indices = (indices[:, None] // cells) * cells + self._aa_local_neighbors[indices % cells]
+                    neighbor_valid = dot[neighbor_indices] > .05
+                    nx = (x[neighbor_indices] + 1) * .5 * (window.surface_width - 1)
+                    ny = (1 - y[neighbor_indices]) * .5 * (window.surface_height - 1)
+                    hx = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(nx - fx[:, None]), 0), axis=1)))
+                    hy = np.minimum(6., np.maximum(.5, np.max(np.where(neighbor_valid, np.abs(ny - fy[:, None]), 0), axis=1)))
+                    norm_x = (hx * 2 / (window.surface_width - 1) if window.surface_width > 1 else
+                              np.maximum(.01, np.max(np.where(neighbor_valid,
+                                  np.abs(x[neighbor_indices] - projected_x[:, None]), 0), axis=1)))
+                    norm_y = (hy * 2 / (window.surface_height - 1) if window.surface_height > 1 else
+                              np.maximum(.01, np.max(np.where(neighbor_valid,
+                                  np.abs(y[neighbor_indices] - projected_y[:, None]), 0), axis=1)))
+                    coverage = np.zeros(len(fx), dtype=np.uint8)
+                    for oy in (-.75, -.25, .25, .75):
+                        for ox in (-.75, -.25, .25, .75):
+                            coverage += ((np.abs(projected_x + ox * norm_x) <= 1) &
+                                         (np.abs(projected_y + oy * norm_y) <= 1)).astype(np.uint8)
+                    covered = coverage > 0
+                    if not np.any(covered):
+                        continue
+                    indices, fx, fy, hx, hy = indices[covered], fx[covered], fy[covered], hx[covered], hy[covered]
+                    projected_x, projected_y, coverage = projected_x[covered], projected_y[covered], coverage[covered]
+                    def bilinear(sx, sy):
+                        sx = np.clip(sx, 0, window.surface_width - 1)
+                        sy = np.clip(sy, 0, window.surface_height - 1)
+                        x0 = np.floor(sx).astype(np.int32)
+                        y0 = np.floor(sy).astype(np.int32)
+                        x1 = np.minimum(x0 + 1, window.surface_width - 1)
+                        y1 = np.minimum(y0 + 1, window.surface_height - 1)
+                        ax, ay = (sx - x0)[:, None], (sy - y0)[:, None]
+                        p00 = window.surface[y0, x0].astype(np.float32)
+                        p10 = window.surface[y0, x1].astype(np.float32)
+                        p01 = window.surface[y1, x0].astype(np.float32)
+                        p11 = window.surface[y1, x1].astype(np.float32)
+                        return p00 * (1 - ax) * (1 - ay) + p10 * ax * (1 - ay) + p01 * (1 - ax) * ay + p11 * ax * ay
+
+                    sampled = np.zeros((len(fx), 3), dtype=np.float32)
+                    for oy in (-.5, .5):
+                        for ox in (-.5, .5):
+                            sampled += bilinear(fx + ox * hx, fy + oy * hy)
+                    sampled *= .25
+                    small = (hx <= .5) & (hy <= .5)
+                    if np.any(small):
+                        sampled[small] = bilinear(fx[small], fy[small])
+                    probes = []
+                    for oy in (-.65, 0., .65):
+                        for ox in (-.65, 0., .65):
+                            px = np.clip(np.rint(fx + ox * hx), 0, window.surface_width - 1).astype(np.int32)
+                            py = np.clip(np.rint(fy + oy * hy), 0, window.surface_height - 1).astype(np.int32)
+                            probes.append(window.surface[py, px])
+                    probes = np.stack(probes).astype(np.int16)
+                    luminance = probes[..., 0] * 3 + probes[..., 1] * 6 + probes[..., 2]
+                    edge = ((np.ptp(luminance, axis=0) >= 216) | np.any(np.ptp(probes, axis=0) >= 28, axis=1)) & ~small
+                    if np.any(edge):
+                        accum = np.zeros((int(np.count_nonzero(edge)), 3), dtype=np.float32)
+                        for oy in (-.75, -.25, .25, .75):
+                            for ox in (-.75, -.25, .25, .75):
+                                accum += bilinear(fx[edge] + ox * hx[edge], fy[edge] + oy * hy[edge])
+                        sampled[edge] = accum * (1.0 / 16.0)
+                        dark = probes[np.argmin(luminance, axis=0), np.arange(len(fx))][edge]
+                        bright = probes[np.argmax(luminance, axis=0), np.arange(len(fx))][edge]
+                        low = np.min(luminance, axis=0)[edge].astype(np.float32)
+                        high = np.max(luminance, axis=0)[edge].astype(np.float32)
+                        preserve = high - low >= 500
+                        if np.any(preserve):
+                            mean = sampled[edge][preserve]
+                            stroke_coverage = np.clip((high[preserve] - (mean[:, 0] * 3 + mean[:, 1] * 6 + mean[:, 2])) /
+                                                      (high[preserve] - low[preserve]), 0, 1)
+                            chroma = np.ptp(dark[preserve], axis=1)
+                            gain = np.where(chroma >= 40, .7, .3)
+                            amount = np.clip(stroke_coverage + gain * np.sqrt(stroke_coverage) * (1 - stroke_coverage), 0, 1)[:, None]
+                            restored = bright[preserve] * (1 - amount) + dark[preserve] * amount
+                            edge_values = sampled[edge]
+                            edge_values[preserve] = restored
+                            sampled[edge] = edge_values
+                    colors = np.clip(np.rint(sampled), 0, 255).astype(np.uint8)
+                else:
+                    px = np.clip(np.rint(fx), 0, window.surface_width - 1).astype(np.int32)
+                    py = np.clip(np.rint(fy), 0, window.surface_height - 1).astype(np.int32)
+                    colors = window.surface[py, px].copy()
+                if window.decorated:
+                    title = projected_y > 0.72
+                    border = (np.abs(projected_x) > 0.94) | (np.abs(projected_y) > 0.92)
+                    colors[title] = (22, 112, 190) if wid == self.focused_window else (55, 65, 81)
+                    colors[border] = (250, 204, 21) if wid == self.focused_window else (120, 130, 145)
+                if self.projection_aa:
+                    fraction = (coverage.astype(np.float32) / 16)[:, None]
+                    flat[indices] = np.rint(colors * fraction + flat[indices] * (1 - fraction)).astype(np.uint8)
+                else:
+                    flat[indices] = colors
+            if self.pointer_visible:
+                pointer = _direction(self.pointer_azimuth, self.pointer_elevation)
+                dots = self._flat_rays @ pointer
+                outer = dots >= math.cos(math.radians(2.2))
+                inner = dots >= math.cos(math.radians(1.0))
+                flat[outer] = (10, 10, 10)
+                flat[inner] = (255, 255, 255)
+            return image
+
+    def render_packed(self):
+        """Return the output-core scene words directly when native support exists."""
+        with self.lock:
+            if self.native is not None:
+                order = [wid for wid in self.z_order if self.windows[wid].mapped]
+                return self.native.render_packed(
+                    self.windows, order, self.focused_window,
+                    (self.pointer_azimuth, self.pointer_elevation, self.pointer_visible),
+                    self.background, self.m,
+                )
+        from bosio_geometry_v2 import pack_scene
+        return pack_scene(self.render(), self.m)
+
+    def render_update(self):
+        """Return ``(words, tile_count, kind)`` where kind is full or patch."""
+        with self.lock:
+            if self.native is not None:
+                order = [wid for wid in self.z_order if self.windows[wid].mapped]
+                return self.native.render_update(
+                    self.windows, order, self.focused_window,
+                    (self.pointer_azimuth, self.pointer_elevation, self.pointer_visible),
+                    self.background, self.m,
+                )
+        words, count = self.render_packed()
+        return words, count, "full"
+

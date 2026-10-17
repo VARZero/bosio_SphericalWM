@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-17",
+  "board": "PYNQ-Z2",
+  "output_m": 32,
+  "projector_count": 2,
+  "clock_mhz": 100,
+  "utilization": {
+    "lut": 32135,
+    "ff": 37644,
+    "bram36_equivalent": 27.5,
+    "dsp48": 155,
+    "slices": 11861
+  },
+  "timing_ns": {
+    "wns": 0.073,
+    "whs": 0.049,
+    "pulse_width": 0.54,
+    "bus_skew_min": 8.275
+  },
+  "board_memory_tests_passed": 40,
+  "mismatched_words": 0,
+  "benchmark": {
+    "single_ms": [
+      593.5709039995345,
+      593.406891000086,
+      593.6172550000265
+    ],
+    "dual_ms": [
+      301.81834399991203,
+      300.62838699996064,
+      300.7297109998035
+    ],
+    "single_median_ms": 593.5709039995345,
+    "dual_median_ms": 300.7297109998035,
+    "speedup": 1.973768744119607,
+    "timer_scope": "Register starts through both completions; excludes partitioning, cache maintenance and CPU reference"
+  },
+  "total_call_single_median_ms": 635.1373649995367,
+  "total_call_dual_median_ms": 367.20667600002344,
+  "total_call_speedup": 1.7296454735466087,
+  "output_fps": 59.96323653967695,
+  "output_services_active": true,
+  "service_restarts": 0,
+  "projection_results_connected_to_display": true,
+  "display_report": "incremental_summary.json",
+  "previous_display_report": "display_summary.json",
+  "incremental_tile_cache_enabled": true
+}

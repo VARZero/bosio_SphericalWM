@@ -1,0 +1,15 @@
+{
+  "center_yaw": 0,
+  "center_pitch": 0,
+  "fov": [
+    60,
+    45
+  ],
+  "m": 32,
+  "frame_delta": 180,
+  "elapsed_seconds": 3.003138587000649,
+  "output_fps": 59.93729386287597,
+  "output_error": false,
+  "sensor_restored": true,
+  "passed": true
+}

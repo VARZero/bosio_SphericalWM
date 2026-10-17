@@ -1,3 +1,6 @@
 [submodule "hw/ip_repo/bosio_output_core_1.0"]
 	path = hw/ip_repo/bosio_output_core_1.0
 	url = https://github.com/VARZero/bosio_OutputCore.git
+[submodule "hw/ip_repo/bosio_projection_core"]
+	path = hw/ip_repo/bosio_projection_core
+	url = https://github.com/VARZero/bosio_ProjectionCore.git

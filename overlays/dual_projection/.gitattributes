@@ -1,0 +1,3 @@
+*.rpt -text -whitespace
+*.hwh -text
+display_incremental/*.py -text whitespace=-blank-at-eof

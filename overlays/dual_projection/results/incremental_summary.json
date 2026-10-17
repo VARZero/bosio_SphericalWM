@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-17",
+  "runtime": "/home/xilinx/bosio_dual_incremental_20261017",
+  "output_m": 32,
+  "projector_count": 2,
+  "bitstream_changed": false,
+  "host_tests_passed": 13,
+  "board_tests_passed": 14,
+  "full_tile_reference_checks": 13,
+  "reference_mismatched_words": 0,
+  "output_fps": 59.93729386287597,
+  "sensor_restored": true,
+  "health_passed": true,
+  "local_files_match_verified_deployment": true,
+  "deployed_files": 36,
+  "cases": [
+    {
+      "name": "initial_window_projection",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 72,
+      "changed_output_tiles": 72,
+      "output_words": 19600,
+      "backend_compose_ms": 330.3397780000523,
+      "daemon_compose_ms": 330.640565000067,
+      "daemon_upload_ms": 79.68885599984787,
+      "compose_plus_upload_ms": 410.3294209999149
+    },
+    {
+      "name": "no_visual_change_zero_jobs_zero_commit",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 0,
+      "output_words": 0,
+      "backend_compose_ms": 1.89558800047962,
+      "daemon_compose_ms": 2.0902699998259777,
+      "daemon_upload_ms": 0.5065969999122899,
+      "compose_plus_upload_ms": 2.5968669997382676
+    },
+    {
+      "name": "small_surface_patch",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 5,
+      "changed_output_tiles": 3,
+      "output_words": 832,
+      "backend_compose_ms": 21.021230999394902,
+      "daemon_compose_ms": 21.273902000757516,
+      "daemon_upload_ms": 32.24537200003397,
+      "compose_plus_upload_ms": 53.519274000791484
+    },
+    {
+      "name": "identical_pixels_zero_jobs_zero_commit",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 0,
+      "output_words": 0,
+      "backend_compose_ms": 2.1531759994104505,
+      "daemon_compose_ms": 2.348910998989595,
+      "daemon_upload_ms": 0.5094650005048607,
+      "compose_plus_upload_ms": 2.8583759994944558
+    },
+    {
+      "name": "new_layer_reuses_underlying_window",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 30,
+      "changed_output_tiles": 29,
+      "output_words": 7904,
+      "backend_compose_ms": 241.44507699929818,
+      "daemon_compose_ms": 241.75543999990623,
+      "daemon_upload_ms": 54.81072000111453,
+      "compose_plus_upload_ms": 296.56616000102076
+    },
+    {
+      "name": "partial_update_reuses_unchanged_overlapping_layer",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 5,
+      "changed_output_tiles": 3,
+      "output_words": 832,
+      "backend_compose_ms": 20.78366199930315,
+      "daemon_compose_ms": 23.035625001284643,
+      "daemon_upload_ms": 17.356257998471847,
+      "compose_plus_upload_ms": 40.39188299975649
+    },
+    {
+      "name": "z_order_uses_cached_projection",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 29,
+      "output_words": 7904,
+      "backend_compose_ms": 9.378885999467457,
+      "daemon_compose_ms": 9.626535000279546,
+      "daemon_upload_ms": 36.91286799949012,
+      "compose_plus_upload_ms": 46.53940299976966
+    },
+    {
+      "name": "move_projects_only_moved_window",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 72,
+      "changed_output_tiles": 135,
+      "output_words": 36736,
+      "backend_compose_ms": 325.6932109998161,
+      "daemon_compose_ms": 326.0230030009552,
+      "daemon_upload_ms": 125.7903499990789,
+      "compose_plus_upload_ms": 451.8133530000341
+    },
+    {
+      "name": "hide_uses_cached_underlay",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 72,
+      "output_words": 19600,
+      "backend_compose_ms": 8.25704599992605,
+      "daemon_compose_ms": 8.514603001458454,
+      "daemon_upload_ms": 59.36934199962707,
+      "compose_plus_upload_ms": 67.88394500108552
+    },
+    {
+      "name": "show_reuses_hidden_window_cache",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 72,
+      "output_words": 19600,
+      "backend_compose_ms": 12.36695399893506,
+      "daemon_compose_ms": 12.612122998689301,
+      "daemon_upload_ms": 64.76790200031246,
+      "compose_plus_upload_ms": 77.38002499900176
+    },
+    {
+      "name": "native_fallback",
+      "mode": "cpp-neon-fallback",
+      "projection_jobs": 0,
+      "changed_output_tiles": null,
+      "output_words": null,
+      "backend_compose_ms": null,
+      "daemon_compose_ms": 3690.856358000019,
+      "daemon_upload_ms": 28.35937199961336,
+      "compose_plus_upload_ms": 3719.2157299996325
+    },
+    {
+      "name": "hardware_return_reuses_cache",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 0,
+      "output_words": 1084800,
+      "backend_compose_ms": 29.03345200138574,
+      "daemon_compose_ms": 29.318929000510252,
+      "daemon_upload_ms": 72.25839399870893,
+      "compose_plus_upload_ms": 101.57732299921918
+    },
+    {
+      "name": "remove_upper_layer_zero_projection",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 29,
+      "output_words": 7904,
+      "backend_compose_ms": 7.208134999018512,
+      "daemon_compose_ms": 10.10992599913152,
+      "daemon_upload_ms": 33.438529000704875,
+      "compose_plus_upload_ms": 43.548454999836395
+    },
+    {
+      "name": "desktop_restored_from_cache",
+      "mode": "fpga-dual+ps-incremental",
+      "projection_jobs": 0,
+      "changed_output_tiles": 72,
+      "output_words": 19600,
+      "backend_compose_ms": 8.200485999623197,
+      "daemon_compose_ms": 8.408166000663186,
+      "daemon_upload_ms": 68.098652000117,
+      "compose_plus_upload_ms": 76.50681800078019
+    }
+  ],
+  "timer_scope": "Backend compose excludes output handoff; daemon compose plus upload is not input-to-photon latency. Single observations, not distribution or worst-case.",
+  "limitations": [
+    "New or moved window geometry/masks remain expensive.",
+    "Shaped/decorated windows and other unsupported cases use native fallback."
+  ]
+}

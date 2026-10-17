@@ -212,3 +212,11 @@ HDMI 커넥터의 실제 신호 출력을 확인할 수는 없습니다.
 
 Apache License 2.0으로 배포합니다. 개발 기여와 AI 지원 내역은
 [CONTRIBUTORS.md](CONTRIBUTORS.md)에 기록했습니다.
+
+## M=32 + dual projection IP (incremental)
+
+See [overlays/dual_projection](overlays/dual_projection) for the tested two-projector
+overlay and live changed-tile compositor. Output and projection IPs are pinned
+separately. Unchanged windows reuse cached projections; no visual change means
+zero projection jobs and no output commit. The original default service remains
+available; the overlay launcher explicitly selects M=32.

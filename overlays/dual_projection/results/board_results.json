@@ -1,0 +1,830 @@
+{
+  "clock_mhz": 100.0,
+  "tests": [
+    {
+      "name": "parallel_full_sphere_4220_tiles",
+      "milliseconds": 386.3125219995709,
+      "workers": 2,
+      "jobs_per_core": [
+        2110,
+        2110
+      ],
+      "prepare_ms": 167.32501600017713,
+      "total_call_ms": 597.5634400001582,
+      "core_milliseconds": [
+        384.1986639999959,
+        386.21829399926355
+      ],
+      "start_skew_ms": 0.03860300057567656,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        230791,
+        233119
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 36,
+      "output_error": false
+    },
+    {
+      "name": "parallel_software_culled_scene",
+      "milliseconds": 302.168824000546,
+      "workers": 2,
+      "jobs_per_core": [
+        256,
+        255
+      ],
+      "prepare_ms": 21.06228299999202,
+      "total_call_ms": 366.6326640004627,
+      "core_milliseconds": [
+        299.4161289998374,
+        302.0807499997318
+      ],
+      "start_skew_ms": 0.037650000194844324,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        231021,
+        232889
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 22,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_single_0",
+      "milliseconds": 593.5709039995345,
+      "workers": 1,
+      "jobs_per_core": [
+        511
+      ],
+      "prepare_ms": 19.063692000599985,
+      "total_call_ms": 634.7260920001645,
+      "core_milliseconds": [
+        593.5202939999726
+      ],
+      "start_skew_ms": 0.0,
+      "status": [
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        463910
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 38,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_dual_0",
+      "milliseconds": 301.81834399991203,
+      "workers": 2,
+      "jobs_per_core": [
+        256,
+        255
+      ],
+      "prepare_ms": 21.791150999888487,
+      "total_call_ms": 367.20667600002344,
+      "core_milliseconds": [
+        301.7685530003291,
+        301.68036299983214
+      ],
+      "start_skew_ms": 0.04327300030126935,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        231021,
+        232889
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 23,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_single_1",
+      "milliseconds": 593.406891000086,
+      "workers": 1,
+      "jobs_per_core": [
+        511
+      ],
+      "prepare_ms": 20.195520000015676,
+      "total_call_ms": 635.7290019996071,
+      "core_milliseconds": [
+        593.3518019992334
+      ],
+      "start_skew_ms": 0.0,
+      "status": [
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        463910
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 38,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_dual_1",
+      "milliseconds": 300.62838699996064,
+      "workers": 2,
+      "jobs_per_core": [
+        256,
+        255
+      ],
+      "prepare_ms": 21.04446800058213,
+      "total_call_ms": 365.6058890001077,
+      "core_milliseconds": [
+        298.6420429997452,
+        300.54393199952756
+      ],
+      "start_skew_ms": 0.03771699994103983,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        231021,
+        232889
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 22,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_single_2",
+      "milliseconds": 593.6172550000265,
+      "workers": 1,
+      "jobs_per_core": [
+        511
+      ],
+      "prepare_ms": 19.05626999996457,
+      "total_call_ms": 635.1373649995367,
+      "core_milliseconds": [
+        593.5625900001469
+      ],
+      "start_skew_ms": 0.0,
+      "status": [
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        463910
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 38,
+      "output_error": false
+    },
+    {
+      "name": "benchmark_dual_2",
+      "milliseconds": 300.7297109998035,
+      "workers": 2,
+      "jobs_per_core": [
+        256,
+        255
+      ],
+      "prepare_ms": 22.55985200008581,
+      "total_call_ms": 367.3989099997925,
+      "core_milliseconds": [
+        298.413716000141,
+        300.64217200015264
+      ],
+      "start_skew_ms": 0.039446000300813466,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 463910,
+      "written_cells_per_core": [
+        231021,
+        232889
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 463910,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 22,
+      "output_error": false
+    },
+    {
+      "name": "parallel_tiles_preserve_layer_order",
+      "milliseconds": 5.558277000091039,
+      "workers": 2,
+      "jobs_per_core": [
+        4,
+        4
+      ],
+      "prepare_ms": 3.4925790005218005,
+      "total_call_ms": 54.00321200067992,
+      "core_milliseconds": [
+        5.513254999641504,
+        5.432658000245283
+      ],
+      "start_skew_ms": 0.039956999899004586,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 8192,
+      "written_cells_per_core": [
+        4096,
+        4096
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 8192,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 3,
+      "output_error": false
+    },
+    {
+      "name": "single_tile_empty_second_queue",
+      "milliseconds": 5.311532000632724,
+      "workers": 2,
+      "jobs_per_core": [
+        4,
+        0
+      ],
+      "prepare_ms": 3.0403880000449135,
+      "total_call_ms": 52.17443099991215,
+      "core_milliseconds": [
+        5.265938999400532,
+        0.07107100009307032
+      ],
+      "start_skew_ms": 0.03763699987757718,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 4096,
+      "written_cells_per_core": [
+        4096,
+        0
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 4096,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 3,
+      "output_error": false
+    },
+    {
+      "name": "empty_both_queues",
+      "milliseconds": 0.18631999955687206,
+      "workers": 2,
+      "jobs_per_core": [
+        0,
+        0
+      ],
+      "prepare_ms": 2.9743069999312866,
+      "total_call_ms": 47.63585199998488,
+      "core_milliseconds": [
+        0.14332899991131853,
+        0.07139100034692092
+      ],
+      "start_skew_ms": 0.03863399979309179,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 0,
+      "written_cells_per_core": [
+        0,
+        0
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 0,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 3,
+      "output_error": false
+    },
+    {
+      "name": "parallel_preserve_existing_payload",
+      "milliseconds": 10.936534999927972,
+      "workers": 2,
+      "jobs_per_core": [
+        8,
+        8
+      ],
+      "prepare_ms": 3.5492430006343056,
+      "total_call_ms": 59.13801200040325,
+      "core_milliseconds": [
+        10.894652999922982,
+        10.817076999956043
+      ],
+      "start_skew_ms": 0.03696000021591317,
+      "status": [
+        0,
+        0
+      ],
+      "written_cells": 16384,
+      "written_cells_per_core": [
+        8192,
+        8192
+      ],
+      "descriptors_unchanged": true,
+      "descriptor_guards_intact": true,
+      "expected_cells": 16384,
+      "mismatched_words": 0,
+      "texture_unchanged": true,
+      "output_frame_delta": 4,
+      "output_error": false
+    }
+  ],
+  "scope": "Two independent projection masters with M=32 output active",
+  "single_core_suites": [
+    {
+      "clock_mhz": 100.0,
+      "tests": [
+        {
+          "name": "empty_job_list",
+          "jobs": 0,
+          "milliseconds": 0.19289200008643093,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "fractional_bilinear_padded_stride",
+          "jobs": 1,
+          "milliseconds": 1.4659629996458534,
+          "status": 0,
+          "written_cells": 1024,
+          "expected_cells": 1024,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "partial_window_clipping",
+          "jobs": 1,
+          "milliseconds": 0.4429539994816878,
+          "status": 0,
+          "written_cells": 256,
+          "expected_cells": 256,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "zero_denominator_clear",
+          "jobs": 1,
+          "milliseconds": 0.3575570008251816,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "behind_window_clear",
+          "jobs": 1,
+          "milliseconds": 1.5322769995691488,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 1,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "outside_preserves_existing_scene",
+          "jobs": 1,
+          "milliseconds": 0.32158199974219315,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "exact_last_texel_clamped_bilinear",
+          "jobs": 1,
+          "milliseconds": 1.524751000033575,
+          "status": 0,
+          "written_cells": 1024,
+          "expected_cells": 1024,
+          "output_frame_delta": 1,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_destination_overrun",
+          "jobs": 1,
+          "milliseconds": 0.07476900009351084,
+          "status": 536870912,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_texture_overrun",
+          "jobs": 1,
+          "milliseconds": 0.07782200009387452,
+          "status": 536870912,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_coefficient_overflow",
+          "jobs": 1,
+          "milliseconds": 0.07852299950172892,
+          "status": 805306368,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_short_descriptor_buffer",
+          "jobs": 1,
+          "milliseconds": 0.07529199956479715,
+          "status": 268435456,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "full_sphere_4220_tiles",
+          "jobs": 4220,
+          "milliseconds": 765.1541149998593,
+          "status": 0,
+          "written_cells": 463910,
+          "expected_cells": 463910,
+          "output_frame_delta": 46,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "software_culled_same_scene",
+          "jobs": 511,
+          "milliseconds": 593.3184850000544,
+          "status": 0,
+          "written_cells": 463910,
+          "expected_cells": 463910,
+          "output_frame_delta": 36,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "ordered_overlapping_window_jobs",
+          "jobs": 5,
+          "milliseconds": 6.536326000059489,
+          "status": 0,
+          "written_cells": 5120,
+          "expected_cells": 5120,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        }
+      ],
+      "scope": "Independent projection DDR buffers concurrent with M=32 Output Core",
+      "software_preparation": {
+        "seconds": 0.21853017200010072,
+        "examined_tiles": 4220,
+        "submitted_after_culling": 511,
+        "note": "batched preparation including initial 297KiB geometry cache; no per-cell projection on CPU"
+      },
+      "culled_matches_full_sphere": true,
+      "passed": true,
+      "output_m_register": 2,
+      "output_signature": "0x42533235",
+      "output_status_after": 262537227,
+      "buffers_freed_after_completion": true
+    },
+    {
+      "clock_mhz": 100.0,
+      "tests": [
+        {
+          "name": "empty_job_list",
+          "jobs": 0,
+          "milliseconds": 0.06932899941602955,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "fractional_bilinear_padded_stride",
+          "jobs": 1,
+          "milliseconds": 1.4478709999821149,
+          "status": 0,
+          "written_cells": 1024,
+          "expected_cells": 1024,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "partial_window_clipping",
+          "jobs": 1,
+          "milliseconds": 0.565303999792377,
+          "status": 0,
+          "written_cells": 256,
+          "expected_cells": 256,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "zero_denominator_clear",
+          "jobs": 1,
+          "milliseconds": 0.3250520003348356,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "behind_window_clear",
+          "jobs": 1,
+          "milliseconds": 0.3582219997042557,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "outside_preserves_existing_scene",
+          "jobs": 1,
+          "milliseconds": 0.3381039996384061,
+          "status": 0,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "exact_last_texel_clamped_bilinear",
+          "jobs": 1,
+          "milliseconds": 1.48799999988114,
+          "status": 0,
+          "written_cells": 1024,
+          "expected_cells": 1024,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_destination_overrun",
+          "jobs": 1,
+          "milliseconds": 0.07020299926807638,
+          "status": 536870912,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_texture_overrun",
+          "jobs": 1,
+          "milliseconds": 0.07418499990308192,
+          "status": 536870912,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_coefficient_overflow",
+          "jobs": 1,
+          "milliseconds": 0.0825039996925625,
+          "status": 805306368,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "reject_short_descriptor_buffer",
+          "jobs": 1,
+          "milliseconds": 0.07844899937481387,
+          "status": 268435456,
+          "written_cells": 0,
+          "expected_cells": 0,
+          "output_frame_delta": 0,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "full_sphere_4220_tiles",
+          "jobs": 4220,
+          "milliseconds": 765.1487920002182,
+          "status": 0,
+          "written_cells": 463910,
+          "expected_cells": 463910,
+          "output_frame_delta": 46,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "software_culled_same_scene",
+          "jobs": 511,
+          "milliseconds": 593.2171320000634,
+          "status": 0,
+          "written_cells": 463910,
+          "expected_cells": 463910,
+          "output_frame_delta": 36,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        },
+        {
+          "name": "ordered_overlapping_window_jobs",
+          "jobs": 5,
+          "milliseconds": 6.877556999825174,
+          "status": 0,
+          "written_cells": 5120,
+          "expected_cells": 5120,
+          "output_frame_delta": 1,
+          "output_error": false,
+          "mismatched_words": 0,
+          "texture_unchanged": true,
+          "descriptors_unchanged": true,
+          "descriptor_guard_intact": true
+        }
+      ],
+      "scope": "Independent projection DDR buffers concurrent with M=32 Output Core",
+      "software_preparation": {
+        "seconds": 0.11696367399963492,
+        "examined_tiles": 4220,
+        "submitted_after_culling": 511,
+        "note": "batched preparation including initial 297KiB geometry cache; no per-cell projection on CPU"
+      },
+      "culled_matches_full_sphere": true,
+      "passed": true,
+      "output_m_register": 2,
+      "output_signature": "0x42533235",
+      "output_status_after": 370409483,
+      "buffers_freed_after_completion": true
+    }
+  ],
+  "culled_matches_full_sphere": true,
+  "benchmark": {
+    "single_ms": [
+      593.5709039995345,
+      593.406891000086,
+      593.6172550000265
+    ],
+    "dual_ms": [
+      301.81834399991203,
+      300.62838699996064,
+      300.7297109998035
+    ],
+    "single_median_ms": 593.5709039995345,
+    "dual_median_ms": 300.7297109998035,
+    "speedup": 1.973768744119607,
+    "timer_scope": "Register starts through both completions; excludes partitioning, cache maintenance and CPU reference"
+  },
+  "partial_overlap_rejected_before_launch": true,
+  "passed": true,
+  "output_m_register": 2,
+  "output_status_after": 483196939,
+  "buffers_freed_after_completion": true
+}
