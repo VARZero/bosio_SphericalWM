@@ -1,5 +1,26 @@
 # BOSIO 구면 윈도우 매니저
 
+## 구면 작업 공간 소프트웨어 확장
+
+출력 RTL·센서 허브·비트스트림을 유지하면서 BoAYo의 보관·복원 UI를 지원한다.
+`ping`의 `spatial-workspace`와 `pointer-capture` 기능으로 호환 여부를 확인한다.
+
+- `create_window()`는 `workspace`, `input_enabled`, `focus_on_create`,
+  `decorated`를 받는다. 미리보기·안내 창은 입력과 생성 시 포커스를 끈다.
+- `workspace`는 최대 4096자 JSON 메타데이터다. 위치·그림 표면 변경과 마찬가지로
+  소유 앱만 변경한다. BoAYo 앱은 `role=app`, `state`, `restore`를 사용한다.
+- `capture_pointer(window_id)`와 `release_pointer()`는 소유자별 드래그를
+  창 밖까지 유지한다. 버튼 해제에는 최종 방위각·고도각을 전달한다.
+- `cancel_pointer()`는 버튼 상태·기본 드래그·캡처를 정리하고 `pointer_cancel`
+  이벤트를 보낸다. `pointer_leave`는 조작부 강조를 해제하는 데 사용한다.
+- `request_window_action(window_id, action, ...)`는 `minimize`, `restore`,
+  `close` 요청을 소유 앱의 `window_action` 이벤트로 전달한다. 요청자가
+  다른 앱 창의 기하·그림 표면을 직접 수정할 권한을 얻지는 않는다.
+- `input_key()`는 `tab`, `enter`, `space`, `escape`, `next`를 받는다.
+  `next`는 입력 가능한 표시 창의 포커스를 순환한다.
+- 숨긴 창은 포커스·캡처에서 빠지고, 비입력 창은 클릭을 가리지 않는다.
+  기본 제목 드래그는 `decorated=True`일 때만 작동한다.
+
 ## 목적
 
 `bosio-wm`은 PYNQ-Z2에서 별도 프로세스로 실행되는 사용자 공간 윈도우
@@ -220,3 +241,15 @@ python3 bosio_wm_demo.py
 PYNQ-Z2에서는 `native/build_pynq.sh`로 ARM 공유 라이브러리를 빌드한다.
 라이브러리가 있으면 데몬 상태의 `compositor`가 `cpp-neon`, 없으면 `numpy`로
 표시된다.
+
+
+### Shaped software windows
+
+`create_window` / `configure_window` accept an optional `shape` list containing
+up to 16 rounded rectangles `[x, y, width, height, radius]` in surface pixels.
+The union defines opaque drawing and pointer-hit regions. Empty lists retain
+the full rectangular surface. Regions outside the shape do not paint over or
+capture input from underlying windows. Pointer capture continues outside the
+shape until release/cancel. Shapes are validated against the surface bounds.
+Both NumPy and the C++/NEON compositor use the same geometry. This permits BoAYo
+floating controls without changing RGB24 content, scene encoding or hardware.

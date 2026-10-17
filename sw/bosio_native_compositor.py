@@ -38,6 +38,7 @@ class NativeCompositor:
   L.bosio_compositor_set_projection_aa.argtypes=[ctypes.c_void_p,ctypes.c_int]
   L.bosio_compositor_sync_window.argtypes=[ctypes.c_void_p,ctypes.c_uint64]+[ctypes.c_float]*5+[ctypes.c_uint32,ctypes.c_uint32,ctypes.c_uint64,ctypes.POINTER(ctypes.c_uint8)]
   L.bosio_compositor_sync_window_dirty.argtypes=L.bosio_compositor_sync_window.argtypes+[ctypes.c_uint32]*4
+  L.bosio_compositor_set_shape.argtypes=[ctypes.c_void_p,ctypes.c_uint64,ctypes.POINTER(ctypes.c_float),ctypes.c_uint32]
   L.bosio_compositor_remove_window.argtypes=[ctypes.c_void_p,ctypes.c_uint64]
   L.bosio_compositor_render.argtypes=[ctypes.c_void_p,ctypes.POINTER(ctypes.c_uint64),ctypes.c_uint32,ctypes.c_uint64,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint8,ctypes.c_uint8,ctypes.c_uint8,ctypes.POINTER(ctypes.c_uint8)]
   L.bosio_compositor_render_packed.argtypes=[ctypes.c_void_p,ctypes.POINTER(ctypes.c_uint64),ctypes.c_uint32,ctypes.c_uint64,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint8,ctypes.c_uint8,ctypes.c_uint8,ctypes.c_uint32,ctypes.POINTER(ctypes.c_uint32),ctypes.c_uint32,ctypes.POINTER(ctypes.c_uint32)];L.bosio_compositor_render_packed.restype=ctypes.c_int
@@ -52,6 +53,8 @@ class NativeCompositor:
    rect=w.dirty_rect or (0,0,0,0)
    rc=self.lib.bosio_compositor_sync_window_dirty(self.ctx,wid,w.azimuth,w.elevation,w.roll,w.width_deg,w.height_deg,w.surface_width,w.surface_height,w.surface_revision,surf.ctypes.data_as(ctypes.POINTER(ctypes.c_uint8)),*rect)
    if rc:raise RuntimeError(self.lib.bosio_compositor_error(self.ctx).decode())
+   shape=np.ascontiguousarray(w.shape,dtype=np.float32).reshape(-1,5)
+   self.lib.bosio_compositor_set_shape(self.ctx,wid,shape.ctypes.data_as(ctypes.POINTER(ctypes.c_float)),len(shape))
   return np.ascontiguousarray(z_order,dtype=np.uint64)
  def render(self,windows,z_order,focus,pointer,background,shape):
   order=self._sync(windows,z_order);out=np.empty((*shape,3),dtype=np.uint8);bg=list(map(int,background))

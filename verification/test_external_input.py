@@ -41,6 +41,22 @@ class ExternalInputTests(unittest.TestCase):
         with self.assertRaisesRegex(Exception, "left, middle, or right"):
             self.daemon.dispatch(self.request(source, "input_button", button="touch", pressed=True))
 
+    def test_workspace_actions_capture_and_cancel_dispatch(self):
+        app = self.daemon.dispatch(self.request("app", "create_window", title="APP",
+            workspace={"role": "app", "state": "open"}, decorated=False))
+        self.assertIn("spatial-workspace", self.daemon.dispatch(self.request("app", "ping"))["features"])
+        self.daemon.dispatch(self.request("desktop", "request_window_action",
+            window_id=app["window_id"], action="restore", azimuth=179, elevation=5))
+        event = [e for e in self.daemon.dispatch(self.request("app", "poll_events"))
+                 if e["type"] == "window_action"][0]
+        self.assertEqual((event["action"], event["azimuth"], event["elevation"]), ("restore", 179, 5))
+        self.daemon.dispatch(self.request("input", "input_warp", azimuth=0, elevation=0))
+        self.daemon.dispatch(self.request("input", "input_button", button="left", pressed=True))
+        self.assertTrue(self.daemon.dispatch(self.request("app", "capture_pointer", window_id=app["window_id"])))
+        self.daemon.dispatch(self.request("input", "input_key", key="escape"))
+        self.assertFalse(self.daemon.input_buttons)
+        self.assertIsNone(self.daemon.manager._capture)
+
 
 if __name__ == "__main__":
     unittest.main()

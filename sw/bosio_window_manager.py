@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import math
+import json
 import threading
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
@@ -42,6 +43,31 @@ def _basis(azimuth: float, elevation: float, roll: float = 0.0):
     return center, right * math.cos(angle) + up * math.sin(angle), up * math.cos(angle) - right * math.sin(angle)
 
 
+def _shape_rects(value, width, height):
+    if not isinstance(value, (list, tuple)) or len(value) > 16:
+        raise WindowManagerError("shape must contain at most 16 rounded rectangles")
+    result = []
+    for rect in value:
+        if not isinstance(rect, (list, tuple)) or len(rect) != 5:
+            raise WindowManagerError("shape rectangle requires x,y,width,height,radius")
+        x, y, w, h, r = map(float, rect)
+        if not all(math.isfinite(v) for v in (x,y,w,h,r)) or x < 0 or y < 0 or w <= 0 or h <= 0 or x+w > width or y+h > height or not 0 <= r <= min(w,h)/2:
+            raise WindowManagerError("invalid shape rectangle")
+        result.append([x,y,w,h,r])
+    return result
+
+
+def _shape_contains(shape, x, y):
+    if not shape:
+        return np.ones(np.broadcast(x, y).shape, dtype=bool)
+    inside = np.zeros(np.broadcast(x, y).shape, dtype=bool)
+    for rx, ry, w, h, r in shape:
+        dx = np.maximum(np.maximum(rx+r-x, x-(rx+w-r)), 0)
+        dy = np.maximum(np.maximum(ry+r-y, y-(ry+h-r)), 0)
+        inside |= (x >= rx) & (x < rx+w) & (y >= ry) & (y < ry+h) & (dx*dx+dy*dy <= r*r)
+    return inside
+
+
 @dataclass
 class SphericalWindow:
     window_id: int
@@ -57,6 +83,9 @@ class SphericalWindow:
     mapped: bool = True
     always_on_top: bool = False
     decorated: bool = False
+    input_enabled: bool = True
+    workspace: dict = field(default_factory=dict)
+    shape: list = field(default_factory=list)
     surface_revision: int = 1
     dirty_rect: tuple[int, int, int, int] | None = None
     surface: np.ndarray = field(repr=False, default=None)
@@ -76,6 +105,9 @@ class SphericalWindow:
             "mapped": self.mapped,
             "always_on_top": self.always_on_top,
             "decorated": self.decorated,
+            "input_enabled": self.input_enabled,
+            "workspace": dict(self.workspace),
+            "shape": [list(rect) for rect in self.shape],
             "focused": focused,
             "z": z,
         }
@@ -104,6 +136,10 @@ class SphericalWindowManager:
         self.pointer_buttons = set()
         self.pointer_left_press_serial = 0
         self.pointer_last_left_press = None
+        self.pointer_left_release_serial = 0
+        self.pointer_last_left_release = None
+        self.pointer_cancel_serial = 0
+        self._capture = None
         self.pointer_scroll_serial = 0
         self.pointer_scroll_delta = 0.0
         self._drag: tuple[int, float, float] | None = None
@@ -134,7 +170,8 @@ class SphericalWindowManager:
         self._events[owner].append({"type": event_type, **payload})
 
     def create_window(self, owner, title, azimuth=0, elevation=0, width_deg=34,
-                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False, decorated=False):
+                      height_deg=24, surface_width=320, surface_height=200, always_on_top=False, decorated=False,
+                      input_enabled=True, focus_on_create=True, workspace=None, shape=None):
         with self.lock:
             if len(self.windows) >= self.MAX_WINDOWS:
                 raise WindowManagerError("window limit reached")
@@ -151,24 +188,113 @@ class SphericalWindowManager:
                 surface=np.full((sh, sw, 3), (16, 24, 32), dtype=np.uint8),
                 always_on_top=bool(always_on_top),
                 decorated=bool(decorated),
+                input_enabled=bool(input_enabled), workspace=self._workspace(workspace or {}),
+                shape=_shape_rects(shape or [], sw, sh),
                 dirty_rect=(0, 0, sw, sh),
             )
             self.windows[wid] = window
-            self.z_order.append(wid)
-            self._set_focus_locked(wid)
+            if window.always_on_top:
+                self.z_order.append(wid)
+            else:
+                first_top = next((i for i, existing in enumerate(self.z_order)
+                                  if self.windows[existing].always_on_top), len(self.z_order))
+                self.z_order.insert(first_top, wid)
+            if focus_on_create and input_enabled:
+                self._set_focus_locked(wid)
             self._changed()
-            return window.public(True, len(self.z_order) - 1)
+            return window.public(wid == self.focused_window, self.z_order.index(wid))
+
+    @staticmethod
+    def _workspace(value):
+        if not isinstance(value, dict) or len(json.dumps(value, allow_nan=False)) > 4096:
+            raise WindowManagerError("invalid workspace metadata")
+        return json.loads(json.dumps(value, allow_nan=False))
+
+    def capture_pointer(self, owner, window_id):
+        with self.lock:
+            window = self._window(window_id, owner)
+            if not window.mapped or not window.input_enabled or "left" not in self.pointer_buttons:
+                return False
+            if self._capture is not None and self.windows[self._capture].owner != owner:
+                raise WindowManagerError("pointer is captured by another application")
+            self._capture = window.window_id
+            self._drag = None
+            return True
+
+    def release_pointer(self, owner):
+        with self.lock:
+            if self._capture is not None:
+                self._window(self._capture, owner)
+                self._capture = None
+            return True
+
+    def cancel_pointer(self):
+        with self.lock:
+            hit = self._pointer_hit()
+            if hit:
+                window, u, v, zone = hit
+                self._event(window.owner, "pointer_cancel", window_id=window.window_id,
+                            u=u, v=v, zone=zone, azimuth=self.pointer_azimuth,
+                            elevation=self.pointer_elevation)
+            self.pointer_buttons.clear()
+            self._capture = self._drag = None
+            self.pointer_cancel_serial += 1
+            self._changed()
+            return self.pointer_state()
+
+    def request_window_action(self, requester, window_id, action, azimuth=None, elevation=None):
+        with self.lock:
+            window = self._window(window_id)
+            if window.workspace.get("role") != "app" or action not in ("minimize", "restore", "close"):
+                raise WindowManagerError("window does not accept workspace actions")
+            payload = {}
+            if azimuth is not None or elevation is not None:
+                if azimuth is None or elevation is None or not all(math.isfinite(float(v)) for v in (azimuth, elevation)):
+                    raise WindowManagerError("invalid restore position")
+                payload = {"azimuth": _azimuth(azimuth), "elevation": _elevation(elevation)}
+            self._event(window.owner, "window_action", window_id=window.window_id,
+                        action=action, requester=str(requester), **payload)
+            return True
+
+    def key(self, key, pressed=True):
+        with self.lock:
+            if key not in ("tab", "enter", "space", "escape", "next"):
+                raise WindowManagerError("unsupported workspace key")
+            if key == "escape" and pressed:
+                self.cancel_pointer()
+            if key == "next" and pressed:
+                visible = [wid for wid in self.z_order if self.windows[wid].mapped and self.windows[wid].input_enabled]
+                if visible:
+                    index = visible.index(self.focused_window) if self.focused_window in visible else -1
+                    self.focus_window(visible[(index + 1) % len(visible)], raise_window=False)
+                return True
+            window = self.windows.get(self.focused_window)
+            if window and window.mapped and window.input_enabled:
+                self._event(window.owner, "key", window_id=window.window_id, key=key, pressed=bool(pressed))
+            return True
+
+    def _pointer_hit(self):
+        if self._capture in self.windows:
+            window = self.windows[self._capture]
+            dot, x, y = self._project(window, _direction(self.pointer_azimuth, self.pointer_elevation)[None, :])
+            return window, float((x[0] + 1) / 2), float((1 - y[0]) / 2), "content"
+        return self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+
+    def _focus_visible(self):
+        self._set_focus_locked(next((wid for wid in reversed(self.z_order)
+                                    if self.windows[wid].mapped and self.windows[wid].input_enabled), None))
 
     def destroy_window(self, owner, window_id):
         with self.lock:
             window = self._window(window_id, owner)
+            if self._capture == window.window_id:
+                self._capture = None
+            if self._drag and self._drag[0] == window.window_id:
+                self._drag = None
             self.windows.pop(window.window_id)
             self.z_order.remove(window.window_id)
             if self.focused_window == window.window_id:
-                self.focused_window = self.z_order[-1] if self.z_order else None
-                if self.focused_window is not None:
-                    target = self.windows[self.focused_window]
-                    self._event(target.owner, "focus", window_id=target.window_id, focused=True)
+                self._focus_visible()
             self._changed()
 
     def destroy_owner_windows(self, owner):
@@ -193,6 +319,8 @@ class SphericalWindowManager:
     def focus_window(self, window_id, raise_window=True):
         with self.lock:
             window = self._window(window_id)
+            if not window.mapped or not window.input_enabled:
+                raise WindowManagerError("cannot focus an inactive window")
             self._set_focus_locked(window.window_id)
             if raise_window:
                 self.z_order.remove(window.window_id)
@@ -231,6 +359,19 @@ class SphericalWindowManager:
                 window.always_on_top = bool(changes["always_on_top"])
             if "decorated" in changes:
                 window.decorated = bool(changes["decorated"])
+            if "input_enabled" in changes:
+                window.input_enabled = bool(changes["input_enabled"])
+            if "shape" in changes:
+                window.shape = _shape_rects(changes["shape"], window.surface_width, window.surface_height)
+            if "workspace" in changes:
+                window.workspace = self._workspace(changes["workspace"])
+            if not window.mapped or not window.input_enabled:
+                if self._capture == window.window_id:
+                    self._capture = None
+                if self._drag and self._drag[0] == window.window_id:
+                    self._drag = None
+                if self.focused_window == window.window_id:
+                    self._focus_visible()
             self._changed()
             return window.public(window.window_id == self.focused_window, self.z_order.index(window.window_id))
 
@@ -300,17 +441,20 @@ class SphericalWindowManager:
         with self.lock:
             for wid in reversed(self.z_order):
                 window = self.windows[wid]
-                if not window.mapped:
+                if not window.mapped or not window.input_enabled:
                     continue
                 dot, x, y = self._project(window, direction)
                 if dot[0] > 0 and abs(x[0]) <= 1 and abs(y[0]) <= 1:
                     u = float((x[0] + 1) * 0.5)
                     v = float((1 - y[0]) * 0.5)
-                    return window, u, v, "title" if v < 0.14 else "content"
+                    if not _shape_contains(window.shape, u * (window.surface_width - 1), v * (window.surface_height - 1)):
+                        continue
+                    return window, u, v, "title" if window.decorated and v < 0.14 else "content"
         return None
 
     def pointer_warp(self, azimuth, elevation):
         with self.lock:
+            previous_hit = self._pointer_hit()
             old_az, old_el = self.pointer_azimuth, self.pointer_elevation
             self.pointer_azimuth, self.pointer_elevation = _azimuth(azimuth), _elevation(elevation)
             if self._drag:
@@ -320,7 +464,10 @@ class SphericalWindowManager:
                     delta_az = _azimuth(self.pointer_azimuth - old_az)
                     window.azimuth = _azimuth(window.azimuth + delta_az)
                     window.elevation = _elevation(window.elevation + self.pointer_elevation - old_el)
-            hit = self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+            hit = self._pointer_hit()
+            if previous_hit and (not hit or previous_hit[0].window_id != hit[0].window_id):
+                previous = previous_hit[0]
+                self._event(previous.owner, "pointer_leave", window_id=previous.window_id)
             if hit:
                 window, u, v, zone = hit
                 self._event(window.owner, "pointer_motion", window_id=window.window_id, u=u, v=v, zone=zone,
@@ -339,7 +486,11 @@ class SphericalWindowManager:
                 self.pointer_buttons.add(button)
             else:
                 self.pointer_buttons.discard(button)
-            hit = self.hit_test(self.pointer_azimuth, self.pointer_elevation)
+            hit = self._pointer_hit()
+            if not pressed and button == "left" and was_pressed:
+                self.pointer_left_release_serial += 1
+                self.pointer_last_left_release = {"azimuth": self.pointer_azimuth,
+                                                  "elevation": self.pointer_elevation}
             if pressed and button == "left" and not was_pressed:
                 self.pointer_left_press_serial += 1
                 self.pointer_last_left_press = {
@@ -357,7 +508,11 @@ class SphericalWindowManager:
             if hit:
                 window, u, v, zone = hit
                 self._event(window.owner, "pointer_button", window_id=window.window_id, button=button,
-                            pressed=pressed, u=u, v=v, zone=zone)
+                            pressed=pressed, u=u, v=v, zone=zone,
+                            azimuth=self.pointer_azimuth, elevation=self.pointer_elevation,
+                            cancel_serial=self.pointer_cancel_serial)
+            if not pressed and button == "left":
+                self._capture = None
             self._changed()
             return self.pointer_state(hit)
 
@@ -374,6 +529,10 @@ class SphericalWindowManager:
             "buttons": sorted(self.pointer_buttons),
             "left_press_serial": self.pointer_left_press_serial,
             "last_left_press": self.pointer_last_left_press,
+            "left_release_serial": self.pointer_left_release_serial,
+            "last_left_release": self.pointer_last_left_release,
+            "cancel_serial": self.pointer_cancel_serial,
+            "captured_window": self._capture,
             "scroll_serial": self.pointer_scroll_serial,
             "scroll_delta": self.pointer_scroll_delta,
         }
@@ -422,6 +581,8 @@ class SphericalWindowManager:
                 margin_x = min(.8, .05 + 1 / window.width_deg) if self.projection_aa else 0
                 margin_y = min(.8, .05 + 1 / window.height_deg) if self.projection_aa else 0
                 mask = (dot > 0) & (np.abs(x) <= 1 + margin_x) & (np.abs(y) <= 1 + margin_y)
+                if window.shape:
+                    mask &= _shape_contains(window.shape, (x+1)*.5*(window.surface_width-1), (1-y)*.5*(window.surface_height-1))
                 indices = np.flatnonzero(mask)
                 if not len(indices):
                     continue

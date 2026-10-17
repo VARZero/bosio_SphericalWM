@@ -17,6 +17,7 @@ struct Sample { uint32_t dst; float fx,fy,hx,hy; uint8_t flags,aa,coverage; };
 struct Window {
   float az=0, el=0, roll=0, width=0, height=0;
   uint32_t sw=0, sh=0; uint64_t surface_revision=0;
+  std::vector<std::array<float,5>> shape;
   std::vector<uint8_t> surface, surface_index; std::vector<Sample> samples;
   uint32_t dirty_x=0,dirty_y=0,dirty_w=0,dirty_h=0;
 };
@@ -195,6 +196,15 @@ void add_window_sample(Context&ctx,Window&w,uint32_t dst,float x,float y,
     if(std::fabs(x)>1.f+mx||std::fabs(y)>1.f+my)return;
   }
   float fx=(x+1.f)*.5f*(w.sw-1),fy=(1.f-y)*.5f*(w.sh-1);
+  if(!w.shape.empty()){
+    bool inside=false;
+    for(const auto&q:w.shape){
+      float dx=std::max({q[0]+q[4]-fx,fx-(q[0]+q[2]-q[4]),0.f});
+      float dy=std::max({q[1]+q[4]-fy,fy-(q[1]+q[3]-q[4]),0.f});
+      if(fx>=q[0]&&fx<q[0]+q[2]&&fy>=q[1]&&fy<q[1]+q[3]&&dx*dx+dy*dy<=q[4]*q[4]){inside=true;break;}
+    }
+    if(!inside)return;
+  }
   auto half=ctx.projection_aa?footprint(ctx,dst,fx,fy,x,y,c,r,u,tx,ty,w.sw,w.sh):std::array<float,4>{0.f,0.f,0.f,0.f};
   uint8_t cover=ctx.projection_aa?window_coverage(x,y,half[2],half[3]):16;
   if(!cover)return;
@@ -313,6 +323,13 @@ int bosio_compositor_sync_window_dirty(void*ptr,uint64_t id,float az,float el,fl
   else if(w.surface_revision!=revision){if(dx>=sw||dy>=sh||!dw||!dh){dx=0;dy=0;dw=sw;dh=sh;}convert_surface_rect(w,rgb,dx,dy,dw,dh);add_dirty(w,dx,dy,std::min(dw,sw-dx),std::min(dh,sh-dy));}
   w.surface_revision=revision;return 0;
  }catch(const std::exception&e){static_cast<Context*>(ptr)->error=e.what();return -1;}}
+void bosio_compositor_set_shape(void*ptr,uint64_t id,const float*rects,uint32_t count){
+  auto&ctx=*static_cast<Context*>(ptr);auto it=ctx.windows.find(id);if(it==ctx.windows.end())return;
+  std::vector<std::array<float,5>> next;
+  for(uint32_t i=0;i<count;i++){std::array<float,5> q;std::copy(rects+i*5,rects+i*5+5,q.begin());next.push_back(q);}
+  if(next==it->second.shape)return;
+  it->second.shape=std::move(next);rebuild(ctx,it->second);ctx.structural_dirty=true;ctx.packed_valid=false;
+}
 void bosio_compositor_remove_window(void*ptr,uint64_t id){auto&ctx=*static_cast<Context*>(ptr);ctx.windows.erase(id);ctx.structural_dirty=true;}
 int bosio_compositor_render(void*ptr,const uint64_t*order,uint32_t order_count,uint64_t focus,float paz,float pel,int pvisible,uint8_t br,uint8_t bg,uint8_t bb,uint8_t*out){
   try{auto&ctx=*static_cast<Context*>(ptr);for(uint32_t i=0;i<ctx.count;i++){out[i*3]=br;out[i*3+1]=bg;out[i*3+2]=bb;}

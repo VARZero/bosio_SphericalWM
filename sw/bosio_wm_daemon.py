@@ -166,7 +166,7 @@ class BosioWindowDaemon:
         if op == "ping":
             return {"version": 2, "m": wm.m, "headless": self.headless,
                     "features": ["windows", "pointer", "input-injection",
-                                 "button-events", "scene-stream"]}
+                                 "button-events", "scene-stream", "spatial-workspace", "pointer-capture"]}
         if op == "claim_scene":
             with self.scene_lock:
                 if self.scene_owner not in (None, app):
@@ -226,6 +226,21 @@ class BosioWindowDaemon:
             return True
         if op == "create_window":
             return wm.create_window(app, **args)
+        if op == "capture_pointer":
+            return wm.capture_pointer(app, args["window_id"])
+        if op == "release_pointer":
+            return wm.release_pointer(app)
+        if op == "cancel_pointer":
+            with self.input_lock:
+                self.input_buttons.clear()
+                return wm.cancel_pointer()
+        if op == "request_window_action":
+            return wm.request_window_action(app, **args)
+        if op == "input_key":
+            if args["key"] == "escape" and args.get("pressed", True):
+                with self.input_lock:
+                    self.input_buttons.clear()
+            return wm.key(args["key"], args.get("pressed", True))
         if op == "destroy_window":
             wm.destroy_window(app, args["window_id"]); return True
         if op == "configure_window":

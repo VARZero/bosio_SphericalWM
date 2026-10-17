@@ -20,7 +20,8 @@ class WindowManagerTests(unittest.TestCase):
         self.assertEqual(self.wm.focused_window, first["window_id"])
 
     def test_pointer_wrap_focus_and_drag(self):
-        window = self.wm.create_window("a", "DRAG", 179, 0, 30, 20)
+        window = self.wm.create_window("a", "DRAG", 179, 0, 30, 20, decorated=True)
+
         self.wm.pointer_warp(179, 8)
         self.wm.pointer_button("left", True)
         self.wm.pointer_move(4, 3)
@@ -28,6 +29,46 @@ class WindowManagerTests(unittest.TestCase):
         self.assertAlmostEqual(self.wm.windows[window["window_id"]].azimuth, -177)
         self.assertAlmostEqual(self.wm.windows[window["window_id"]].elevation, 3)
         self.assertEqual(self.wm.pointer_azimuth, -177)
+
+    def test_undecorated_top_is_content_and_capture_routes_off_window_release(self):
+        app = self.wm.create_window("app", "APP", 0, 0, 30, 20, decorated=False)
+        other = self.wm.create_window("other", "OTHER", 80, 0)
+        self.wm.pointer_warp(0, 8)
+        self.assertEqual(self.wm.hit_test(0, 8)[3], "content")
+        self.wm.pointer_button("left", True)
+        self.wm.capture_pointer("app", app["window_id"])
+        with self.assertRaises(WindowManagerError):
+            self.wm.release_pointer("other")
+        self.wm.pointer_warp(80, 0)
+        self.wm.pointer_button("left", False)
+        events = self.wm.poll_events("app")
+        release = [e for e in events if e["type"] == "pointer_button" and not e["pressed"]][-1]
+        self.assertEqual((release["azimuth"], release["elevation"]), (80, 0))
+        self.assertEqual(self.wm.windows[app["window_id"]].azimuth, 0)
+        self.assertIsNone(self.wm._capture)
+        self.assertFalse(any(e["type"] == "pointer_button" for e in self.wm.poll_events("other")))
+
+    def test_hidden_focus_skips_feedback_and_hover_leaves(self):
+        app = self.wm.create_window("app", "APP")
+        self.wm.create_window("desktop", "PREVIEW", input_enabled=False, focus_on_create=False)
+        self.wm.pointer_warp(0, 0)
+        self.wm.pointer_warp(90, 0)
+        self.assertTrue(any(e["type"] == "pointer_leave" for e in self.wm.poll_events("app")))
+        self.wm.configure_window("app", app["window_id"], mapped=False)
+        self.assertIsNone(self.wm.focused_window)
+
+    def test_cancel_and_keyboard_card_activation(self):
+        card = self.wm.create_window("desktop", "CARD", workspace={"role": "storage"})
+        self.wm.pointer_warp(0, 0)
+        self.wm.pointer_button("left", True)
+        self.wm.capture_pointer("desktop", card["window_id"])
+        self.wm.key("escape")
+        self.assertFalse(self.wm.pointer_buttons)
+        self.assertIsNone(self.wm._capture)
+        self.wm.key("enter")
+        events = self.wm.poll_events("desktop")
+        self.assertTrue(any(e["type"] == "pointer_cancel" for e in events))
+        self.assertTrue(any(e["type"] == "key" and e["key"] == "enter" for e in events))
 
     def test_short_outside_click_remains_visible_after_release(self):
         panel = self.wm.create_window("panel", "PANEL", 0, 0, 42, 30)
