@@ -13,6 +13,16 @@ wait_on_run impl_1
 if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} {error "Implementation failed"}
 open_run impl_1
 source $root/scripts/correct_clock.tcl
+# Repair marginal routed paths using the real PS-derived clock constraints.
+# Timing gates below still reject any setup/hold violation.
+set initial_setup [get_timing_paths -delay_type max -max_paths 1]
+set initial_hold [get_timing_paths -delay_type min -max_paths 1]
+if {[llength $initial_setup]==0 || [llength $initial_hold]==0} {error "Missing timing paths"}
+if {[get_property SLACK $initial_setup]<0 || [get_property SLACK $initial_hold]<0} {
+    report_timing_summary -file $root/results/timing_before_physopt.rpt
+    phys_opt_design -directive AggressiveExplore
+    route_design -directive Explore
+}
 source $hdmi_check
 report_utilization -file $root/results/utilization.rpt
 report_utilization -hierarchical -file $root/results/hierarchy.rpt
@@ -25,7 +35,8 @@ set setup [get_timing_paths -delay_type max -max_paths 1]
 set hold [get_timing_paths -delay_type min -max_paths 1]
 if {[llength $setup]==0 || [llength $hold]==0} {error "Missing timing paths"}
 if {[get_property SLACK $setup]<0 || [get_property SLACK $hold]<0} {error "Timing failed; do not deploy"}
-file copy -force $proj_dir/$proj_name.runs/impl_1/bosio_out_system_wrapper.bit $root/bitstream/bosio_output_projection_dual.bit
+write_checkpoint -force $root/results/validated_routed.dcp
+write_bitstream -force $root/bitstream/bosio_output_projection_dual.bit
 file copy -force $proj_dir/$proj_name.gen/sources_1/bd/bosio_out_system/hw_handoff/bosio_out_system.hwh $root/bitstream/bosio_output_projection_dual.hwh
 write_bd_tcl -force $root/results/recreate_bd.tcl
 puts "BOSIO_OUTPUT_PROJECTION_BUILD_PASS"

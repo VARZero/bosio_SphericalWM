@@ -1,6 +1,10 @@
 set root [file normalize [file join [file dirname [info script]] ..]]
 set_param general.maxThreads 4
-open_checkpoint $root/build/vivado/bosio_out_system_proj.runs/impl_1/bosio_out_system_wrapper_routed.dcp
+set checkpoint $root/results/validated_routed.dcp
+if {![file exists $checkpoint]} {
+    set checkpoint $root/build/vivado/bosio_out_system_proj.runs/impl_1/bosio_out_system_wrapper_routed.dcp
+}
+open_checkpoint $checkpoint
 source $root/scripts/correct_clock.tcl
 source $root/scripts/validate_hdmi_io.tcl
 report_timing_summary -report_unconstrained -file $root/results/timing.rpt

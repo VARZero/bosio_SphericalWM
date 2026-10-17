@@ -1,14 +1,14 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
---------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Sat Oct 17 17:11:06 2026
+| Date         : Sun Oct 18 00:08:53 2026
 | Host         : VieupE-Desk running 64-bit major release  (build 9200)
-| Command      : report_methodology -file D:/work_buffer/bosio_AG/output_projection_scanout/results/methodology.rpt
+| Command      : report_methodology -file D:/work_buffer/bosio_AG/output_projection_transform/results/methodology.rpt
 | Design       : bosio_out_system_wrapper
 | Device       : xc7z020clg400-1
 | Speed File   : -1
 | Design State : Fully Routed
---------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------
 
 Report Methodology
 
@@ -20,22 +20,20 @@ Table of Contents
 1. REPORT SUMMARY
 -----------------
             Netlist: netlist
-          Floorplan: impl_1
+          Floorplan: checkpoint_bosio_out_system_wrapper_routed
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 266
+             Violations found: 251
 +-----------+----------+-------------------------------------------------------------------+------------+
 | Rule      | Severity | Description                                                       | Violations |
 +-----------+----------+-------------------------------------------------------------------+------------+
 | DPIR-1    | Warning  | Asynchronous driver check                                         | 225        |
 | LUTAR-1   | Warning  | LUT drives async reset alert                                      | 10         |
 | TIMING-18 | Warning  | Missing input or output delay                                     | 6          |
-| TIMING-24 | Warning  | Overridden Max delay datapath only                                | 18         |
+| TIMING-24 | Warning  | Overridden Max delay datapath only                                | 6          |
 | TIMING-47 | Warning  | False path or asynchronous clock group between synchronous clocks | 2          |
 | ULMTCS-1  | Warning  | Control Sets use limits recommend reduction                       | 1          |
-| XDCB-5    | Warning  | Runtime inefficient way to find pin objects                       | 2          |
-| XDCC-4    | Warning  | User Clock constraint overwritten with the same name              | 1          |
-| XDCC-8    | Warning  | User Clock constraint overwritten on the same source              | 1          |
+| XDCB-5    | Warning  | Runtime inefficient way to find pin objects                       | 1          |
 +-----------+----------+-------------------------------------------------------------------+------------+
 
 2. REPORT DETAILS
@@ -1397,92 +1395,32 @@ Related violations: <none>
 
 TIMING-24#1 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 35). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 24). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-24#2 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 37). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 26). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-24#3 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 53). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 22). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-24#4 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 55). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 30 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 24). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-24#5 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 33). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 30 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 26). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-24#6 Warning
 Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 11 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 51). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#7 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 35). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#8 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 37). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#9 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 53). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#10 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 55). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#11 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 33). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#12 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 22 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 51). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#13 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 35). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#14 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 37). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#15 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 53). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#16 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out1_bosio_out_system_clk_wiz_0_0_1 and clk_out2_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 55). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#17 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 33). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
-Related violations: <none>
-
-TIMING-24#18 Warning
-Overridden Max delay datapath only  
-An asynchronous set_clock_groups or a set_false path (see constraint position 59 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 51). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
+An asynchronous set_clock_groups or a set_false path (see constraint position 30 in the Timing Constraints window in Vivado IDE) between clocks clk_out2_bosio_out_system_clk_wiz_0_0_1 and clk_out1_bosio_out_system_clk_wiz_0_0_1 overrides a set_max_delay -datapath_only (position 22). It is not recommended to override a set_max_delay -datapath_only constraint. Replace the set_clock_groups or set_false_path between clocks with point-to-point set_false_path constraints
 Related violations: <none>
 
 TIMING-47#1 Warning
@@ -1497,33 +1435,13 @@ Related violations: <none>
 
 ULMTCS-1#1 Warning
 Control Sets use limits recommend reduction  
-This design uses 1022 control sets (vs. available limit of 13300, determined by 1 control set per CLB). This exceeds the control set use guideline of 7.5 percent. This is at a level where reduction is RECOMMENDED (see UG949). Use report_control_sets to get more details.
+This design uses 1032 control sets (vs. available limit of 13300, determined by 1 control set per CLB). This exceeds the control set use guideline of 7.5 percent. This is at a level where reduction is RECOMMENDED (see UG949). Use report_control_sets to get more details.
 Related violations: <none>
 
 XDCB-5#1 Warning
 Runtime inefficient way to find pin objects  
-The option '-through : [get_pins -filter {NAME =~ *SyncAsync*/oSyncStages_reg[0]/D} -hier]' of constraint 'set_false_path' uses inefficient query to find pin objects (see constraint position '18' in the Timing Constraint window in Vivado IDE). To reduce runtime, it is recommended to get the pins through the cell objects. Please refer to Using Constraints Guide (Constraints Efficiency). An example of optimal query is: get_pins -filter {REF_PIN_NAME=~yy*} -of_objects [get_cells -hierarchical xx*].
-Current XDC: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 100)
-Related violations: <none>
-
-XDCB-5#2 Warning
-Runtime inefficient way to find pin objects  
 The option '-through : [get_pins -filter {NAME =~ *SyncAsync*/oSyncStages_reg[0]/D} -hier]' of constraint 'set_false_path' uses inefficient query to find pin objects (see constraint position '7' in the Timing Constraint window in Vivado IDE). To reduce runtime, it is recommended to get the pins through the cell objects. Please refer to Using Constraints Guide (Constraints Efficiency). An example of optimal query is: get_pins -filter {REF_PIN_NAME=~yy*} -of_objects [get_cells -hierarchical xx*].
-Current XDC: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 54)
-Related violations: <none>
-
-XDCC-4#1 Warning
-User Clock constraint overwritten with the same name  
-A new clock constraint create_clock overrides a previous user clock constraint with the same name.
-New: create_clock -period 10.000 -name clk_fpga_0 [get_pins {PS7_i/FCLKCLK[0]}] (Source: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 86))
-Previous: create_clock -period 10.000 -name clk_fpga_0 [get_pins {PS7_i/FCLKCLK[0]}] (Source: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 13))
-Related violations: <none>
-
-XDCC-8#1 Warning
-User Clock constraint overwritten on the same source  
-A new clock constraint create_clock overrides a previous user clock constraint defined on the same source.
-New: create_clock -period 10.000 -name clk_fpga_0 [get_pins {PS7_i/FCLKCLK[0]}] (Source: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 86))
-Previous: create_clock -period 10.000 -name clk_fpga_0 [get_pins {PS7_i/FCLKCLK[0]}] (Source: D:/work_buffer/bosio_AG/output_projection_scanout/results/timing_corrected.xdc (Line: 13))
+Current XDC: D:/work_buffer/bosio_AG/output_projection_transform/results/timing_corrected.xdc (Line: 54)
 Related violations: <none>
 
 

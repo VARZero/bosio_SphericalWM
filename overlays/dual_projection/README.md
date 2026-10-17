@@ -20,6 +20,10 @@ now uses a separate triple-buffer AXI VDMA on HP3 (`0x43000000`), with video hea
 at `0x41210000`. The bundled bitstream includes this buffered output path; see
 [scanout design and validation](SCANOUT.md).
 
+The current bundled overlay also supports whole-display quarter-turn rotation
+and horizontal/vertical reflection in both hardware IMU and software-pose modes.
+See [display transforms and current build validation](DISPLAY_TRANSFORM.md).
+
 ## Launch and test
 
 Initialize dependencies with `git submodule update --init --recursive`.
@@ -62,3 +66,9 @@ and actual Dashboard validation. Decorated/unsupported-size windows retain nativ
 The earlier original-bitstream configuration, metadata reload fix, and base boot
 service are recorded in [STABLE_RUNTIME.md](STABLE_RUNTIME.md). The current scanout
 bitstream and service override are recorded in [SCANOUT.md](SCANOUT.md).
+
+## Display orientation
+
+See [whole-display rotation and reflection](DISPLAY_TRANSFORM.md) for the DTF1
+Output Core extension and its settings API. App drawing and incremental tile
+reuse are independent of this final output transform.

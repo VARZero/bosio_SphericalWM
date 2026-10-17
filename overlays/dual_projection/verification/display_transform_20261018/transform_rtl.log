@@ -1,0 +1,20 @@
+#-----------------------------------------------------------
+# xsim v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Sat Oct 17 23:44:52 2026
+# Process ID: 40700
+# Current directory: D:/work_buffer/bosio_AG/verification/display_transform_20261017
+# Command line: xsim.exe -mode tcl -source {xsim.dir/transform_test/xsim_script.tcl}
+# Log file: D:/work_buffer/bosio_AG/verification/display_transform_20261017/xsim.log
+# Journal file: D:/work_buffer/bosio_AG/verification/display_transform_20261017\xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/transform_test/xsim_script.tcl
+# xsim {transform_test} -autoloadwcfg -runall
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+run -all
+DISPLAY_TRANSFORM_PASS: 48 transactions, 16 modes, bubbles, delayed ack, request races
+$finish called at time : 166920 ns : File "D:/work_buffer/bosio_AG/github_bosio_OutputCore/verification/tb_display_transform.v" Line 43
+exit
+INFO: [Common 17-206] Exiting xsim at Sat Oct 17 23:44:58 2026...

@@ -54,6 +54,14 @@ class BosioWMClient:
                 raise BosioWMError(response.get("error", "window manager error"))
             return response.get("result")
 
+    def set_display_transform(self, rotation=0, flip_x=False, flip_y=False):
+        """Rotate clockwise, then reflect the complete output in screen axes."""
+        return self.call("set_display_transform", rotation=rotation, flip_x=bool(flip_x), flip_y=bool(flip_y))
+
+    def input_display_move(self, dx, dy):
+        """Move in screen-oriented angular deltas, +x right and +y down."""
+        return self.call("input_display_move", dx=dx, dy=dy)
+
     def ping(self):
         return self.call("ping")
 

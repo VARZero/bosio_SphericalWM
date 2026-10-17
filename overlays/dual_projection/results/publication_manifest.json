@@ -1,21 +1,21 @@
 {
-  "output_core_commit": "addaa9d784f7b9b4f2d2d91b2dc6c57836542708",
+  "output_core_commit": "a8a1ec3177d453f4d91955baf2d4f9cbeafce22d",
   "projection_core_commit": "60943cc825e47779c8175c2d411939dc68b106e1",
   "output_m": 32,
   "projector_count": 2,
   "artifacts": {
-    "bitstream/bosio_output_projection_dual.bit": "ce31ede26331fe5c45ca09acda75262cf24d4fe3610cb073a52f60d7a2236342",
-    "bitstream/bosio_output_projection_dual.hwh": "c27170a7069c6583b1179831f0b2e385724654b4c506add4d83036cad85a340f"
+    "bitstream/bosio_output_projection_dual.bit": "da015895bb27727d1bbef4f357bd706362112ed850feb5394e390323627d64d9",
+    "bitstream/bosio_output_projection_dual.hwh": "5e88bc47677ad25befc72d2e9d9a5c1882bd500d15c733feaccf84e226c85db2"
   },
   "validation": {
     "incremental_host_tests": 14,
-    "output_driver_host_tests": 5,
+    "output_driver_host_tests": 8,
     "projection_model_host_tests": 4,
     "partition_host_tests": 4,
     "workspace_input_host_tests": 14,
     "previous_live_board_cases": 14,
     "live_hardware_reference_checks": 13,
-    "boayo_host_tests": 47,
+    "boayo_host_tests": 48,
     "boayo_live_cases": 8,
     "dashboard_minimize_restore": true,
     "metadata_reload_live_cases": 3,
@@ -27,24 +27,39 @@
     "scanout_lock_losses": 0,
     "scanout_rtl_simulation": "VIDEO_HEALTH_PASS",
     "incremental_live_board_cases": 14,
-    "scanout_evidence": "../verification/scanout_20261017/"
+    "scanout_evidence": "../verification/scanout_20261017/",
+    "display_transform": {
+      "captured_modes": 16,
+      "live_imu_api_modes": 16,
+      "incremental_cases": 14,
+      "rtl_transform_transactions": 48,
+      "rtl_frozen_sensor_modes": 16,
+      "transform_extra_projection_jobs": 0,
+      "additional_underflows": 0,
+      "lock_losses": 0,
+      "worst_capture_mask_iou": 0.9783854237380183,
+      "full_window_jobs": 72,
+      "partial_window_jobs": 5
+    },
+    "display_transform_evidence": "../verification/display_transform_20261018/"
   },
-  "packaging": "Validated M32 dual-projection overlay with HP3 triple-buffer VDMA scanout. Incremental tile reuse and metadata reload fix preserved; fixed-size active-window BoAYO captions supported.",
+  "packaging": "Validated M32 dual-projection overlay with DTF1 whole-display rotation/reflection, hardware IMU and triple-buffer HDMI. Incremental caches preserved.",
   "runtime_sources": {
     "bosio_buttons.py": "775ec50de1327371ef48906a3ff57629ca751aa4c5164d5d3b2936f2b7876201",
     "bosio_geometry_v2.py": "fcff37f73139cfb6327bfdb5012a59fd6e668fe54267231b06e47aaa0e00bedd",
     "bosio_hw_compositor.py": "110ce1e4ce1d27fd665fbb02930fa928b9b1c14ba48440e54da4b5eddfbbe5fa",
-    "bosio_mouse_input.py": "6408948f09b02e7def281f904c5ffc8e95edc1e2e427b60fa79526a83210a867",
+    "bosio_mouse_input.py": "9395dad230c8d129a31fb9abee194c3e5b6ad26a9a252e49a9295dd6d60aa9a7",
     "bosio_native_compositor.py": "1aa473d08cf53271763bcd292d69a2ac97d798d8bef200ccc1a66fb6fdb97f03",
     "bosio_window_manager.py": "1719d117ed27c91963370433b235db85d8d6af9ab4f0d2b3c0b6e3512b714126",
-    "bosio_wm_client.py": "cbbd0537bc432937230d120b9cbc98ea65ebf64d9f32ffc4adf295976434819b",
-    "bosio_wm_daemon.py": "fed95bf44d0ab3e3c8d139e63697c8bb9acd63c347a7b23c54a5b4a50cb2d1dd",
+    "bosio_wm_client.py": "ec7e64014c0e31c84ab0ac94fcdcac80504019b7cc59b3be2f594e5782d3ae13",
+    "bosio_wm_daemon.py": "54dc3b5951e62af4d0ddf8275cdb695da310a49b829333e33f2c65285a3d2bca",
     "check_display_health.py": "1532f4bcf4ba548b9f3ad4f95d112780d101951966545a818d7199d2953a9d94",
     "validate_display_pose.py": "c5ab79f0766b82bbb4001436676c4cdd6a10573fc620832d097634c3d208f9df",
     "validate_incremental.py": "b7a9baeed2021c5ac0b1fc7fe0aa58994e3be51cdb8bea22ee315fe4f0f856f0",
     "show_preview_window.py": "e4599f0913979195a1f308dee2e9d1bacf975bd97b327c08e367ba2eb6f14752",
     "bosio_scanout.py": "029bf9398fc2e9c4c9fb4b90bb867181f08669b097a03bea1b673a7220f5b2d0",
-    "validate_scanout.py": "40178da11f4976905cbc24f879bfb83c94ca02e5255959963964a0d13275ec48"
+    "validate_scanout.py": "40178da11f4976905cbc24f879bfb83c94ca02e5255959963964a0d13275ec48",
+    "display_transform.py": "4ae4872acfc027e52fe3260a3df074ae7fc200b6769cc799edb8bb1836713784"
   },
   "runtime_source_hash_format": "SHA-256 of UTF-8 source with LF line endings",
   "deployed_configuration": {
@@ -59,7 +74,13 @@
     "video_fifo_start_threshold": 2048,
     "scanout_buffers": 3,
     "scanout_buffer_bytes": 8294400,
-    "hdmi_mode": "1280x720@60"
+    "hdmi_mode": "1280x720@60",
+    "display_transform_capability": "DTF1",
+    "display_transform_default": {
+      "rotation": 0,
+      "flip_x": false,
+      "flip_y": false
+    }
   },
-  "deployed_driver_sha256": "ab9899b4855319aed21b071a2611f2cc3c62c258734e33a0d1aa6533e2227516"
+  "deployed_driver_sha256": "8c55044d0ff802555dc0de83210c4d15c7e5a811a0ea1802716440ca5caa71bb"
 }

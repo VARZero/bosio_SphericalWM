@@ -1,0 +1,242 @@
+{
+  "generation": 98,
+  "compositor": "fpga-dual+ps-incremental",
+  "projection": {
+    "mode": "fpga-dual+ps-incremental",
+    "hardware_frames": 52,
+    "fallback_frames": 1,
+    "windows": [
+      19
+    ],
+    "projected_windows": [
+      19
+    ],
+    "jobs_per_core": [
+      65,
+      65
+    ],
+    "written_cells_per_core": [
+      54020,
+      51602
+    ],
+    "hardware_ms": 72.85683100053575,
+    "driver_ms": 150.69239399963408,
+    "shaped_windows": [
+      19
+    ],
+    "texture_upload_words": 281600,
+    "reused_window_tiles": 0,
+    "dirty_tiles": 130,
+    "changed_tiles": 0,
+    "total_hw_jobs": 1880,
+    "cached_window_tiles": 290,
+    "update_kind": "patch",
+    "output_words": 0,
+    "active_tiles": 0,
+    "compose_ms": 1323.1223179973313,
+    "sampling": "fixed-point bilinear RGB332"
+  },
+  "focused_window": 19,
+  "pointer": {
+    "azimuth": 4.182591904455023,
+    "elevation": -58.90006133944863,
+    "visible": false,
+    "window_id": 19,
+    "zone": "content",
+    "dragging": false,
+    "buttons": [],
+    "left_press_serial": 0,
+    "last_left_press": null,
+    "left_release_serial": 0,
+    "last_left_release": null,
+    "cancel_serial": 0,
+    "captured_window": null,
+    "scroll_serial": 0,
+    "scroll_delta": 0.0
+  },
+  "windows": [
+    {
+      "window_id": 19,
+      "owner": "dashboard:30271:5a4e128f",
+      "title": "Dashboard",
+      "azimuth": 4.182591904455023,
+      "elevation": -58.90006133944863,
+      "roll": 0.0,
+      "width_deg": 38.0,
+      "height_deg": 28.0,
+      "surface_width": 640,
+      "surface_height": 440,
+      "mapped": true,
+      "always_on_top": false,
+      "decorated": false,
+      "input_enabled": true,
+      "workspace": {
+        "role": "app",
+        "state": "open"
+      },
+      "shape": [
+        [
+          48.0,
+          4.0,
+          544.0,
+          428.0,
+          14.0
+        ]
+      ],
+      "focused": true,
+      "z": 0
+    },
+    {
+      "window_id": 18,
+      "owner": "boayo-desktop:30268:829c1424",
+      "title": "BoAYO Launcher",
+      "azimuth": 0.0,
+      "elevation": 0.0,
+      "roll": 0.0,
+      "width_deg": 42.0,
+      "height_deg": 30.0,
+      "surface_width": 640,
+      "surface_height": 360,
+      "mapped": false,
+      "always_on_top": true,
+      "decorated": false,
+      "input_enabled": true,
+      "workspace": {},
+      "shape": [
+        [
+          51.2,
+          36.0,
+          537.6,
+          251.99999999999997,
+          18.0
+        ]
+      ],
+      "focused": false,
+      "z": 1
+    }
+  ],
+  "output": {
+    "display_transform": {
+      "supported": true,
+      "rotation": 0,
+      "flip_x": false,
+      "flip_y": false,
+      "active_rotation": 0,
+      "active_flip_x": false,
+      "active_flip_y": false,
+      "pending": false
+    },
+    "raw": 1626079243,
+    "enabled": true,
+    "scene_valid": true,
+    "dma_busy": false,
+    "pose_pending": true,
+    "scene_pending": false,
+    "error": false,
+    "frames": 24812,
+    "received": 107520,
+    "fclk0_mhz": 100.0,
+    "aa_enabled": true,
+    "aa_threshold": 24,
+    "aa_strength": 32,
+    "sensor_mode": true,
+    "sensor_active": true,
+    "sensor_pose_busy": true,
+    "sensor_applied": 25888,
+    "sensor_packets": 25889,
+    "sensor_yaw_mrad": 74,
+    "sensor_pitch_mrad": -1028,
+    "sensor_roll_mrad": -96,
+    "sensor_invert_yaw": false,
+    "sensor_invert_pitch": false,
+    "sensor_invert_roll": false,
+    "ddr_cache": true,
+    "cache_line_bytes": 64,
+    "cache_bytes": 16384,
+    "cache_ways": 2,
+    "cache_hits": 1320484728,
+    "cache_misses": 72068378,
+    "cache_stall_cycles": 3101572024
+  },
+  "scanout": {
+    "mode": "triple-buffer-dynamic-genlock",
+    "width": 1280,
+    "height": 720,
+    "frame_buffers": 3,
+    "buffer_bytes": 8294400,
+    "read_status": 69632,
+    "write_status": 69632,
+    "read_errors": 0,
+    "write_errors": 0,
+    "read_frame": 0,
+    "write_frame": 2,
+    "video_locked": true,
+    "underflow": false,
+    "overflow": false,
+    "ever_locked": true,
+    "overflow_seen": false,
+    "lock_losses": 0,
+    "underflow_events": 1,
+    "video_frames": 15598
+  },
+  "buttons": {
+    "state": 0,
+    "available": true,
+    "last_event_id": 0
+  },
+  "render_error": null,
+  "projection_presented": {
+    "generation": 97,
+    "backend": {
+      "mode": "fpga-dual+ps-incremental",
+      "hardware_frames": 52,
+      "fallback_frames": 1,
+      "windows": [
+        19
+      ],
+      "projected_windows": [
+        19
+      ],
+      "jobs_per_core": [
+        65,
+        65
+      ],
+      "written_cells_per_core": [
+        54020,
+        51602
+      ],
+      "hardware_ms": 72.85683100053575,
+      "driver_ms": 150.69239399963408,
+      "shaped_windows": [
+        19
+      ],
+      "texture_upload_words": 281600,
+      "reused_window_tiles": 0,
+      "dirty_tiles": 130,
+      "changed_tiles": 0,
+      "total_hw_jobs": 1880,
+      "cached_window_tiles": 290,
+      "update_kind": "patch",
+      "output_words": 0,
+      "active_tiles": 0,
+      "compose_ms": 1323.1223179973313,
+      "sampling": "fixed-point bilinear RGB332"
+    },
+    "active_address": 367001600,
+    "frames": 24812
+  },
+  "scene_owner": null,
+  "performance": {
+    "render_count": 52,
+    "full_update_count": 2,
+    "patch_update_count": 28,
+    "update_words": 1529840,
+    "no_op_update_count": 22,
+    "uptime_seconds": 277.5384321399979,
+    "average_compose_ms": 320.6826584425401,
+    "average_upload_ms": 33.90134776922283,
+    "last_compose_ms": 1323.4749090006517,
+    "last_upload_ms": 0.6551629994646646,
+    "frame_limit": 30.0
+  }
+}

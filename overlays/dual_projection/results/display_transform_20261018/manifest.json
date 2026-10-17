@@ -1,0 +1,69 @@
+{
+  "status": "Validated and deployed release",
+  "output_core_base_commit": "addaa9d784f7b9b4f2d2d91b2dc6c57836542708",
+  "output_core_has_uncommitted_changes": false,
+  "projection_core_commit": "60943cc825e47779c8175c2d411939dc68b106e1",
+  "output_m": 32,
+  "projector_count": 2,
+  "capability": "DTF1",
+  "artifacts": {
+    "bitstream/bosio_output_projection_transform.bit": "da015895bb27727d1bbef4f357bd706362112ed850feb5394e390323627d64d9",
+    "bitstream/bosio_output_projection_transform.hwh": "5e88bc47677ad25befc72d2e9d9a5c1882bd500d15c733feaccf84e226c85db2"
+  },
+  "output_core_source_sha256": {
+    "hdl/bosio_ddr_scene_cache.v": "912c6895d47f59a5ef60244a2c96ae54422dd219bb20b180fd3407aecabeceea",
+    "hdl/bosio_display_transform.v": "6f11446eab3a5e18d6b965bbe1cfd2fabf1610835896249c9190bddb8e91c7cb",
+    "hdl/bosio_out_agu.v": "77956228d53f0016ef05429c09997f60c1b7a99f42b4e43d16343d04985d2bab",
+    "hdl/bosio_out_bary_agu.v": "1f4764a5c3d258b91fd2a8309ffd7f9cb105041ccbff02f84e2a38e87615f77c",
+    "hdl/bosio_out_dma_cache.v": "a01cba4b447ae188740316f4f94a0c398c165a809e2e26d6db635522c6f3c9a4",
+    "hdl/bosio_out_fifo.v": "3ac171c56395d5a16dfa785442bfa4d73a45b2ae468fd9ba2b08ca3a16e4ce77",
+    "hdl/bosio_out_pose_proc.v": "968a682082390f1a6a72ffcbe332284f9cbca2ad8edfad2ca42363bdfb3f4fe0",
+    "hdl/bosio_out_reg_ctrl.v": "609f0975e3156e245e5bec27a04db15b940e62a1413479595ec21f08432cfb0c",
+    "hdl/bosio_out_sensor_rx.v": "f215b3ddeac4202b3f38d39d880fc3370c6d62466ac63dee99369be2614368de",
+    "hdl/bosio_out_stream_out.v": "5773e424d68f7ef304f361898355e3d701a783563f5884a35e047761153f9a62",
+    "hdl/bosio_output_top.v": "3dad8b3536e3b0c49684e9e68aad86089a0c19d07f1c95ef64c72300536b5f99",
+    "hdl/bosio_v2_cache.v": "d8cd5a71d5b11176f0cd318ee216199fc92a4a1a6a2e760714c71f67c788607d",
+    "hdl/bosio_v2_edge_aa.v": "dc91317ead1ab0257a0eca687285b2ef79de4c993a323cb5bbf096c5801b8e03",
+    "hdl/bosio_v2_projector.v": "ea6d17d8d803bbb1a9d43ad9e459655c72fd89bf98f022a40270680048d1e407",
+    "hdl/bosio_v2_sensor_pose.v": "dcbae8ceb28187a11de31cc0c9a8c9c8a16aa714077f140f00396575b48ffa0d",
+    "hdl/varzero_cache_line.v": "1b0dcfe553f71d448de19f6207d18c548905971f09c54c04864b2f7d3bd97103",
+    "component.xml": "ba0a305d5a9cf7dcee6180b8afaf7bb775e91d26688a332e0f238e470da2cafe",
+    "software/bosio_driver_v2.py": "8c55044d0ff802555dc0de83210c4d15c7e5a811a0ea1802716440ca5caa71bb"
+  },
+  "runtime_source_sha256": {
+    "bosio_wm_daemon.py": "54dc3b5951e62af4d0ddf8275cdb695da310a49b829333e33f2c65285a3d2bca",
+    "bosio_wm_client.py": "ec7e64014c0e31c84ab0ac94fcdcac80504019b7cc59b3be2f594e5782d3ae13",
+    "bosio_mouse_input.py": "9395dad230c8d129a31fb9abee194c3e5b6ad26a9a252e49a9295dd6d60aa9a7",
+    "display_transform.py": "4ae4872acfc027e52fe3260a3df074ae7fc200b6769cc799edb8bb1836713784"
+  },
+  "hash_format": "Artifact hashes use exact bytes; source hashes use UTF-8 with LF line endings",
+  "lut": 36374,
+  "ff": 43905,
+  "bram36": 50,
+  "dsp": 155,
+  "setup_wns_ns": 0.032,
+  "hold_whs_ns": 0.01,
+  "validation": {
+    "captured_modes": 16,
+    "live_imu_api_modes": 16,
+    "incremental_cases": 14,
+    "rtl_transform_transactions": 48,
+    "rtl_frozen_sensor_modes": 16,
+    "transform_extra_projection_jobs": 0,
+    "additional_underflows": 0,
+    "lock_losses": 0,
+    "worst_capture_mask_iou": 0.9783854237380183,
+    "full_window_jobs": 72,
+    "partial_window_jobs": 5
+  },
+  "deployed_bit": "/home/xilinx/bosio_display_transform_20261017/bosio_output_projection_transform.bit",
+  "evidence": "../../verification/display_transform_20261018/",
+  "previous_release_manifest": "../scanout_publication_manifest_20261017.json",
+  "notes": [
+    "The first routed result failed setup by 0.007 ns and was not deployed.",
+    "Post-route physical optimization and routing passed unchanged timing gates; exported bit matches final netlist.",
+    "First deployment startup check timed out at 45 s; runtime became ready at about 46 s. Retry with 180 s passed.",
+    "The default dual.bit/HWH are byte-identical to the deployed transform.bit/HWH; prior artifacts remain in Git history."
+  ],
+  "output_core_commit": "a8a1ec3177d453f4d91955baf2d4f9cbeafce22d"
+}

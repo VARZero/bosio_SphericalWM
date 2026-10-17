@@ -1,0 +1,29 @@
+{
+  "output_m": 32,
+  "projector_count": 2,
+  "source_files": {
+    "OutputCore/hdl/bosio_ddr_scene_cache.v": "14749d8a5202a0a1bb1694bf854eef6d21c42bb826ed3f2d41ad360e8f7bff5d",
+    "OutputCore/hdl/bosio_display_transform.v": "6f11446eab3a5e18d6b965bbe1cfd2fabf1610835896249c9190bddb8e91c7cb",
+    "OutputCore/hdl/bosio_out_agu.v": "77956228d53f0016ef05429c09997f60c1b7a99f42b4e43d16343d04985d2bab",
+    "OutputCore/hdl/bosio_out_bary_agu.v": "1f4764a5c3d258b91fd2a8309ffd7f9cb105041ccbff02f84e2a38e87615f77c",
+    "OutputCore/hdl/bosio_out_dma_cache.v": "a01cba4b447ae188740316f4f94a0c398c165a809e2e26d6db635522c6f3c9a4",
+    "OutputCore/hdl/bosio_out_fifo.v": "3ac171c56395d5a16dfa785442bfa4d73a45b2ae468fd9ba2b08ca3a16e4ce77",
+    "OutputCore/hdl/bosio_out_pose_proc.v": "3b0928ce5ad94fe04f7bf3636fdd911101568a247380bd59a4cf4c5ed9060a4e",
+    "OutputCore/hdl/bosio_out_reg_ctrl.v": "609f0975e3156e245e5bec27a04db15b940e62a1413479595ec21f08432cfb0c",
+    "OutputCore/hdl/bosio_out_sensor_rx.v": "f215b3ddeac4202b3f38d39d880fc3370c6d62466ac63dee99369be2614368de",
+    "OutputCore/hdl/bosio_out_stream_out.v": "5773e424d68f7ef304f361898355e3d701a783563f5884a35e047761153f9a62",
+    "OutputCore/hdl/bosio_output_top.v": "a4d660f2c6a1e156a4e800655bd4d8dc600776e76cb05323257ab6d2c83a2f10",
+    "OutputCore/hdl/bosio_v2_cache.v": "55a645968eb792c3ffeb97ec9f7310aa92927c38a894e42098e4a2b6785e732f",
+    "OutputCore/hdl/bosio_v2_edge_aa.v": "dc91317ead1ab0257a0eca687285b2ef79de4c993a323cb5bbf096c5801b8e03",
+    "OutputCore/hdl/bosio_v2_projector.v": "3e4c7f83808cb9a5c1392740be7b118eae38ef3a0d231146d4117ef0bdbda08a",
+    "OutputCore/hdl/bosio_v2_sensor_pose.v": "6dd7e5f08a1efc30b036b7d754436774d9a0851ecf0784688a747685ee8af56a",
+    "OutputCore/hdl/varzero_cache_line.v": "187219540bdcd372c67b7371a641a00fb2346655ec9a92a6ea76fbe82ddb8d7c",
+    "integration/scripts/build.tcl": "73f26a627fc9275c77f8664165a6f8261c0d84f2c3aad81d028e9d1cf0c670e2",
+    "integration/scripts/correct_clock.tcl": "778a507246ee00322ea6d4b1a29b2d8d38854e551d21fe38496df5194715f084",
+    "integration/scripts/create_system.tcl": "1c331c872db32e16510fd51f3a9aa22309845178e7c82ee2b6089054df6883f2",
+    "integration/scripts/ps7_config.tcl": "3c21a9314ebf981f8be1dd81594fa828cefa873c523d0e1ae295c2d0e33b14c2",
+    "integration/scripts/rebuild_scanout.tcl": "9ec99a22b2bd3cc846c31bb951e8b2c17f5fd6e2252ee703e556adad3a644a64",
+    "integration/scripts/signoff.tcl": "f1136e0b80c3669dc07917056f82ee422cdd95c539638a80b1845bf42acb96ef",
+    "integration/scripts/validate_hdmi_io.tcl": "b12074270e2bc72dc86916d8f89daca6540efc4dd750c4c91ba3a4137eb6722d"
+  }
+}

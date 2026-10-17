@@ -125,6 +125,14 @@ class BosioWindowDaemon:
         self.input_buttons = {}
         self.last_projection_presented = None
 
+    def _display_motion(self, dx, dy):
+        # Current gaze input stays in world coordinates; only screen-relative
+        # mouse deltas need the inverse of the active output transform.
+        from bosio_mouse_input import inverse_display_motion
+        with self.driver_lock:
+            transform = self.driver.get_display_transform() if self.driver is not None else {}
+        return inverse_display_motion(dx, dy, transform)
+
     def _input_button(self, app, button, pressed):
         """Merge one IPC input source into the global pointer button state."""
         button = str(button)
@@ -206,6 +214,16 @@ class BosioWindowDaemon:
                 raise WindowManagerError("fps must be between 1 and 500")
             self.frame_period = 1.0 / fps
             return fps
+        if op == "set_display_transform":
+            if self.driver is None:
+                raise WindowManagerError("output driver is not available")
+            with self.driver_lock:
+                result = self.driver.set_display_transform(**args)
+                self.output_status = self.driver.status()
+                return result
+        if op == "input_display_move":
+            dx, dy = self._display_motion(float(args["dx"]), float(args["dy"]))
+            return wm.pointer_move(dx, -dy)
         if op == "set_antialias":
             if self.driver is None:
                 raise WindowManagerError("output driver is not available")
@@ -555,7 +573,7 @@ class BosioWindowDaemon:
             raise
         if self.mouse_device:
             from bosio_mouse_input import EvdevMouse
-            self.mouse = EvdevMouse(self.manager, self.mouse_device, self.mouse_sensitivity)
+            self.mouse = EvdevMouse(self.manager, self.mouse_device, self.mouse_sensitivity, transform_motion=self._display_motion)
             active = self.mouse.start()
             print(f"BOSIO_MOUSE device={self.mouse.device!r} active={active}", flush=True)
         self.server = _Server(str(self.socket_path), _Handler)

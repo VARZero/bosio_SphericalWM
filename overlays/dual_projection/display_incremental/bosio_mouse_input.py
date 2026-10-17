@@ -26,9 +26,19 @@ def find_mouse_device():
     return candidates[0] if candidates else None
 
 
+def inverse_display_motion(dx, dy, transform):
+    """Map output-screen deltas back to the untransformed logical viewport."""
+    if transform.get('active_flip_x', False): dx = -dx
+    if transform.get('active_flip_y', False): dy = -dy
+    for _ in range(transform.get('active_rotation', 0)//90):
+        dx, dy = dy, -dx
+    return dx, dy
+
+
 class EvdevMouse:
-    def __init__(self, manager, device="auto", sensitivity=0.12):
+    def __init__(self, manager, device="auto", sensitivity=0.12, transform_motion=None):
         self.manager = manager
+        self.transform_motion = transform_motion
         self.device = find_mouse_device() if device == "auto" else device
         self.sensitivity = float(sensitivity)
         self.thread = None
@@ -62,6 +72,8 @@ class EvdevMouse:
                     elif event_type == EV_KEY and code in BUTTONS:
                         self.manager.pointer_button(BUTTONS[code], value != 0)
                     elif event_type == EV_SYN and code == SYN_REPORT and (dx or dy):
+                        if self.transform_motion is not None:
+                            dx, dy = self.transform_motion(dx, dy)
                         self.manager.pointer_move(dx * self.sensitivity, -dy * self.sensitivity)
                         dx = dy = 0
         except Exception as exc:
