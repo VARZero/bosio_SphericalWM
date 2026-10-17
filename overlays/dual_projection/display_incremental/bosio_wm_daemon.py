@@ -91,6 +91,7 @@ class BosioWindowDaemon:
         self.aa_strength = int(aa_strength)
         self.mouse = None
         self.driver = None
+        self.scanout = None
         self.running = False
         self.last_rendered = 0
         self.server = None
@@ -301,6 +302,7 @@ class BosioWindowDaemon:
                     self.output_status = self.driver.status()
             state = wm.state()
             state["output"] = self.output_status
+            state["scanout"] = self.scanout.status() if self.scanout is not None else None
             with self.button_lock:
                 state["buttons"] = {"state": self.button_state,
                                     "available": self.buttons is not None,
@@ -378,6 +380,10 @@ class BosioWindowDaemon:
             raise RuntimeError("--bit is required unless --headless is used")
         from bosio_driver_v2 import BosioV2
         self.driver = BosioV2(self.bitstream, self.manager.m)
+        if "scanout_vdma" in self.driver.overlay.ip_dict:
+            from bosio_scanout import BufferedScanout
+            self.scanout = BufferedScanout()
+            self.scanout.start()
         from bosio_hw_compositor import HardwareCompositor
         if self.manager.native is None:
             raise RuntimeError('Native fallback compositor is required')
@@ -536,7 +542,17 @@ class BosioWindowDaemon:
         if self.socket_path.exists():
             self.socket_path.unlink()
         self.socket_path.parent.mkdir(parents=True, exist_ok=True)
-        self._start_driver()
+        try:
+            self._start_driver()
+        except BaseException:
+            # Stop scanout before an unsuccessful startup can release its DDR
+            # allocation. A failed reset deliberately retains the allocation.
+            if self.scanout is not None:
+                self.scanout.close()
+            if self.driver is not None:
+                self.driver.close()
+            self.lock_file.close()
+            raise
         if self.mouse_device:
             from bosio_mouse_input import EvdevMouse
             self.mouse = EvdevMouse(self.manager, self.mouse_device, self.mouse_sensitivity)
@@ -568,6 +584,8 @@ class BosioWindowDaemon:
                 self.button_thread.join(timeout=1)
             if self.driver is not None:
                 self.driver.close()
+            if self.scanout is not None:
+                self.scanout.close()
             if self.manager.native is not None:
                 self.manager.native.close()
             if self.socket_path.exists():

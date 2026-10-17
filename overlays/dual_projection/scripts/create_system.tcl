@@ -45,6 +45,7 @@ set_property -dict [list \
     CONFIG.PCW_USE_S_AXI_HP0 {1} \
     CONFIG.PCW_USE_S_AXI_HP1 {1} \
     CONFIG.PCW_USE_S_AXI_HP2 {1} \
+    CONFIG.PCW_USE_S_AXI_HP3 {1} \
     CONFIG.PCW_USE_M_AXI_GP0 {1} \
     CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {100} \
 ] [get_bd_cells ps7_0]
@@ -108,13 +109,13 @@ set_property -dict [list \
     CONFIG.GEN_VACTIVE_SIZE {720} \
 ] [get_bd_cells vtc_0]
 
-# 9. AXI4-Stream to Video Out
+# 9. AXI4-Stream to Video Out: C_VTG_MASTER_SLAVE=1 means Master.
 create_bd_cell -type ip -vlnv xilinx.com:ip:v_axi4s_vid_out:4.0 vid_out_0
 set_property -dict [list \
     CONFIG.C_VTG_MASTER_SLAVE {1} \
     CONFIG.C_HAS_ASYNC_CLK {1} \
-    CONFIG.C_ADDR_WIDTH {11} \
-    CONFIG.C_HYSTERESIS_LEVEL {12} \
+    CONFIG.C_ADDR_WIDTH {13} \
+    CONFIG.C_HYSTERESIS_LEVEL {2048} \
     CONFIG.C_SYNC_LOCK_THRESHOLD {4} \
 ] [get_bd_cells vid_out_0]
 
@@ -162,7 +163,7 @@ connect_bd_net [get_bd_pins rst_ps7_74M/peripheral_aresetn] [get_bd_pins rgb2dvi
 
 # Video Timing Controller and Video Out Synchronization
 connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins vtc_0/clken]
-connect_bd_net [get_bd_pins vid_out_0/vtg_ce] [get_bd_pins vtc_0/gen_clken]
+connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins vtc_0/gen_clken]
 connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins vid_out_0/aclken]
 connect_bd_net [get_bd_pins const_vcc/dout] [get_bd_pins vid_out_0/vid_io_out_ce]
 
@@ -188,8 +189,52 @@ connect_bd_intf_net [get_bd_intf_pins sensor_hub_0/m_axis_sensor] [get_bd_intf_p
 # ----------------------------------------------------------------------------
 # Connect Video Pipeline
 # ----------------------------------------------------------------------------
+# Complete-frame handoff: producer may stall; scanout repeats completed frames.
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_vdma:6.3 scanout_vdma
+set_property -dict [list \
+ CONFIG.c_include_sg {0} CONFIG.c_num_fstores {3} \
+ CONFIG.c_include_mm2s {1} CONFIG.c_include_s2mm {1} \
+ CONFIG.c_m_axi_mm2s_data_width {64} CONFIG.c_m_axi_s2mm_data_width {64} \
+ CONFIG.c_m_axis_mm2s_tdata_width {24} CONFIG.c_s_axis_s2mm_tdata_width {24} \
+ CONFIG.c_include_mm2s_dre {1} CONFIG.c_include_s2mm_dre {1} \
+ CONFIG.c_mm2s_genlock_mode {3} CONFIG.c_s2mm_genlock_mode {2} \
+ CONFIG.c_include_internal_genlock {1} \
+ CONFIG.c_use_fsync {1} CONFIG.c_use_mm2s_fsync {0} CONFIG.c_use_s2mm_fsync {2} \
+ CONFIG.c_mm2s_linebuffer_depth {8192} CONFIG.c_s2mm_linebuffer_depth {4096} \
+ CONFIG.c_mm2s_max_burst_length {16} CONFIG.c_s2mm_max_burst_length {16} \
+] [get_bd_cells scanout_vdma]
+foreach pin {s_axi_lite_aclk m_axi_mm2s_aclk m_axi_s2mm_aclk m_axis_mm2s_aclk s_axis_s2mm_aclk} {
+ connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins scanout_vdma/$pin]
+}
+connect_bd_net [get_bd_pins rst_ps7_100M/peripheral_aresetn] [get_bd_pins scanout_vdma/axi_resetn]
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins ps7_0/S_AXI_HP3_ACLK]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/ps7_0/M_AXI_GP0" Clk "Auto"} [get_bd_intf_pins scanout_vdma/S_AXI_LITE]
+assign_bd_address -offset 0x43000000 -range 64K -target_address_space [get_bd_addr_spaces ps7_0/Data] [get_bd_addr_segs scanout_vdma/S_AXI_LITE/Reg] -force
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect:2.1 scanout_ddr
+set_property -dict [list CONFIG.NUM_SI {2} CONFIG.NUM_MI {1}] [get_bd_cells scanout_ddr]
+foreach pin {ACLK S00_ACLK S01_ACLK M00_ACLK} {connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins scanout_ddr/$pin]}
+foreach pin {ARESETN S00_ARESETN S01_ARESETN M00_ARESETN} {connect_bd_net [get_bd_pins rst_ps7_100M/peripheral_aresetn] [get_bd_pins scanout_ddr/$pin]}
+connect_bd_intf_net [get_bd_intf_pins scanout_vdma/M_AXI_MM2S] [get_bd_intf_pins scanout_ddr/S00_AXI]
+connect_bd_intf_net [get_bd_intf_pins scanout_vdma/M_AXI_S2MM] [get_bd_intf_pins scanout_ddr/S01_AXI]
+connect_bd_intf_net [get_bd_intf_pins scanout_ddr/M00_AXI] [get_bd_intf_pins ps7_0/S_AXI_HP3]
+
+# Read-only video health and native frame counter, independent of producer FPS.
+add_files -norecurse [file join $root_dir hw video_health.v]
+create_bd_cell -type module -reference video_health video_health_0
+connect_bd_net [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins video_health_0/clk]
+connect_bd_net [get_bd_pins rst_ps7_100M/peripheral_aresetn] [get_bd_pins video_health_0/rst_n]
+foreach pin {locked underflow overflow status} {connect_bd_net [get_bd_pins vid_out_0/$pin] [get_bd_pins video_health_0/$pin]}
+connect_bd_net [get_bd_pins vid_out_0/vid_vsync] [get_bd_pins video_health_0/vsync]
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 video_health_gpio
+set_property -dict [list CONFIG.C_GPIO_WIDTH {32} CONFIG.C_ALL_INPUTS {1} CONFIG.C_IS_DUAL {1} CONFIG.C_GPIO2_WIDTH {32} CONFIG.C_ALL_INPUTS_2 {1}] [get_bd_cells video_health_gpio]
+connect_bd_net [get_bd_pins video_health_0/health] [get_bd_pins video_health_gpio/gpio_io_i]
+connect_bd_net [get_bd_pins video_health_0/video_frames] [get_bd_pins video_health_gpio/gpio2_io_i]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config {Master "/ps7_0/M_AXI_GP0" Clk "Auto"} [get_bd_intf_pins video_health_gpio/S_AXI]
+assign_bd_address -offset 0x41210000 -range 64K -target_address_space [get_bd_addr_spaces ps7_0/Data] [get_bd_addr_segs video_health_gpio/S_AXI/Reg] -force
+
 puts "==> Connecting Video Pipeline..."
-connect_bd_intf_net [get_bd_intf_pins output_core_0/m_axis_video] [get_bd_intf_pins vid_out_0/video_in]
+connect_bd_intf_net [get_bd_intf_pins output_core_0/m_axis_video] [get_bd_intf_pins scanout_vdma/S_AXIS_S2MM]
+connect_bd_intf_net [get_bd_intf_pins scanout_vdma/M_AXIS_MM2S] [get_bd_intf_pins vid_out_0/video_in]
 connect_bd_intf_net [get_bd_intf_pins vtc_0/vtiming_out] [get_bd_intf_pins vid_out_0/vtiming_in]
 
 # Connect vid_out signals to rgb2dvi

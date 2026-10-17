@@ -1,13 +1,13 @@
-Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
----------------------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
-| Date         : Sat Oct 17 12:47:51 2026
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Sat Oct 17 17:10:54 2026
 | Host         : VieupE-Desk running 64-bit major release  (build 9200)
-| Command      : report_timing_summary -file D:/work_buffer/bosio_AG/output_projection_dual/results/timing.rpt
+| Command      : report_timing_summary -file D:/work_buffer/bosio_AG/output_projection_scanout/results/timing.rpt
 | Design       : bosio_out_system_wrapper
 | Device       : 7z020-clg400
 | Speed File   : -1  PRODUCTION 1.12 2019-11-22
----------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
 
 Timing Summary Report
 
@@ -32,14 +32,6 @@ Timing Summary Report
   ------  ---------  ---------  
   Slow    Yes        Yes        
   Fast    Yes        Yes        
-
-
-------------------------------------------------------------------------------------------------
-| Report Methodology
-| ------------------
-------------------------------------------------------------------------------------------------
-
-No report available as report_methodology has not been run prior. Run report_methodology on the current design for the summary of methodology violations.
 
 
 
@@ -136,7 +128,7 @@ Table of Contents
 
     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
-      0.073        0.000                      0               102200        0.049        0.000                      0               102200        0.540        0.000                       0                 40009  
+      0.148        0.000                      0               116947        0.050        0.000                      0               116947        0.540        0.000                       0                 45982  
 
 
 All user specified timing constraints are met.
@@ -166,8 +158,8 @@ clk_fpga_0                                 {0.000 5.000}        10.000          
 Clock                                          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
 -----                                          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
 clk_fpga_0                                                                                                                                                                                   3.000        0.000                       0                     2  
-  clk_out1_bosio_out_system_clk_wiz_0_0_1        0.073        0.000                      0                99854        0.049        0.000                      0                99854        3.750        0.000                       0                 39394  
-  clk_out2_bosio_out_system_clk_wiz_0_0_1        4.317        0.000                      0                  949        0.050        0.000                      0                  949        3.737        0.000                       0                   588  
+  clk_out1_bosio_out_system_clk_wiz_0_0_1        0.148        0.000                      0               114400        0.050        0.000                      0               114400        3.750        0.000                       0                 45337  
+  clk_out2_bosio_out_system_clk_wiz_0_0_1        5.605        0.000                      0                 1060        0.121        0.000                      0                 1060        3.737        0.000                       0                   618  
     CLKFBIN_1                                                                                                                                                                               12.225        0.000                       0                     2  
     PixelClk                                                                                                                                                                                11.318        0.000                       0                    10  
     SerialClk                                                                                                                                                                                0.540        0.000                       0                    10  
@@ -181,7 +173,7 @@ clk_fpga_0                                                                      
 
 From Clock                               To Clock                                     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
 ----------                               --------                                     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
-clk_out2_bosio_out_system_clk_wiz_0_0_1  PixelClk                                       7.140        0.000                      0                   38        0.120        0.000                      0                   38  
+clk_out2_bosio_out_system_clk_wiz_0_0_1  PixelClk                                       8.159        0.000                      0                   38        0.075        0.000                      0                   38  
 
 
 ------------------------------------------------------------------------------------------------
@@ -191,8 +183,8 @@ clk_out2_bosio_out_system_clk_wiz_0_0_1  PixelClk                               
 
 Path Group                               From Clock                               To Clock                                     WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
 ----------                               ----------                               --------                                     -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
-**async_default**                        clk_out1_bosio_out_system_clk_wiz_0_0_1  clk_out1_bosio_out_system_clk_wiz_0_0_1        0.874        0.000                      0                 1355        0.515        0.000                      0                 1355  
-**async_default**                        clk_out2_bosio_out_system_clk_wiz_0_0_1  clk_out2_bosio_out_system_clk_wiz_0_0_1       11.689        0.000                      0                    4        0.466        0.000                      0                    4  
+**async_default**                        clk_out1_bosio_out_system_clk_wiz_0_0_1  clk_out1_bosio_out_system_clk_wiz_0_0_1        1.115        0.000                      0                 1445        0.567        0.000                      0                 1445  
+**async_default**                        clk_out2_bosio_out_system_clk_wiz_0_0_1  clk_out2_bosio_out_system_clk_wiz_0_0_1       11.699        0.000                      0                    4        0.458        0.000                      0                    4  
 
 
 ------------------------------------------------------------------------------------------------
@@ -230,28 +222,28 @@ High Pulse Width  Slow    MMCME2_ADV/CLKIN1  n/a            2.000         5.000 
 From Clock:  clk_out1_bosio_out_system_clk_wiz_0_0_1
   To Clock:  clk_out1_bosio_out_system_clk_wiz_0_0_1
 
-Setup :            0  Failing Endpoints,  Worst Slack        0.073ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.049ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        0.148ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.050ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        3.750ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.073ns  (required time - arrival time)
-  Source:                 bosio_out_system_i/projector_0/inst/add_ln49_1_reg_2715_reg[8]/C
+Slack (MET) :             0.148ns  (required time - arrival time)
+  Source:                 bosio_out_system_i/projector_0/inst/mul_ln49_reg_2710_reg[0]/C
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[28]/CE
+  Destination:            bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[18]/CE
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk_out1_bosio_out_system_clk_wiz_0_0_1
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@10.000ns - clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        9.519ns  (logic 3.915ns (41.129%)  route 5.604ns (58.871%))
-  Logic Levels:           20  (CARRY4=15 LUT1=1 LUT2=2 LUT4=2)
-  Clock Path Skew:        -0.130ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.672ns = ( 12.672 - 10.000 ) 
-    Source Clock Delay      (SCD):    3.032ns
-    Clock Pessimism Removal (CPR):    0.229ns
+  Data Path Delay:        9.430ns  (logic 4.460ns (47.294%)  route 4.970ns (52.706%))
+  Logic Levels:           22  (CARRY4=17 LUT2=3 LUT6=2)
+  Clock Path Skew:        -0.180ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.732ns = ( 12.732 - 10.000 ) 
+    Source Clock Delay      (SCD):    3.040ns
+    Clock Pessimism Removal (CPR):    0.129ns
   Clock Uncertainty:      0.073ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Discrete Jitter          (DJ):    0.128ns
@@ -269,67 +261,73 @@ Slack (MET) :             0.073ns  (required time - arrival time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       1.735     3.032    bosio_out_system_i/projector_0/inst/ap_clk
-    SLICE_X17Y23         FDRE                                         r  bosio_out_system_i/projector_0/inst/add_ln49_1_reg_2715_reg[8]/C
+                         net (fo=45410, routed)       1.743     3.040    bosio_out_system_i/projector_0/inst/ap_clk
+    SLICE_X20Y32         FDRE                                         r  bosio_out_system_i/projector_0/inst/mul_ln49_reg_2710_reg[0]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X17Y23         FDRE (Prop_fdre_C_Q)         0.456     3.488 r  bosio_out_system_i/projector_0/inst/add_ln49_1_reg_2715_reg[8]/Q
-                         net (fo=2, routed)           0.928     4.416    bosio_out_system_i/projector_0/inst/add_ln49_1_reg_2715[8]
-    SLICE_X14Y27         LUT2 (Prop_lut2_I0_O)        0.124     4.540 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_193/O
-                         net (fo=1, routed)           0.000     4.540    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_193_n_3
-    SLICE_X14Y27         CARRY4 (Prop_carry4_S[0]_CO[3])
-                                                      0.513     5.053 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_180/CO[3]
-                         net (fo=1, routed)           0.000     5.053    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_180_n_3
-    SLICE_X14Y28         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.170 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_170/CO[3]
-                         net (fo=1, routed)           0.000     5.170    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_170_n_3
-    SLICE_X14Y29         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.287 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_160/CO[3]
-                         net (fo=1, routed)           0.000     5.287    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_160_n_3
-    SLICE_X14Y30         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.404 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_150/CO[3]
-                         net (fo=1, routed)           0.000     5.404    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_150_n_3
-    SLICE_X14Y31         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.521 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_140/CO[3]
-                         net (fo=1, routed)           0.000     5.521    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_140_n_3
-    SLICE_X14Y32         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.638 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_133/CO[3]
-                         net (fo=1, routed)           0.000     5.638    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_133_n_3
-    SLICE_X14Y33         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.755 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_127/CO[3]
-                         net (fo=1, routed)           0.000     5.755    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_127_n_3
-    SLICE_X14Y34         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.872 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_117/CO[3]
-                         net (fo=1, routed)           0.000     5.872    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_117_n_3
-    SLICE_X14Y35         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     5.989 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_106/CO[3]
-                         net (fo=1, routed)           0.000     5.989    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_106_n_3
-    SLICE_X14Y36         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     6.106 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_92/CO[3]
-                         net (fo=1, routed)           0.000     6.106    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_92_n_3
-    SLICE_X14Y37         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     6.223 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_77/CO[3]
-                         net (fo=1, routed)           0.000     6.223    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_77_n_3
-    SLICE_X14Y38         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     6.340 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_62/CO[3]
-                         net (fo=1, routed)           0.000     6.340    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_62_n_3
-    SLICE_X14Y39         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     6.457 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_47/CO[3]
-                         net (fo=1, routed)           0.000     6.457    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_47_n_3
-    SLICE_X14Y40         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     6.676 f  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_32/O[0]
-                         net (fo=1, routed)           0.647     7.323    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_32_n_10
-    SLICE_X15Y40         LUT1 (Prop_lut1_I0_O)        0.295     7.618 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_17/O
-                         net (fo=1, routed)           0.000     7.618    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_17_n_3
-    SLICE_X15Y40         CARRY4 (Prop_carry4_S[0]_CO[3])
-                                                      0.532     8.150 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_7/CO[3]
-                         net (fo=1, routed)           1.968    10.117    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_7_n_3
-    SLICE_X29Y14         LUT4 (Prop_lut4_I1_O)        0.124    10.241 f  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_3/O
-                         net (fo=1, routed)           0.425    10.666    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_3_n_3
-    SLICE_X31Y14         LUT4 (Prop_lut4_I1_O)        0.124    10.790 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_1/O
-                         net (fo=18, routed)          0.750    11.540    bosio_out_system_i/projector_0/inst/ap_NS_fsm139_out
-    SLICE_X39Y10         LUT2 (Prop_lut2_I1_O)        0.124    11.664 r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546[31]_i_1/O
-                         net (fo=32, routed)          0.887    12.551    bosio_out_system_i/projector_0/inst/retval_1118_reg_546[31]_i_1_n_3
-    SLICE_X48Y5          FDRE                                         r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[28]/CE
+    SLICE_X20Y32         FDRE (Prop_fdre_C_Q)         0.478     3.518 r  bosio_out_system_i/projector_0/inst/mul_ln49_reg_2710_reg[0]/Q
+                         net (fo=1, routed)           0.647     4.165    bosio_out_system_i/projector_0/inst/mul_ln49_reg_2710[0]
+    SLICE_X21Y32         LUT2 (Prop_lut2_I1_O)        0.295     4.460 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_201/O
+                         net (fo=1, routed)           0.000     4.460    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_201_n_3
+    SLICE_X21Y32         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.532     4.992 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_193/CO[3]
+                         net (fo=1, routed)           0.000     4.992    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_193_n_3
+    SLICE_X21Y33         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.106 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_188/CO[3]
+                         net (fo=1, routed)           0.000     5.106    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_188_n_3
+    SLICE_X21Y34         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.220 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_179/CO[3]
+                         net (fo=1, routed)           0.000     5.220    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_179_n_3
+    SLICE_X21Y35         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.334 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_169/CO[3]
+                         net (fo=1, routed)           0.000     5.334    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_169_n_3
+    SLICE_X21Y36         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     5.448 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_159/CO[3]
+                         net (fo=1, routed)           0.000     5.448    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_159_n_3
+    SLICE_X21Y37         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     5.782 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_149/O[1]
+                         net (fo=1, routed)           0.798     6.580    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_149_n_9
+    SLICE_X27Y37         LUT2 (Prop_lut2_I1_O)        0.303     6.883 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_137/O
+                         net (fo=1, routed)           0.000     6.883    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_137_n_3
+    SLICE_X27Y37         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.550     7.433 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_127/CO[3]
+                         net (fo=1, routed)           0.000     7.433    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_127_n_3
+    SLICE_X27Y38         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     7.547 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_121/CO[3]
+                         net (fo=1, routed)           0.000     7.547    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_121_n_3
+    SLICE_X27Y39         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     7.661 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_111/CO[3]
+                         net (fo=1, routed)           0.000     7.661    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_111_n_3
+    SLICE_X27Y40         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     7.775 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_100/CO[3]
+                         net (fo=1, routed)           0.000     7.775    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_100_n_3
+    SLICE_X27Y41         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     7.889 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_86/CO[3]
+                         net (fo=1, routed)           0.000     7.889    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_86_n_3
+    SLICE_X27Y42         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.003 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_71/CO[3]
+                         net (fo=1, routed)           0.000     8.003    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_71_n_3
+    SLICE_X27Y43         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.117 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_56/CO[3]
+                         net (fo=1, routed)           0.000     8.117    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_56_n_3
+    SLICE_X27Y44         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.231 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_41/CO[3]
+                         net (fo=1, routed)           0.000     8.231    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_41_n_3
+    SLICE_X27Y45         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.345 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_26/CO[3]
+                         net (fo=1, routed)           0.000     8.345    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_26_n_3
+    SLICE_X27Y46         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.459 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_12/CO[3]
+                         net (fo=1, routed)           0.000     8.459    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_12_n_3
+    SLICE_X27Y47         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.114     8.573 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_8/CO[3]
+                         net (fo=1, routed)           2.085    10.658    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731_reg[12]_i_8_n_3
+    SLICE_X47Y16         LUT6 (Prop_lut6_I4_O)        0.124    10.782 f  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_3/O
+                         net (fo=1, routed)           0.264    11.046    bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_3_n_3
+    SLICE_X47Y16         LUT6 (Prop_lut6_I5_O)        0.124    11.170 r  bosio_out_system_i/projector_0/inst/zext_ln54_reg_2731[12]_i_1/O
+                         net (fo=18, routed)          0.163    11.333    bosio_out_system_i/projector_0/inst/ap_NS_fsm139_out
+    SLICE_X47Y16         LUT2 (Prop_lut2_I1_O)        0.124    11.457 r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546[31]_i_1/O
+                         net (fo=32, routed)          1.013    12.470    bosio_out_system_i/projector_0/inst/retval_1118_reg_546[31]_i_1_n_3
+    SLICE_X58Y10         FDRE                                         r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[18]/CE
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -342,16 +340,16 @@ Slack (MET) :             0.073ns  (required time - arrival time)
                                                      -3.425     9.366 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           1.725    11.091    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    11.182 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       1.490    12.672    bosio_out_system_i/projector_0/inst/ap_clk
-    SLICE_X48Y5          FDRE                                         r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[28]/C
-                         clock pessimism              0.229    12.902    
-                         clock uncertainty           -0.073    12.829    
-    SLICE_X48Y5          FDRE (Setup_fdre_C_CE)      -0.205    12.624    bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[28]
+                         net (fo=45410, routed)       1.549    12.731    bosio_out_system_i/projector_0/inst/ap_clk
+    SLICE_X58Y10         FDRE                                         r  bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[18]/C
+                         clock pessimism              0.129    12.860    
+                         clock uncertainty           -0.073    12.787    
+    SLICE_X58Y10         FDRE (Setup_fdre_C_CE)      -0.169    12.618    bosio_out_system_i/projector_0/inst/retval_1118_reg_546_reg[18]
   -------------------------------------------------------------------
-                         required time                         12.624    
-                         arrival time                         -12.551    
+                         required time                         12.618    
+                         arrival time                         -12.470    
   -------------------------------------------------------------------
-                         slack                                  0.073    
+                         slack                                  0.148    
 
 
 
@@ -359,19 +357,19 @@ Slack (MET) :             0.073ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.049ns  (arrival time - required time)
-  Source:                 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/staged_words_reg[10]/C
+Slack (MET) :             0.050ns  (arrival time - required time)
+  Source:                 bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.read_addr_inst/GEN_CMD_QUEUE.cmd_queue/USE_FF_OUT.USE_RTL_OUTPUT_PIPELINE.M_MESG_Q_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/active_words_reg[10]/D
+  Destination:            bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q_reg[2]/D
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk_out1_bosio_out_system_clk_wiz_0_0_1
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns - clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        0.392ns  (logic 0.141ns (35.985%)  route 0.251ns (64.015%))
-  Logic Levels:           0  
-  Clock Path Skew:        0.267ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    1.219ns
-    Source Clock Delay      (SCD):    0.922ns
+  Data Path Delay:        0.411ns  (logic 0.209ns (50.909%)  route 0.202ns (49.091%))
+  Logic Levels:           1  (LUT6=1)
+  Clock Path Skew:        0.268ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.195ns
+    Source Clock Delay      (SCD):    0.897ns
     Clock Pessimism Removal (CPR):    0.030ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
@@ -386,12 +384,14 @@ Slack (MET) :             0.049ns  (arrival time - required time)
                                                      -1.150    -0.217 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           0.529     0.312    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.338 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       0.584     0.922    bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/aclk
-    SLICE_X63Y48         FDRE                                         r  bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/staged_words_reg[10]/C
+                         net (fo=45410, routed)       0.559     0.897    bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.read_addr_inst/GEN_CMD_QUEUE.cmd_queue/USE_RTL_ADDR.addr_q_reg[4]_0
+    SLICE_X36Y51         FDRE                                         r  bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.read_addr_inst/GEN_CMD_QUEUE.cmd_queue/USE_FF_OUT.USE_RTL_OUTPUT_PIPELINE.M_MESG_Q_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X63Y48         FDRE (Prop_fdre_C_Q)         0.141     1.063 r  bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/staged_words_reg[10]/Q
-                         net (fo=3, routed)           0.251     1.313    bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/staged_words_reg[28]_0[9]
-    SLICE_X64Y51         FDRE                                         r  bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/active_words_reg[10]/D
+    SLICE_X36Y51         FDRE (Prop_fdre_C_Q)         0.164     1.061 r  bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.read_addr_inst/GEN_CMD_QUEUE.cmd_queue/USE_FF_OUT.USE_RTL_OUTPUT_PIPELINE.M_MESG_Q_reg[1]/Q
+                         net (fo=3, routed)           0.202     1.262    bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/pre_next_word_1_reg[2]_2[1]
+    SLICE_X37Y46         LUT6 (Prop_lut6_I1_O)        0.045     1.307 r  bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q[2]_i_1__0/O
+                         net (fo=1, routed)           0.000     1.307    bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q[2]_i_1__0_n_0
+    SLICE_X37Y46         FDRE                                         r  bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q_reg[2]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -404,15 +404,15 @@ Slack (MET) :             0.049ns  (arrival time - required time)
                                                      -1.467    -0.237 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           0.576     0.339    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     0.368 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       0.851     1.219    bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/aclk
-    SLICE_X64Y51         FDRE                                         r  bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/active_words_reg[10]/C
-                         clock pessimism             -0.030     1.189    
-    SLICE_X64Y51         FDRE (Hold_fdre_C_D)         0.075     1.264    bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/active_words_reg[10]
+                         net (fo=45410, routed)       0.827     1.195    bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q_reg[0]_0
+    SLICE_X37Y46         FDRE                                         r  bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q_reg[2]/C
+                         clock pessimism             -0.030     1.165    
+    SLICE_X37Y46         FDRE (Hold_fdre_C_D)         0.092     1.257    bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_us/inst/gen_upsizer.gen_full_upsizer.axi_upsizer_inst/USE_READ.gen_non_fifo_r_upsizer.read_data_inst/USE_RTL_LENGTH.length_counter_q_reg[2]
   -------------------------------------------------------------------
-                         required time                         -1.264    
-                         arrival time                           1.313    
+                         required time                         -1.257    
+                         arrival time                           1.307    
   -------------------------------------------------------------------
-                         slack                                  0.049    
+                         slack                                  0.050    
 
 
 
@@ -426,10 +426,10 @@ Period(ns):         10.000
 Sources:            { bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0 }
 
 Check Type        Corner  Lib Pin             Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location         Pin
-Min Period        n/a     DSP48E1/CLK         n/a            3.884         10.000      6.116      DSP48_X4Y34      bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_x_reg/CLK
+Min Period        n/a     DSP48E1/CLK         n/a            3.884         10.000      6.116      DSP48_X1Y10      bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy_reg/CLK
 Max Period        n/a     MMCME2_ADV/CLKOUT0  n/a            213.360       10.000      203.360    MMCME2_ADV_X1Y0  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
-Low Pulse Width   Slow    RAMD32/CLK          n/a            1.250         5.000       3.750      SLICE_X12Y37     bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gdm.dm_gen.dm/RAM_reg_0_31_0_0/DP/CLK
-High Pulse Width  Slow    RAMD32/CLK          n/a            1.250         5.000       3.750      SLICE_X12Y37     bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gdm.dm_gen.dm/RAM_reg_0_31_0_0/DP/CLK
+Low Pulse Width   Slow    RAMD64E/CLK         n/a            1.250         5.000       3.750      SLICE_X82Y56     bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/queue_reg_384_447_6_8/RAMA/CLK
+High Pulse Width  Fast    RAMD32/CLK          n/a            1.250         5.000       3.750      SLICE_X4Y17      bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gdm.dm_gen.dm/RAM_reg_0_31_0_4/RAMA/CLK
 
 
 
@@ -437,28 +437,28 @@ High Pulse Width  Slow    RAMD32/CLK          n/a            1.250         5.000
 From Clock:  clk_out2_bosio_out_system_clk_wiz_0_0_1
   To Clock:  clk_out2_bosio_out_system_clk_wiz_0_0_1
 
-Setup :            0  Failing Endpoints,  Worst Slack        4.317ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.050ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        5.605ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.121ns,  Total Violation        0.000ns
 PW    :            0  Failing Endpoints,  Worst Slack        3.737ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             4.317ns  (required time - arrival time)
+Slack (MET) :             5.605ns  (required time - arrival time)
   Source:                 bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/active_video_reg/C
                             (rising edge-triggered cell FDRE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
-  Destination:            bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0/ENBWREN
+  Destination:            bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1/ENBWREN
                             (rising edge-triggered cell RAMB36E1 clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
   Path Group:             clk_out2_bosio_out_system_clk_wiz_0_0_1
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            13.474ns  (clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@13.474ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        8.024ns  (logic 0.791ns (9.858%)  route 7.233ns (90.142%))
+  Data Path Delay:        7.087ns  (logic 0.704ns (9.934%)  route 6.383ns (90.066%))
   Logic Levels:           2  (LUT4=1 LUT5=1)
-  Clock Path Skew:        -0.405ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.821ns = ( 16.295 - 13.474 ) 
-    Source Clock Delay      (SCD):    3.355ns
-    Clock Pessimism Removal (CPR):    0.129ns
+  Clock Path Skew:        -0.262ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.870ns = ( 16.343 - 13.474 ) 
+    Source Clock Delay      (SCD):    3.278ns
+    Clock Pessimism Removal (CPR):    0.146ns
   Clock Uncertainty:      0.077ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Discrete Jitter          (DJ):    0.137ns
@@ -476,16 +476,16 @@ Slack (MET) :             4.317ns  (required time - arrival time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         2.058     3.355    bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/clk
-    SLICE_X108Y144       FDRE                                         r  bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/active_video_reg/C
+                         net (fo=616, routed)         1.981     3.278    bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/clk
+    SLICE_X103Y149       FDRE                                         r  bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/active_video_reg/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X108Y144       FDRE (Prop_fdre_C_Q)         0.518     3.873 r  bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/active_video_reg/Q
-                         net (fo=12, routed)          3.633     7.506    bosio_out_system_i/vid_out_0/inst/SYNC_INST/vtg_active_video
-    SLICE_X107Y95        LUT5 (Prop_lut5_I0_O)        0.124     7.630 r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/in_data_mux[23]_i_1/O
-                         net (fo=33, routed)          1.848     9.478    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/rdp_inst/rd_en
-    SLICE_X109Y91        LUT4 (Prop_lut4_I2_O)        0.149     9.627 r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/rdp_inst/gen_sdpram.xpm_memory_base_inst_i_2/O
-                         net (fo=25, routed)          1.752    11.379    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/enb
-    RAMB36_X4Y17         RAMB36E1                                     r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0/ENBWREN
+    SLICE_X103Y149       FDRE (Prop_fdre_C_Q)         0.456     3.734 r  bosio_out_system_i/vtc_0/U0/U_TC_TOP/GEN_GENERATOR.U_TC_GEN/active_video_reg/Q
+                         net (fo=12, routed)          1.764     5.498    bosio_out_system_i/vid_out_0/inst/SYNC_INST/vtg_active_video
+    SLICE_X90Y146        LUT5 (Prop_lut5_I0_O)        0.124     5.622 r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/in_data_mux[23]_i_1/O
+                         net (fo=35, routed)          1.185     6.806    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/rdp_inst/rd_en
+    SLICE_X99Y143        LUT4 (Prop_lut4_I2_O)        0.124     6.930 r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/rdp_inst/gen_sdpram.xpm_memory_base_inst_i_2/O
+                         net (fo=34, routed)          3.434    10.365    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/enb
+    RAMB36_X2Y27         RAMB36E1                                     r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1/ENBWREN
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -498,17 +498,17 @@ Slack (MET) :             4.317ns  (required time - arrival time)
                                                      -3.425    12.840 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.725    14.565    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.091    14.656 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         1.639    16.295    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clkb
-    RAMB36_X4Y17         RAMB36E1                                     r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0/CLKBWRCLK
-                         clock pessimism              0.129    16.424    
-                         clock uncertainty           -0.077    16.347    
-    RAMB36_X4Y17         RAMB36E1 (Setup_ramb36e1_CLKBWRCLK_ENBWREN)
-                                                     -0.651    15.696    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0
+                         net (fo=616, routed)         1.687    16.343    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/clkb
+    RAMB36_X2Y27         RAMB36E1                                     r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1/CLKBWRCLK
+                         clock pessimism              0.146    16.490    
+                         clock uncertainty           -0.077    16.413    
+    RAMB36_X2Y27         RAMB36E1 (Setup_ramb36e1_CLKBWRCLK_ENBWREN)
+                                                     -0.443    15.970    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1
   -------------------------------------------------------------------
-                         required time                         15.696    
-                         arrival time                         -11.379    
+                         required time                         15.970    
+                         arrival time                         -10.365    
   -------------------------------------------------------------------
-                         slack                                  4.317    
+                         slack                                  5.605    
 
 
 
@@ -516,20 +516,20 @@ Slack (MET) :             4.317ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.050ns  (arrival time - required time)
-  Source:                 bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]/C
+Slack (MET) :             0.121ns  (arrival time - required time)
+  Source:                 bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/C
                             (rising edge-triggered cell FDRE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
-  Destination:            bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]/D
+  Destination:            bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[1][1]/D
                             (rising edge-triggered cell FDRE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
   Path Group:             clk_out2_bosio_out_system_clk_wiz_0_0_1
   Path Type:              Hold (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        0.507ns  (logic 0.392ns (77.358%)  route 0.115ns (22.642%))
-  Logic Levels:           2  (CARRY4=2)
-  Clock Path Skew:        0.351ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    1.362ns
-    Source Clock Delay      (SCD):    0.976ns
-    Clock Pessimism Removal (CPR):    0.035ns
+  Data Path Delay:        0.197ns  (logic 0.141ns (71.611%)  route 0.056ns (28.389%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.000ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.333ns
+    Source Clock Delay      (SCD):    1.029ns
+    Clock Pessimism Removal (CPR):    0.304ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -543,18 +543,12 @@ Slack (MET) :             0.050ns  (arrival time - required time)
                                                      -1.150    -0.217 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           0.529     0.312    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.026     0.338 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         0.638     0.976    bosio_out_system_i/vid_out_0/inst/SYNC_INST/vid_io_out_clk
-    SLICE_X109Y99        FDRE                                         r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]/C
+                         net (fo=616, routed)         0.691     1.029    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_clk
+    SLICE_X103Y141       FDRE                                         r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X109Y99        FDRE (Prop_fdre_C_Q)         0.141     1.117 r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]/Q
-                         net (fo=2, routed)           0.114     1.231    bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]
-    SLICE_X109Y99        CARRY4 (Prop_carry4_S[0]_CO[3])
-                                                      0.197     1.428 r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]_i_1/CO[3]
-                         net (fo=1, routed)           0.001     1.428    bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[4]_i_1_n_0
-    SLICE_X109Y100       CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.054     1.482 r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]_i_1/O[0]
-                         net (fo=1, routed)           0.000     1.482    bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]_i_1_n_7
-    SLICE_X109Y100       FDRE                                         r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]/D
+    SLICE_X103Y141       FDRE (Prop_fdre_C_Q)         0.141     1.170 r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[0][1]/Q
+                         net (fo=1, routed)           0.056     1.226    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff[0][1]
+    SLICE_X103Y141       FDRE                                         r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[1][1]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -567,15 +561,15 @@ Slack (MET) :             0.050ns  (arrival time - required time)
                                                      -1.467    -0.237 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           0.576     0.339    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.029     0.368 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         0.994     1.362    bosio_out_system_i/vid_out_0/inst/SYNC_INST/vid_io_out_clk
-    SLICE_X109Y100       FDRE                                         r  bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]/C
-                         clock pessimism             -0.035     1.327    
-    SLICE_X109Y100       FDRE (Hold_fdre_C_D)         0.105     1.432    bosio_out_system_i/vid_out_0/inst/SYNC_INST/fifo_eol_cnt_reg[8]
+                         net (fo=616, routed)         0.965     1.333    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_clk
+    SLICE_X103Y141       FDRE                                         r  bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[1][1]/C
+                         clock pessimism             -0.304     1.029    
+    SLICE_X103Y141       FDRE (Hold_fdre_C_D)         0.076     1.105    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_cdc_pntr.wr_pntr_cdc_inst/dest_graysync_ff_reg[1][1]
   -------------------------------------------------------------------
-                         required time                         -1.432    
-                         arrival time                           1.482    
+                         required time                         -1.105    
+                         arrival time                           1.226    
   -------------------------------------------------------------------
-                         slack                                  0.050    
+                         slack                                  0.121    
 
 
 
@@ -589,9 +583,9 @@ Period(ns):         13.474
 Sources:            { bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1 }
 
 Check Type        Corner  Lib Pin             Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location        Pin
-Min Period        n/a     RAMB36E1/CLKBWRCLK  n/a            2.576         13.474      10.898     RAMB36_X4Y17    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0/CLKBWRCLK
+Min Period        n/a     RAMB36E1/CLKBWRCLK  n/a            2.576         13.474      10.898     RAMB36_X2Y29    bosio_out_system_i/vid_out_0/inst/COUPLER_INST/generate_async_fifo.FIFO_INST/XPM_FIFO_ASYNC_INST/gnuram_async_fifo.xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0/CLKBWRCLK
 Max Period        n/a     PLLE2_ADV/CLKIN1    n/a            52.633        13.474      39.159     PLLE2_ADV_X1Y0  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKIN1
-Low Pulse Width   Slow    PLLE2_ADV/CLKIN1    n/a            3.000         6.737       3.737      PLLE2_ADV_X1Y0  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKIN1
+Low Pulse Width   Fast    PLLE2_ADV/CLKIN1    n/a            3.000         6.737       3.737      PLLE2_ADV_X1Y0  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKIN1
 High Pulse Width  Slow    PLLE2_ADV/CLKIN1    n/a            3.000         6.737       3.737      PLLE2_ADV_X1Y0  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKIN1
 
 
@@ -692,26 +686,26 @@ Max Period  n/a     MMCME2_ADV/CLKFBIN  n/a            100.000       10.000     
 From Clock:  clk_out2_bosio_out_system_clk_wiz_0_0_1
   To Clock:  PixelClk
 
-Setup :            0  Failing Endpoints,  Worst Slack        7.140ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.120ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        8.159ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.075ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             7.140ns  (required time - arrival time)
-  Source:                 bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataEncoder/pDataOutRaw_reg[9]/C
-                            (rising edge-triggered cell FDSE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
-  Destination:            bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave/D4
+Slack (MET) :             8.159ns  (required time - arrival time)
+  Source:                 bosio_out_system_i/rgb2dvi_0/U0/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
+                            (rising edge-triggered cell FDPE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
+  Destination:            bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave/RST
                             (rising edge-triggered cell OSERDESE2 clocked by PixelClk  {rise@0.000ns fall@6.737ns period=13.474ns})
   Path Group:             PixelClk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            13.474ns  (PixelClk rise@13.474ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        8.623ns  (logic 0.419ns (4.859%)  route 8.205ns (95.141%))
+  Data Path Delay:        7.391ns  (logic 0.419ns (5.669%)  route 6.972ns (94.331%))
   Logic Levels:           0  
-  Clock Path Skew:        3.295ns (DCD - SCD + CPR)
+  Clock Path Skew:        3.308ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    6.537ns = ( 20.011 - 13.474 ) 
-    Source Clock Delay      (SCD):    3.357ns
+    Source Clock Delay      (SCD):    3.344ns
     Clock Pessimism Removal (CPR):    0.115ns
   Clock Uncertainty:      0.208ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -730,12 +724,12 @@ Slack (MET) :             7.140ns  (required time - arrival time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         2.060     3.357    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataEncoder/PixelClk
-    SLICE_X113Y103       FDSE                                         r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataEncoder/pDataOutRaw_reg[9]/C
+                         net (fo=616, routed)         2.047     3.344    bosio_out_system_i/rgb2dvi_0/U0/LockLostReset/SyncAsyncx/PixelClk
+    SLICE_X113Y129       FDPE                                         r  bosio_out_system_i/rgb2dvi_0/U0/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X113Y103       FDSE (Prop_fdse_C_Q)         0.419     3.776 r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataEncoder/pDataOutRaw_reg[9]/Q
-                         net (fo=1, routed)           8.205    11.980    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/pDataOut[9]
-    OLOGIC_X1Y121        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave/D4
+    SLICE_X113Y129       FDPE (Prop_fdpe_C_Q)         0.419     3.763 r  bosio_out_system_i/rgb2dvi_0/U0/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/Q
+                         net (fo=8, routed)           6.972    10.735    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/out[0]
+    OLOGIC_X1Y121        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave/RST
   -------------------------------------------------------------------    -------------------
 
                          (clock PixelClk rise edge)
@@ -748,7 +742,7 @@ Slack (MET) :             7.140ns  (required time - arrival time)
                                                      -3.425    12.840 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.725    14.565    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.091    14.656 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         1.631    16.287    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
+                         net (fo=616, routed)         1.631    16.287    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
     PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT1)
                                                       0.083    16.370 r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKOUT1
                          net (fo=1, routed)           1.720    18.090    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/PixelClk
@@ -757,13 +751,13 @@ Slack (MET) :             7.140ns  (required time - arrival time)
     OLOGIC_X1Y121        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave/CLKDIV
                          clock pessimism              0.115    20.126    
                          clock uncertainty           -0.208    19.917    
-    OLOGIC_X1Y121        OSERDESE2 (Setup_oserdese2_CLKDIV_D4)
-                                                     -0.797    19.120    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave
+    OLOGIC_X1Y121        OSERDESE2 (Setup_oserdese2_CLKDIV_RST)
+                                                     -1.024    18.893    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[2].DataSerializer/SerializerSlave
   -------------------------------------------------------------------
-                         required time                         19.120    
-                         arrival time                         -11.981    
+                         required time                         18.893    
+                         arrival time                         -10.735    
   -------------------------------------------------------------------
-                         slack                                  7.140    
+                         slack                                  8.159    
 
 
 
@@ -771,19 +765,19 @@ Slack (MET) :             7.140ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.120ns  (arrival time - required time)
-  Source:                 bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataEncoder/pDataOutRaw_reg[0]/C
-                            (rising edge-triggered cell FDRE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
-  Destination:            bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/SerializerMaster/D1
+Slack (MET) :             0.075ns  (arrival time - required time)
+  Source:                 bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataEncoder/pDataOutRaw_reg[4]/C
+                            (rising edge-triggered cell FDSE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
+  Destination:            bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/SerializerMaster/D5
                             (rising edge-triggered cell OSERDESE2 clocked by PixelClk  {rise@0.000ns fall@6.737ns period=13.474ns})
   Path Group:             PixelClk
   Path Type:              Hold (Min at Slow Process Corner)
   Requirement:            0.000ns  (PixelClk rise@0.000ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        4.385ns  (logic 0.418ns (9.532%)  route 3.967ns (90.468%))
+  Data Path Delay:        4.326ns  (logic 0.367ns (8.484%)  route 3.959ns (91.516%))
   Logic Levels:           0  
-  Clock Path Skew:        4.119ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    7.265ns
-    Source Clock Delay      (SCD):    3.031ns
+  Clock Path Skew:        4.105ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    7.261ns
+    Source Clock Delay      (SCD):    3.041ns
     Clock Pessimism Removal (CPR):    0.115ns
   Clock Uncertainty:      0.208ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -802,12 +796,12 @@ Slack (MET) :             0.120ns  (arrival time - required time)
                                                      -3.425    -0.634 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.725     1.091    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.091     1.182 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         1.849     3.031    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataEncoder/PixelClk
-    SLICE_X112Y127       FDRE                                         r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataEncoder/pDataOutRaw_reg[0]/C
+                         net (fo=616, routed)         1.859     3.041    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataEncoder/PixelClk
+    SLICE_X109Y142       FDSE                                         r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataEncoder/pDataOutRaw_reg[4]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X112Y127       FDRE (Prop_fdre_C_Q)         0.418     3.449 r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataEncoder/pDataOutRaw_reg[0]/Q
-                         net (fo=1, routed)           3.967     7.416    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/pDataOut[0]
-    OLOGIC_X1Y130        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/SerializerMaster/D1
+    SLICE_X109Y142       FDSE (Prop_fdse_C_Q)         0.367     3.408 r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataEncoder/pDataOutRaw_reg[4]/Q
+                         net (fo=1, routed)           3.959     7.367    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/pDataOut[4]
+    OLOGIC_X1Y126        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/SerializerMaster/D5
   -------------------------------------------------------------------    -------------------
 
                          (clock PixelClk rise edge)
@@ -820,22 +814,22 @@ Slack (MET) :             0.120ns  (arrival time - required time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         1.828     3.125    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
+                         net (fo=616, routed)         1.828     3.125    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
     PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT1)
                                                       0.088     3.213 r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/GenPLL.DVI_ClkGenerator/CLKOUT1
                          net (fo=1, routed)           1.883     5.096    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/PixelClk
     BUFGCTRL_X0Y1        BUFG (Prop_bufg_I_O)         0.101     5.197 r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/PixelClk_BUFG_inst/O
-                         net (fo=8, routed)           2.068     7.265    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/PixelClk
-    OLOGIC_X1Y130        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/SerializerMaster/CLKDIV
-                         clock pessimism             -0.115     7.150    
-                         clock uncertainty            0.208     7.359    
-    OLOGIC_X1Y130        OSERDESE2 (Hold_oserdese2_CLKDIV_D1)
-                                                     -0.063     7.296    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[1].DataSerializer/SerializerMaster
+                         net (fo=8, routed)           2.064     7.261    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/PixelClk
+    OLOGIC_X1Y126        OSERDESE2                                    r  bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/SerializerMaster/CLKDIV
+                         clock pessimism             -0.115     7.146    
+                         clock uncertainty            0.208     7.355    
+    OLOGIC_X1Y126        OSERDESE2 (Hold_oserdese2_CLKDIV_D5)
+                                                     -0.063     7.292    bosio_out_system_i/rgb2dvi_0/U0/DataEncoders[0].DataSerializer/SerializerMaster
   -------------------------------------------------------------------
-                         required time                         -7.296    
-                         arrival time                           7.416    
+                         required time                         -7.292    
+                         arrival time                           7.367    
   -------------------------------------------------------------------
-                         slack                                  0.120    
+                         slack                                  0.075    
 
 
 
@@ -846,27 +840,27 @@ Path Group:  **async_default**
 From Clock:  clk_out1_bosio_out_system_clk_wiz_0_0_1
   To Clock:  clk_out1_bosio_out_system_clk_wiz_0_0_1
 
-Setup :            0  Failing Endpoints,  Worst Slack        0.874ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.515ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack        1.115ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.567ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.874ns  (required time - arrival time)
+Slack (MET) :             1.115ns  (required time - arrival time)
   Source:                 bosio_out_system_i/rst_ps7_100M/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q16_reg[26]/CLR
+  Destination:            bosio_out_system_i/sensor_hub_0/inst/gyro_bias_y_reg[4]/CLR
                             (recovery check against rising-edge clock clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             **async_default**
   Path Type:              Recovery (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@10.000ns - clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        8.225ns  (logic 0.604ns (7.343%)  route 7.621ns (92.657%))
+  Data Path Delay:        7.940ns  (logic 0.741ns (9.332%)  route 7.199ns (90.668%))
   Logic Levels:           1  (LUT1=1)
-  Clock Path Skew:        -0.218ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    2.654ns = ( 12.654 - 10.000 ) 
-    Source Clock Delay      (SCD):    3.001ns
-    Clock Pessimism Removal (CPR):    0.129ns
+  Clock Path Skew:        -0.263ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.757ns = ( 12.757 - 10.000 ) 
+    Source Clock Delay      (SCD):    3.134ns
+    Clock Pessimism Removal (CPR):    0.115ns
   Clock Uncertainty:      0.073ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
     Discrete Jitter          (DJ):    0.128ns
@@ -884,14 +878,14 @@ Slack (MET) :             0.874ns  (required time - arrival time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       1.704     3.001    bosio_out_system_i/rst_ps7_100M/U0/slowest_sync_clk
-    SLICE_X85Y74         FDRE                                         r  bosio_out_system_i/rst_ps7_100M/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C
+                         net (fo=45410, routed)       1.837     3.134    bosio_out_system_i/rst_ps7_100M/U0/slowest_sync_clk
+    SLICE_X49Y116        FDRE                                         r  bosio_out_system_i/rst_ps7_100M/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X85Y74         FDRE (Prop_fdre_C_Q)         0.456     3.457 r  bosio_out_system_i/rst_ps7_100M/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/Q
-                         net (fo=178, routed)         3.182     6.639    bosio_out_system_i/sensor_hub_0/inst/rst_n
-    SLICE_X92Y9          LUT1 (Prop_lut1_I0_O)        0.148     6.787 f  bosio_out_system_i/sensor_hub_0/inst/m_axis_sensor_tdata[95]_i_2/O
-                         net (fo=929, routed)         4.439    11.226    bosio_out_system_i/sensor_hub_0/inst/rst_n_0
-    SLICE_X43Y68         FDCE                                         f  bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q16_reg[26]/CLR
+    SLICE_X49Y116        FDRE (Prop_fdre_C_Q)         0.419     3.553 r  bosio_out_system_i/rst_ps7_100M/U0/ACTIVE_LOW_PR_OUT_DFF[0].FDRE_PER_N/Q
+                         net (fo=184, routed)         4.842     8.395    bosio_out_system_i/sensor_hub_0/inst/rst_n
+    SLICE_X54Y9          LUT1 (Prop_lut1_I0_O)        0.322     8.717 f  bosio_out_system_i/sensor_hub_0/inst/m_axis_sensor_tdata[95]_i_2/O
+                         net (fo=929, routed)         2.357    11.074    bosio_out_system_i/sensor_hub_0/inst/rst_n_0
+    SLICE_X11Y12         FDCE                                         f  bosio_out_system_i/sensor_hub_0/inst/gyro_bias_y_reg[4]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -904,16 +898,16 @@ Slack (MET) :             0.874ns  (required time - arrival time)
                                                      -3.425     9.366 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           1.725    11.091    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    11.182 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       1.472    12.654    bosio_out_system_i/sensor_hub_0/inst/clk
-    SLICE_X43Y68         FDCE                                         r  bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q16_reg[26]/C
-                         clock pessimism              0.129    12.783    
-                         clock uncertainty           -0.073    12.709    
-    SLICE_X43Y68         FDCE (Recov_fdce_C_CLR)     -0.609    12.100    bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q16_reg[26]
+                         net (fo=45410, routed)       1.574    12.756    bosio_out_system_i/sensor_hub_0/inst/clk
+    SLICE_X11Y12         FDCE                                         r  bosio_out_system_i/sensor_hub_0/inst/gyro_bias_y_reg[4]/C
+                         clock pessimism              0.115    12.871    
+                         clock uncertainty           -0.073    12.798    
+    SLICE_X11Y12         FDCE (Recov_fdce_C_CLR)     -0.609    12.189    bosio_out_system_i/sensor_hub_0/inst/gyro_bias_y_reg[4]
   -------------------------------------------------------------------
-                         required time                         12.100    
-                         arrival time                         -11.226    
+                         required time                         12.189    
+                         arrival time                         -11.074    
   -------------------------------------------------------------------
-                         slack                                  0.874    
+                         slack                                  1.115    
 
 
 
@@ -921,20 +915,20 @@ Slack (MET) :             0.874ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.515ns  (arrival time - required time)
-  Source:                 bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/C
+Slack (MET) :             0.567ns  (arrival time - required time)
+  Source:                 bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/C
                             (rising edge-triggered cell FDRE clocked by clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.curr_fwft_state_reg[0]/CLR
+  Destination:            bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR
                             (removal check against rising-edge clock clk_out1_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             **async_default**
   Path Type:              Removal (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns - clk_out1_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        0.436ns  (logic 0.209ns (47.961%)  route 0.227ns (52.039%))
+  Data Path Delay:        0.515ns  (logic 0.247ns (47.938%)  route 0.268ns (52.062%))
   Logic Levels:           1  (LUT3=1)
-  Clock Path Skew:        0.013ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    1.259ns
-    Source Clock Delay      (SCD):    0.959ns
-    Clock Pessimism Removal (CPR):    0.288ns
+  Clock Path Skew:        0.015ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    1.256ns
+    Source Clock Delay      (SCD):    0.957ns
+    Clock Pessimism Removal (CPR):    0.284ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
   -------------------------------------------------------------------    -------------------
@@ -948,14 +942,14 @@ Slack (MET) :             0.515ns  (arrival time - required time)
                                                      -1.150    -0.217 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           0.529     0.312    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.026     0.338 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       0.621     0.959    bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/clk
-    SLICE_X2Y10          FDRE                                         r  bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/C
+                         net (fo=45410, routed)       0.619     0.957    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/clk
+    SLICE_X2Y35          FDRE                                         r  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X2Y10          FDRE (Prop_fdre_C_Q)         0.164     1.123 f  bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/Q
-                         net (fo=2, routed)           0.096     1.218    bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc[1]
-    SLICE_X3Y10          LUT3 (Prop_lut3_I0_O)        0.045     1.263 f  bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/gpregsm1.curr_fwft_state[1]_i_2/O
-                         net (fo=32, routed)          0.131     1.394    bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_reg_0
-    SLICE_X3Y10          FDCE                                         f  bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.curr_fwft_state_reg[0]/CLR
+    SLICE_X2Y35          FDRE (Prop_fdre_C_Q)         0.148     1.105 f  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1]/Q
+                         net (fo=1, routed)           0.093     1.197    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/sckt_wr_rst_cc[1]
+    SLICE_X2Y35          LUT3 (Prop_lut3_I0_O)        0.099     1.296 f  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/gpregsm1.curr_fwft_state[1]_i_2/O
+                         net (fo=33, routed)          0.175     1.472    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[4]_1
+    SLICE_X0Y36          FDCE                                         f  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out1_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -968,15 +962,15 @@ Slack (MET) :             0.515ns  (arrival time - required time)
                                                      -1.467    -0.237 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT0
                          net (fo=1, routed)           0.576     0.339    bosio_out_system_i/clk_wiz_0/inst/clk_out1_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.029     0.368 r  bosio_out_system_i/clk_wiz_0/inst/clkout1_buf/O
-                         net (fo=39465, routed)       0.891     1.259    bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/clk
-    SLICE_X3Y10          FDCE                                         r  bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.curr_fwft_state_reg[0]/C
-                         clock pessimism             -0.288     0.971    
-    SLICE_X3Y10          FDCE (Remov_fdce_C_CLR)     -0.092     0.879    bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.curr_fwft_state_reg[0]
+                         net (fo=45410, routed)       0.888     1.256    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/clk
+    SLICE_X0Y36          FDCE                                         r  bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]/C
+                         clock pessimism             -0.284     0.971    
+    SLICE_X0Y36          FDCE (Remov_fdce_C_CLR)     -0.067     0.904    bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc0.count_d1_reg[0]
   -------------------------------------------------------------------
-                         required time                         -0.879    
-                         arrival time                           1.394    
+                         required time                         -0.904    
+                         arrival time                           1.472    
   -------------------------------------------------------------------
-                         slack                                  0.515    
+                         slack                                  0.567    
 
 
 
@@ -987,14 +981,14 @@ Path Group:  **async_default**
 From Clock:  clk_out2_bosio_out_system_clk_wiz_0_0_1
   To Clock:  clk_out2_bosio_out_system_clk_wiz_0_0_1
 
-Setup :            0  Failing Endpoints,  Worst Slack       11.689ns,  Total Violation        0.000ns
-Hold  :            0  Failing Endpoints,  Worst Slack        0.466ns,  Total Violation        0.000ns
+Setup :            0  Failing Endpoints,  Worst Slack       11.699ns,  Total Violation        0.000ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.458ns,  Total Violation        0.000ns
 ---------------------------------------------------------------------------------------------------
 
 
 Max Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             11.689ns  (required time - arrival time)
+Slack (MET) :             11.699ns  (required time - arrival time)
   Source:                 bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
                             (rising edge-triggered cell FDPE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
   Destination:            bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
@@ -1002,11 +996,11 @@ Slack (MET) :             11.689ns  (required time - arrival time)
   Path Group:             **async_default**
   Path Type:              Recovery (Max at Slow Process Corner)
   Requirement:            13.474ns  (clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@13.474ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        1.065ns  (logic 0.419ns (39.343%)  route 0.646ns (60.657%))
+  Data Path Delay:        1.054ns  (logic 0.419ns (39.737%)  route 0.635ns (60.263%))
   Logic Levels:           0  
   Clock Path Skew:        -0.063ns (DCD - SCD + CPR)
-    Destination Clock Delay (DCD):    3.044ns = ( 16.518 - 13.474 ) 
-    Source Clock Delay      (SCD):    3.354ns
+    Destination Clock Delay (DCD):    3.045ns = ( 16.519 - 13.474 ) 
+    Source Clock Delay      (SCD):    3.355ns
     Clock Pessimism Removal (CPR):    0.247ns
   Clock Uncertainty:      0.077ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -1025,12 +1019,12 @@ Slack (MET) :             11.689ns  (required time - arrival time)
                                                      -3.793    -0.693 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.889     1.196    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.101     1.297 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         2.057     3.354    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[0]_0
-    SLICE_X109Y142       FDPE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
+                         net (fo=616, routed)         2.058     3.355    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[0]_0
+    SLICE_X106Y143       FDPE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X109Y142       FDPE (Prop_fdpe_C_Q)         0.419     3.773 f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/Q
-                         net (fo=4, routed)           0.646     4.419    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pRst
-    SLICE_X111Y141       FDCE                                         f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
+    SLICE_X106Y143       FDPE (Prop_fdpe_C_Q)         0.419     3.774 f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/Q
+                         net (fo=4, routed)           0.635     4.409    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pRst
+    SLICE_X113Y143       FDCE                                         f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -1043,16 +1037,16 @@ Slack (MET) :             11.689ns  (required time - arrival time)
                                                      -3.425    12.840 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           1.725    14.565    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.091    14.656 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         1.862    16.518    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
-    SLICE_X111Y141       FDCE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/C
-                         clock pessimism              0.247    16.765    
-                         clock uncertainty           -0.077    16.688    
-    SLICE_X111Y141       FDCE (Recov_fdce_C_CLR)     -0.580    16.108    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]
+                         net (fo=616, routed)         1.863    16.519    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
+    SLICE_X113Y143       FDCE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/C
+                         clock pessimism              0.247    16.766    
+                         clock uncertainty           -0.077    16.689    
+    SLICE_X113Y143       FDCE (Recov_fdce_C_CLR)     -0.580    16.109    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]
   -------------------------------------------------------------------
-                         required time                         16.108    
-                         arrival time                          -4.419    
+                         required time                         16.109    
+                         arrival time                          -4.409    
   -------------------------------------------------------------------
-                         slack                                 11.689    
+                         slack                                 11.699    
 
 
 
@@ -1060,7 +1054,7 @@ Slack (MET) :             11.689ns  (required time - arrival time)
 
 Min Delay Paths
 --------------------------------------------------------------------------------------
-Slack (MET) :             0.466ns  (arrival time - required time)
+Slack (MET) :             0.458ns  (arrival time - required time)
   Source:                 bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
                             (rising edge-triggered cell FDPE clocked by clk_out2_bosio_out_system_clk_wiz_0_0_1  {rise@0.000ns fall@6.737ns period=13.474ns})
   Destination:            bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
@@ -1068,11 +1062,11 @@ Slack (MET) :             0.466ns  (arrival time - required time)
   Path Group:             **async_default**
   Path Type:              Removal (Min at Fast Process Corner)
   Requirement:            0.000ns  (clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns - clk_out2_bosio_out_system_clk_wiz_0_0_1 rise@0.000ns)
-  Data Path Delay:        0.359ns  (logic 0.128ns (35.656%)  route 0.231ns (64.344%))
+  Data Path Delay:        0.351ns  (logic 0.128ns (36.422%)  route 0.223ns (63.578%))
   Logic Levels:           0  
   Clock Path Skew:        0.039ns (DCD - SCD - CPR)
-    Destination Clock Delay (DCD):    1.363ns
-    Source Clock Delay      (SCD):    1.056ns
+    Destination Clock Delay (DCD):    1.364ns
+    Source Clock Delay      (SCD):    1.057ns
     Clock Pessimism Removal (CPR):    0.268ns
 
     Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
@@ -1087,12 +1081,12 @@ Slack (MET) :             0.466ns  (arrival time - required time)
                                                      -1.150    -0.217 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           0.529     0.312    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.026     0.338 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         0.718     1.056    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[0]_0
-    SLICE_X109Y142       FDPE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
+                         net (fo=616, routed)         0.719     1.057    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[0]_0
+    SLICE_X106Y143       FDPE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/C
   -------------------------------------------------------------------    -------------------
-    SLICE_X109Y142       FDPE (Prop_fdpe_C_Q)         0.128     1.184 f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/Q
-                         net (fo=4, routed)           0.231     1.415    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pRst
-    SLICE_X111Y141       FDCE                                         f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
+    SLICE_X106Y143       FDPE (Prop_fdpe_C_Q)         0.128     1.185 f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages_reg[1]/Q
+                         net (fo=4, routed)           0.223     1.408    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pRst
+    SLICE_X113Y143       FDCE                                         f  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/CLR
   -------------------------------------------------------------------    -------------------
 
                          (clock clk_out2_bosio_out_system_clk_wiz_0_0_1 rise edge)
@@ -1105,15 +1099,15 @@ Slack (MET) :             0.466ns  (arrival time - required time)
                                                      -1.467    -0.237 r  bosio_out_system_i/clk_wiz_0/inst/mmcm_adv_inst/CLKOUT1
                          net (fo=1, routed)           0.576     0.339    bosio_out_system_i/clk_wiz_0/inst/clk_out2_bosio_out_system_clk_wiz_0_0
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.029     0.368 r  bosio_out_system_i/clk_wiz_0/inst/clkout2_buf/O
-                         net (fo=586, routed)         0.995     1.363    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
-    SLICE_X111Y141       FDCE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/C
-                         clock pessimism             -0.268     1.095    
-    SLICE_X111Y141       FDCE (Remov_fdce_C_CLR)     -0.146     0.949    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]
+                         net (fo=616, routed)         0.996     1.364    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/oSyncStages_reg[0]
+    SLICE_X113Y143       FDCE                                         r  bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]/C
+                         clock pessimism             -0.268     1.096    
+    SLICE_X113Y143       FDCE (Remov_fdce_C_CLR)     -0.146     0.950    bosio_out_system_i/rgb2dvi_0/U0/ClockGenInternal.ClockGenX/pLocked_q_reg[0]
   -------------------------------------------------------------------
-                         required time                         -0.949    
-                         arrival time                           1.415    
+                         required time                         -0.950    
+                         arrival time                           1.408    
   -------------------------------------------------------------------
-                         slack                                  0.466    
+                         slack                                  0.458    
 
 
 

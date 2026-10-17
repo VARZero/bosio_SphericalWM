@@ -15,7 +15,10 @@ See [measurements](INCREMENTAL_RESULTS.md) and [contract](AGENTS.md).
   directly from their respective submodules; geometry remains the WM version.
 
 Output: 0x43c00000/HP0; projector0: 0x43c10000/HP1; projector1: 0x43c20000/HP2.
-100 MHz, native AXI masters, no added AXI DMA IP. The validated bitstream is unchanged.
+100 MHz, native AXI masters for output sampling and both projectors. HDMI scanout
+now uses a separate triple-buffer AXI VDMA on HP3 (`0x43000000`), with video health
+at `0x41210000`. The bundled bitstream includes this buffered output path; see
+[scanout design and validation](SCANOUT.md).
 
 ## Launch and test
 
@@ -39,7 +42,8 @@ restores sensor tracking; use the privileged PYNQ environment for that script.
 ## Build
 
 Run Vitis HLS 2022.2 on the projection submodule's `scripts/build_hls.tcl`, then
-Vivado 2022.2 on this folder's `scripts/build.tcl`. Supply Digilent rgb2dvi:1.4
+Vivado on this folder's `scripts/build.tcl` (scanout implementation validated with
+Vivado 2020.2). Supply Digilent rgb2dvi:1.4
 under WM hw/ip_repo as described in its README. WM provides sensor IP and HDMI
 constraints. Timing and HDMI physical checks gate bitstream export.
 
@@ -55,5 +59,6 @@ content tiles. Shape-only changes reuse projected pixels. See
 [BoAYO M32 results](BOAYO_M32_RESULTS.md) for SDK delta uploads, chrome caching
 and actual Dashboard validation. Decorated/unsupported-size windows retain native fallback.
 
-The currently deployed original-bitstream configuration, metadata reload fix,
-and boot service are recorded in [STABLE_RUNTIME.md](STABLE_RUNTIME.md).
+The earlier original-bitstream configuration, metadata reload fix, and base boot
+service are recorded in [STABLE_RUNTIME.md](STABLE_RUNTIME.md). The current scanout
+bitstream and service override are recorded in [SCANOUT.md](SCANOUT.md).

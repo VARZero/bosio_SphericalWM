@@ -1,14 +1,14 @@
-Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
--------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2022.2 (win64) Build 3671981 Fri Oct 14 05:00:03 MDT 2022
-| Date         : Sat Oct 17 12:47:56 2026
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+----------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Sat Oct 17 17:10:58 2026
 | Host         : VieupE-Desk running 64-bit major release  (build 9200)
-| Command      : report_drc -file D:/work_buffer/bosio_AG/output_projection_dual/results/drc.rpt
+| Command      : report_drc -file D:/work_buffer/bosio_AG/output_projection_scanout/results/drc.rpt
 | Design       : bosio_out_system_wrapper
 | Device       : xc7z020clg400-1
 | Speed File   : -1
 | Design State : Fully Routed
--------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 Report DRC
 
@@ -24,18 +24,19 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 361
+             Violations found: 353
 +-----------+----------+----------------------------+------------+
 | Rule      | Severity | Description                | Violations |
 +-----------+----------+----------------------------+------------+
 | CHECK-3   | Warning  | Report rule limit reached  | 2          |
-| DPIP-1    | Warning  | Input pipelining           | 73         |
-| DPOP-1    | Warning  | PREG Output pipelining     | 95         |
+| DPIP-1    | Warning  | Input pipelining           | 67         |
+| DPOP-1    | Warning  | PREG Output pipelining     | 96         |
 | DPOP-2    | Warning  | MREG Output pipelining     | 143        |
-| PDCN-1569 | Warning  | LUT equation term check    | 7          |
 | REQP-1839 | Warning  | RAMB36 async control check | 20         |
 | REQP-1840 | Warning  | RAMB18 async control check | 20         |
 | RTSTAT-10 | Warning  | No routable loads          | 1          |
+| REQP-165  | Advisory | writefirst                 | 2          |
+| REQP-181  | Advisory | writefirst                 | 2          |
 +-----------+----------+----------------------------+------------+
 
 2. REPORT DETAILS
@@ -52,365 +53,335 @@ Related violations: <none>
 
 DPIP-1#1 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#2 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#3 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#4 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/center_prod_y_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#5 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#6 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#7 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#8 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cx_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#9 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#10 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cy_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#11 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#12 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#13 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_cz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#14 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#15 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#16 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#17 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rx_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#18 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#19 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#20 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#21 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ry0__0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#22 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#23 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#24 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#25 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_rz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#26 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#27 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#28 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#29 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_ux_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#30 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#31 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#32 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#33 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uy0__0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#34 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#35 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#36 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#37 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/mul_uz_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#38 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#39 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#40 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#41 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#42 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#43 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#44 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#45 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#46 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#47 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#48 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#49 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#50 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#51 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#52 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#53 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0 input bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#54 Warning
 Input pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y_reg input bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#55 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/dout_reg input bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/dout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#56 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#57 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#58 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#59 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#60 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_0/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#61 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/dout_reg input bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/dout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#62 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U32/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/dout_reg input bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/dout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#63 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U33/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162 input bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#64 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_U34/bosio_projector_ama_addmuladd_16ns_17ns_8ns_16ns_24_4_1_DSP48_1_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/sensor_hub_0/inst/accel_roll_target_q161 input bosio_out_system_i/sensor_hub_0/inst/accel_roll_target_q161/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#65 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U35/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP bosio_out_system_i/sensor_hub_0/inst/delta_gx_q160 input bosio_out_system_i/sensor_hub_0/inst/delta_gx_q160/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#66 Warning
 Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U36/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#67 Warning
-Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg input bosio_out_system_i/projector_1/inst/ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_U37/bosio_projector_ama_addmuladd_16ns_17ns_9ns_24ns_24_4_1_DSP48_2_U/p_reg_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#68 Warning
-Input pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/dout_reg input bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/dout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#69 Warning
-Input pipelining  
-DSP bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162 input bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#70 Warning
-Input pipelining  
-DSP bosio_out_system_i/sensor_hub_0/inst/accel_roll_target_q161 input bosio_out_system_i/sensor_hub_0/inst/accel_roll_target_q161/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#71 Warning
-Input pipelining  
-DSP bosio_out_system_i/sensor_hub_0/inst/delta_gx_q160 input bosio_out_system_i/sensor_hub_0/inst/delta_gx_q160/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPIP-1#72 Warning
-Input pipelining  
 DSP bosio_out_system_i/sensor_hub_0/inst/delta_gy_q160 input bosio_out_system_i/sensor_hub_0/inst/delta_gy_q160/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
-DPIP-1#73 Warning
+DPIP-1#67 Warning
 Input pipelining  
 DSP bosio_out_system_i/sensor_hub_0/inst/delta_gz_q160 input bosio_out_system_i/sensor_hub_0/inst/delta_gz_q160/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
@@ -492,400 +463,405 @@ Related violations: <none>
 
 DPOP-1#16 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#17 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_a_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#18 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#19 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#20 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#21 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ar_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#22 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#23 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#24 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#25 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_b_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#26 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#27 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#28 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#29 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_bp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#30 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#31 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#32 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_c_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#33 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#34 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#35 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#36 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#37 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cx0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#38 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#39 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#40 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_cz_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#41 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#42 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#43 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_d_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#44 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#45 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#46 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#47 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_dp_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#48 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#49 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#50 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_ry_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#51 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#52 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy0__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#53 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_x0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_x0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy_reg__0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/p_uy_reg__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#54 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_x0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_x0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#55 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y0 output bosio_out_system_i/output_core_0/inst/u_sensor_pose/prod_y0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#56 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#57 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#58 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#59 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#60 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#61 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32s_24ns_32_2_1_U17/tmp_product output bosio_out_system_i/projector_0/inst/mul_32s_24ns_32_2_1_U17/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#62 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32s_24ns_32_2_1_U17/tmp_product output bosio_out_system_i/projector_0/inst/mul_32s_24ns_32_2_1_U17/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#63 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U20/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U20/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0 output bosio_out_system_i/projector_0/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#64 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U22/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U22/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U20/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U20/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#65 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U24/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U24/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U22/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U22/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#66 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U26/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U26/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U24/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U24/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#67 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U28/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U28/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U26/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U26/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#68 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U30/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U30/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U28/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U28/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#69 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U19/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U19/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U30/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_8ns_16_1_1_U30/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#70 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U21/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U21/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U19/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U19/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#71 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U23/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U23/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U21/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U21/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#72 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U25/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U25/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U23/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U23/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#73 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U27/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U27/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U25/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U25/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#74 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U29/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U29/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U27/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U27/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#75 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U29/dout__0 output bosio_out_system_i/projector_0/inst/mul_8ns_9ns_17_1_1_U29/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#76 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#77 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U13/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#78 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#79 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_63_2_1_U14/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#80 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#81 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32s_24ns_32_2_1_U17/tmp_product output bosio_out_system_i/projector_1/inst/mul_32s_24ns_32_2_1_U17/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32ns_32ns_64_2_1_U12/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#82 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32s_24ns_32_2_1_U17/tmp_product output bosio_out_system_i/projector_1/inst/mul_32s_24ns_32_2_1_U17/tmp_product/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#83 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U20/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U20/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0 output bosio_out_system_i/projector_1/inst/mul_32s_25ns_32_2_1_U18/tmp_product__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#84 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U22/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U22/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U20/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U20/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#85 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U24/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U24/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U22/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U22/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#86 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U26/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U26/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U24/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U24/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#87 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U28/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U28/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U26/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U26/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#88 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U30/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U30/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U28/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U28/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#89 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U19/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U19/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U30/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_8ns_16_1_1_U30/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#90 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U21/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U21/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U19/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U19/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#91 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U23/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U23/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U21/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U21/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#92 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U25/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U25/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U23/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U23/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#93 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U27/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U27/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U25/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U25/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#94 Warning
 PREG Output pipelining  
-DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U29/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U29/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U27/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U27/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
 
 DPOP-1#95 Warning
+PREG Output pipelining  
+DSP bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U29/dout__0 output bosio_out_system_i/projector_1/inst/mul_8ns_9ns_17_1_1_U29/dout__0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-1#96 Warning
 PREG Output pipelining  
 DSP bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162 output bosio_out_system_i/sensor_hub_0/inst/accel_pitch_target_q162/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
 Related violations: <none>
@@ -1605,41 +1581,6 @@ MREG Output pipelining
 DSP bosio_out_system_i/sensor_hub_0/inst/delta_gz_q160 multiplier stage bosio_out_system_i/sensor_hub_0/inst/delta_gz_q160/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
-PDCN-1569#1 Warning
-LUT equation term check  
-Used physical LUT pin 'A1' of cell bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A2)+((~A2)*(~A6)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#2 Warning
-LUT equation term check  
-Used physical LUT pin 'A1' of cell bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A6)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#3 Warning
-LUT equation term check  
-Used physical LUT pin 'A2' of cell bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A6)+((~A6)*(~A4)*A5)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#4 Warning
-LUT equation term check  
-Used physical LUT pin 'A2' of cell bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A1)+((~A1)*(~A6)*A5)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#5 Warning
-LUT equation term check  
-Used physical LUT pin 'A2' of cell bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A6)+((~A6)*(~A4)*A3)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#6 Warning
-LUT equation term check  
-Used physical LUT pin 'A4' of cell bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A5)+((~A5)*(~A6)*A1)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
-PDCN-1569#7 Warning
-LUT equation term check  
-Used physical LUT pin 'A5' of cell bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1 (pin bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/gpregsm1.user_valid_i_1/I1) is not included in the LUT equation: 'O6=(A4)+((~A4)*(~A6)*A2)'. If this cell is a user instantiated LUT in the design, please remove connectivity to the pin or change the equation and/or INIT string of the LUT to prevent this issue. If the cell is inferred or IP created LUT, please regenerate the IP and/or resynthesize the design to attempt to correct the issue.
-Related violations: <none>
-
 REQP-1839#1 Warning
 RAMB36 async control check  
 The RAMB36E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache/data_way[0].memory_reg_0 has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache/data_way[0].memory_reg_0/ADDRBWRADDR[13] (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache/read_index__0[9]) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[10]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
@@ -1827,37 +1768,57 @@ Related violations: <none>
 
 REQP-1840#18 Warning
 RAMB18 async control check  
-The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[3]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[5]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
 Related violations: <none>
 
 REQP-1840#19 Warning
 RAMB18 async control check  
-The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[4]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[8]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
 Related violations: <none>
 
 REQP-1840#20 Warning
 RAMB18 async control check  
-The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[5]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
+The RAMB18E1 bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg has an input control pin bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/pal1_reg/ENARDEN (net: bosio_out_system_i/output_core_0/inst/ddr_cache.u_cache/cache_n_85) which is driven by a register (bosio_out_system_i/output_core_0/inst/u_fifo/fifo_cnt_reg[9]) that has an active asychronous set or reset. This may cause corruption of the memory contents and/or read values when the set/reset is asserted and is not analyzed by the default static timing analysis. It is suggested to eliminate the use of a set/reset to registers driving this RAMB pin or else use a synchronous reset in which the assertion of the reset is timed by default.
 Related violations: <none>
 
 RTSTAT-10#1 Warning
 No routable loads  
-77 net(s) have no routable loads. The problem bus(es) and/or net(s) are bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+110 net(s) have no routable loads. The problem bus(es) and/or net(s) are bosio_out_system_i/axi_mem_intercon/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
 bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
 bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
 bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
+bosio_out_system_i/axi_mem_intercon_1/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
 bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
 bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0],
-bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg[2:0],
+bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
 bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
-bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg[2:0]
- (the first 15 of 49 listed).
+bosio_out_system_i/axi_mem_intercon_2/s00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_afull_fb,
+bosio_out_system_i/scanout_ddr/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_READ.USE_SPLIT_R.read_addr_inst/USE_R_CHANNEL.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+bosio_out_system_i/scanout_ddr/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_BURSTS.cmd_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i,
+bosio_out_system_i/scanout_ddr/m00_couplers/auto_pc/inst/gen_axi4_axi3.axi3_conv_inst/USE_WRITE.write_addr_inst/USE_B_CHANNEL.cmd_b_queue/inst/fifo_gen_inst/inst_fifo_gen/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.gr1_int.rfwft/aempty_fwft_i
+ (the first 15 of 70 listed).
+Related violations: <none>
+
+REQP-165#1 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (bosio_out_system_i/scanout_vdma/U0/I_PRMRY_DATAMOVER/GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/GEN_INCLUDE_MM2S_SF.I_RD_SF/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
+Related violations: <none>
+
+REQP-165#2 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (bosio_out_system_i/scanout_vdma/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_1) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
+Related violations: <none>
+
+REQP-181#1 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (bosio_out_system_i/scanout_vdma/U0/I_PRMRY_DATAMOVER/GEN_MM2S_FULL.I_MM2S_FULL_WRAPPER/GEN_INCLUDE_MM2S_SF.I_RD_SF/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
+Related violations: <none>
+
+REQP-181#2 Advisory
+writefirst  
+Synchronous clocking is detected for BRAM (bosio_out_system_i/scanout_vdma/U0/I_PRMRY_DATAMOVER/GEN_S2MM_FULL.I_S2MM_FULL_WRAPPER/GEN_ENABLE_INDET_BTT_SF.I_INDET_BTT/I_DATA_FIFO/BLK_MEM.I_SYNC_FIFOGEN_FIFO/xpm_fifo_instance.xpm_fifo_sync_inst/xpm_fifo_base_inst/gen_sdpram.xpm_memory_base_inst/gen_wr_a.gen_word_narrow.mem_reg_0) in SDP mode with WRITE_FIRST write-mode. This is the preferred mode for best power characteristics, however it may exhibit address collisions if the same address appears on both read and write ports resulting in unknown or corrupted read data. It is suggested to confirm via simulation that an address collision never occurs and if so it is suggested to try and avoid this situation. If address collisions cannot be avoided, the write-mode may be set to READ_FIRST which guarantees that the read data is the prior contents of the memory at the cost of additional power in the design. See the FPGA Memory Resources User Guide for additional information.
 Related violations: <none>
 
 

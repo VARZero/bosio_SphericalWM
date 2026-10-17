@@ -4,8 +4,8 @@
   "output_m": 32,
   "projector_count": 2,
   "artifacts": {
-    "bitstream/bosio_output_projection_dual.bit": "2a9a981d9638077c49c09149d22d1eba962970e181a67fa35c20e4d1a6adb2d1",
-    "bitstream/bosio_output_projection_dual.hwh": "7d72d9c4dfc0b65893ab939c1650f82ae337aff38dc7c02ed1125142d3c0fb43"
+    "bitstream/bosio_output_projection_dual.bit": "ce31ede26331fe5c45ca09acda75262cf24d4fe3610cb073a52f60d7a2236342",
+    "bitstream/bosio_output_projection_dual.hwh": "c27170a7069c6583b1179831f0b2e385724654b4c506add4d83036cad85a340f"
   },
   "validation": {
     "incremental_host_tests": 14,
@@ -15,12 +15,21 @@
     "workspace_input_host_tests": 14,
     "previous_live_board_cases": 14,
     "live_hardware_reference_checks": 13,
-    "boayo_host_tests": 42,
+    "boayo_host_tests": 47,
     "boayo_live_cases": 8,
     "dashboard_minimize_restore": true,
-    "metadata_reload_live_cases": 3
+    "metadata_reload_live_cases": 3,
+    "scanout_driver_host_tests": 5,
+    "scanout_angle_cases": 13,
+    "scanout_producer_stop_seconds": 4.003542407,
+    "scanout_stop_native_frames": 240,
+    "scanout_additional_underflows": 0,
+    "scanout_lock_losses": 0,
+    "scanout_rtl_simulation": "VIDEO_HEALTH_PASS",
+    "incremental_live_board_cases": 14,
+    "scanout_evidence": "../verification/scanout_20261017/"
   },
-  "packaging": "Current deployed original M32 dual bitstream. Rounded-shape caches, BPT2 hardware metadata reload fix, and Dashboard boot startup. Cache/FIFO expansion candidate excluded.",
+  "packaging": "Validated M32 dual-projection overlay with HP3 triple-buffer VDMA scanout. Incremental tile reuse and metadata reload fix preserved; fixed-size active-window BoAYO captions supported.",
   "runtime_sources": {
     "bosio_buttons.py": "775ec50de1327371ef48906a3ff57629ca751aa4c5164d5d3b2936f2b7876201",
     "bosio_geometry_v2.py": "fcff37f73139cfb6327bfdb5012a59fd6e668fe54267231b06e47aaa0e00bedd",
@@ -29,11 +38,13 @@
     "bosio_native_compositor.py": "1aa473d08cf53271763bcd292d69a2ac97d798d8bef200ccc1a66fb6fdb97f03",
     "bosio_window_manager.py": "1719d117ed27c91963370433b235db85d8d6af9ab4f0d2b3c0b6e3512b714126",
     "bosio_wm_client.py": "cbbd0537bc432937230d120b9cbc98ea65ebf64d9f32ffc4adf295976434819b",
-    "bosio_wm_daemon.py": "6bdc2233e81bf08af78a5284b5d4d8d5a85afb1b61c1b417fd25e5173ce60bcd",
-    "check_display_health.py": "2af302ca6d6605164688e395b4610fc761a8f4074448e2542c0a71c4cb6f630f",
+    "bosio_wm_daemon.py": "fed95bf44d0ab3e3c8d139e63697c8bb9acd63c347a7b23c54a5b4a50cb2d1dd",
+    "check_display_health.py": "1532f4bcf4ba548b9f3ad4f95d112780d101951966545a818d7199d2953a9d94",
     "validate_display_pose.py": "c5ab79f0766b82bbb4001436676c4cdd6a10573fc620832d097634c3d208f9df",
     "validate_incremental.py": "b7a9baeed2021c5ac0b1fc7fe0aa58994e3be51cdb8bea22ee315fe4f0f856f0",
-    "show_preview_window.py": "e4599f0913979195a1f308dee2e9d1bacf975bd97b327c08e367ba2eb6f14752"
+    "show_preview_window.py": "e4599f0913979195a1f308dee2e9d1bacf975bd97b327c08e367ba2eb6f14752",
+    "bosio_scanout.py": "029bf9398fc2e9c4c9fb4b90bb867181f08669b097a03bea1b673a7220f5b2d0",
+    "validate_scanout.py": "40178da11f4976905cbc24f879bfb83c94ca02e5255959963964a0d13275ec48"
   },
   "runtime_source_hash_format": "SHA-256 of UTF-8 source with LF line endings",
   "deployed_configuration": {
@@ -41,10 +52,14 @@
     "projector_count": 2,
     "cache_bytes": 16384,
     "cache_ways": 2,
-    "video_fifo_pixels": 2048,
+    "video_fifo_pixels": 8192,
     "dashboard_autostart": true,
     "metadata_reload_fix": true,
-    "hardware_candidate_deployed": false
+    "hardware_candidate_deployed": true,
+    "video_fifo_start_threshold": 2048,
+    "scanout_buffers": 3,
+    "scanout_buffer_bytes": 8294400,
+    "hdmi_mode": "1280x720@60"
   },
   "deployed_driver_sha256": "ab9899b4855319aed21b071a2611f2cc3c62c258734e33a0d1aa6533e2227516"
 }
